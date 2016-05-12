@@ -3,6 +3,7 @@
   
   require_once('C:\xampp\htdocs\no_mans_sky\includes\db.php');
   require_once('C:\xampp\htdocs\no_mans_sky\includes\db_checking.php');
+  global $galaxy_limit;
   
   
    function test_input($data) {
@@ -10,6 +11,8 @@
   $data = stripslashes($data);
   $data = htmlspecialchars($data);
   return $data;
+  
+  $number = 1;
 }
   
   ?>
@@ -54,6 +57,18 @@
             
         }
         
+        #submit_button1{
+            margin-bottom: 100px;
+            margin-left: 420px;
+            margin-right:auto;
+            
+        }
+        
+        #link_css{
+            color: grey;
+            margin-left: 20px;
+        }
+        
         
     </style>
     <body>
@@ -71,7 +86,14 @@
                             <ul class="dropdown-menu">
                                 
                                 <li><a href="" data-toggle="modal" data-target="#galaxy_modal">Galaxy</a></li>
-                                <li><a href="" data-toggle="modal" data-target="#star_modal">Star System</a></li>
+                                <li><?php $disable = true;
+                                  if ($galaxy_limit != 0){
+                                    echo '<a href="" data-toggle="modal" data-target="#star_modal">Star System</a>';
+                                }
+                                else { echo '<p1 id="link_css"> Star System </p1>';}
+                                            
+                                    ?>
+                                </li>
                                 <li><a href="">Planet</a></li>
                                 <li><a href="">Moon</a></li>
                                 <li><a href="">Creature</a></li>
@@ -86,7 +108,10 @@
         <!-- Button trigger modal -->
 
 
-<!-- Modal -->
+<!-- //////////////////////////////////////// GALAXY MODAL ////////////////////////////////////////////// -->
+
+
+
 <div class="modal fade" id="galaxy_modal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel5" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -97,29 +122,31 @@
           
           $name = "";
           $nameErr = "";
-          
-          
+
+ 
           if ($_SERVER["REQUEST_METHOD"] == "POST") {
-          if (empty($_POST["name"])) {
-    $nameErr = "Name is required";
+          if (empty($_POST["galaxy_name"])) {
+    echo " This is empty";
     
   } else {
-    $name = test_input($_POST["name"]);
+    $galaxy_name = test_input($_POST["galaxy_name"]);
+    echo $galaxy_name;
+    
+    
 //    $disabled_count = $disabled_count + 1;
     // check if name only contains letters and whitespace
     if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
-      $nameErr = "Only letters and white space allowed"; 
+      
     }
     
-    add_galaxy($name);
+    add_galaxy($galaxy_name);
+         
+    }
     
-    
-          }}
-          
-          ?>
+}?>
    <div id="formDiv">     
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
-         <input class="form-control" type="text" name="name" value="" placeholder="name">
+         <input class="form-control" type="text" name="galaxy_name" value="" placeholder="name">
   <span class="error"> <?php echo $nameErr;?></span>
   <br><br>
   </div>
@@ -141,77 +168,112 @@
 
 
 
+<!--  ////////////////////////////  STAR SYSTEM MODAL ///////////////////////////////////// -->
+
 
 
 <div class="modal fade" id="star_modal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel5" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-        <h1> This is the star modal</h1>
+        <h1 id="title_id"> Add a Star System </h1>
+        <div id="formDiv">
         
         <?php 
           
-          $name = "";
-          $nameErr = "";
-          $car = "";
-          $upload_image = "";
-          $disabled_count = 0;
+          $star_name = "";
+          $star_upload_image = "";
           $star_system = "";
-          $upload_image[0] = "";
+          $star_upload_image[0] = "";
           
           if ($_SERVER["REQUEST_METHOD"] == "POST") {
-          if (empty($_POST["name"])) {
-    $nameErr = "Name is required";
-    
+          if (empty($_POST["star_name"])) {
+    $testing1 = "This is not working";
   } else {
-    $name = test_input($_POST["name"]);
-    $disabled_count = $disabled_count + 1;
+    $star_name = test_input($_POST["star_name"]);
+    $testing1 = $star_name;
     // check if name only contains letters and whitespace
     if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
-      $nameErr = "Only letters and white space allowed"; 
-    }
+  }}
+  
+  
+    
+    if (empty($_POST["galaxy_inside"])) {
+    $testing2 = "this is not working";
+  } else {
+    $galaxy_inside = test_input($_POST["galaxy_inside"]);
+    
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z ]*$/",$name)) {}
     
     
           }
           
-          $star_system = ($_POST["star_systems"]);
-          $upload_image = [$_POST["fileToUpload"]];
+    if (empty($_POST["fileToUpload"])) {
+    $star_upload_image[0] = "Upload image is empty";
+    
+  } else {
+    $star_upload_image[0] = ($_POST["fileToUpload"]);
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z ]*$/",$name)) {}
+          }
           
           
-    }
-  
- 
-
-
-          ?>
+     add_star($star_name , $galaxy_inside , $star_upload_image);     
+}
+?>
         
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
-  Name: <input type="text" name="name" value="">
-  <span class="error">* <?php echo $nameErr;?></span>
+            <input class="form-control" type="text" name="star_name" value="" placeholder="name">
   <br><br>
-  Dropdown Test: <select name="star_systems" class="btn btn-secondary" id="dropdownMenu1">
-    <option value="star 1">star 1</option>
-    <option value="star 2">star 2</option>
-    <option value="star 3">star 3</option>
-    <option value="star 4">star 4</option>
+  <h4> select galaxy: </h4>
+  <select name="galaxy_inside" class="form-control" id="dropdownMenu1">
+      <?php
+        $id = 1;
+        global $galaxy_limit;
+        echo $galaxy_limit;
+        
+        while($id <= $galaxy_limit){
+        $sql = $conn->prepare("SELECT * FROM `galaxy` WHERE `id` = :id");
+              $sql->bindParam('id', $id, PDO::PARAM_INT);
+              $sql->execute();
+
+              $result = $sql->fetchObject();
+              
+              if($result != false){
+              
+              $galaxy_name = $result->name; ?>
+              
+    <option value="<?= $galaxy_name;  ?>"><?php echo $galaxy_name; ?></option>
+    <?php
+            
+              }
+              else{}
+              
+              $id++;
+        }
+        
+            ?>
   </select>
-  <br><br>
-  Select image to upload:
-    <input type="file" name="fileToUpload" id="fileToUpload">
+  <br>
+  <h4> Select main image to upload: </h4>
+  <input class="btn btn-primary form-control" type="file" name="fileToUpload" id="fileToUpload">
     <br><br>
-  E-mail: <input type="dropdown" name="email" value="">
-  <br><br>
-  Website: <input type="text" name="website" value="">
-  <br><br>
-  Comment: <textarea name="comment" rows="5" cols="40"></textarea>
-  <br><br>
-  <br><br>
   <?php $disabled = 'enabled';?>
-  <input type="submit" name="submit" value="Submit" <?php echo $disabled; ?>>  
+  </div>
+  <input class="btn btn-lg btn-success" id="submit_button1" type="submit" name="submit" value="Submit" <?php echo $disabled; ?>>  
 </form>
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+<!--  ///////////////////////////////////  PLANET MODAL  ///////////////////////////////////// -->
         
 
   
@@ -219,12 +281,11 @@
 
 <?php 
   
-  echo $name , "</br>";  
+  echo $star_name , "</br>";  
   echo $star_system , "</br>";
-  echo $upload_image[0] , "</br>";
-  $name = "";
-  $star_system = "";
-  $upload_image = "";
+  echo $star_upload_image[0] , "</br>";
+  
+//  echo "<meta http-equiv='refresh' content='0'>";
   ?>
         
     </body>

@@ -5,6 +5,8 @@
         <group>
             <file>file:/C:/xampp/htdocs/no_mans_sky/test/table_test.php</file>
             <file>file:/C:/xampp/htdocs/no_mans_sky/includes/db_checking.php</file>
+            <file>file:/C:/xampp/htdocs/no_mans_sky/includes/db.php</file>
+            <file>file:/C:/xampp/htdocs/no_mans_sky/includes/bootstrap.php</file>
             <file>file:/C:/xampp/htdocs/no_mans_sky/index.php</file>
         </group>
     </open-files>
