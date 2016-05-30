@@ -1118,7 +1118,7 @@
                                     
                             </div>
 
-                            <input class="btn btn-success" id="submit_button1" type="submit" name="submit" value="Submit" >  
+                            <input class="btn btn-success" id="submit_button1" type="submit" name="submit3" value="Submit" >  
                         </form>
 
 
@@ -1255,6 +1255,7 @@ $('#moon_modal').modal('show');
                               
                               $sql = $conn->prepare("UPDATE `test` SET `name` = '$choice_star' WHERE `id` = '5'");
               $sql->execute();
+              echo "<meta http-equiv='refresh' content='0'>";
                           
                           }
                               ?>
@@ -1343,6 +1344,8 @@ $('#moon_modal').modal('show');
               
               $sql = $conn->prepare("UPDATE `test` SET `owner` = '$moon_or_planet' WHERE `id` = '5'");
               $sql->execute();
+              
+              echo "<meta http-equiv='refresh' content='0'>";
                           
                           }
                               ?>

@@ -424,14 +424,18 @@ function add_creature($creature_name , $creature_planet , $creature_life_type , 
 
 /////////////////////////////  ADD SHIP /////////////////////////////////////////////////////
 
-function add_ship($ship_name , $ship_type , $ship_main_image){
-    //Get the connection to the db
+function add_ship($ship_name, $ship_type, $ship_main_image){
+    
     global $conn;
-    //Get the last record
+    global $planet_limit;
+    global $galaxy_limit;
     global $ship_limit;
-    //get last record of galaxy db
-    $sql = $conn->prepare("SELECT * FROM `galaxy` WHERE `Id` = :id");
-              $sql->bindParam('id', $ship_limit, PDO::PARAM_INT);
+    
+    
+    if($ship_name != NULL){
+    
+    $sql = $conn->prepare("SELECT * FROM `ships` WHERE `id` = :id");
+              $sql->bindParam('id', $moon_limit, PDO::PARAM_INT);
               $sql->execute();
 
               $result = $sql->fetchObject();
@@ -440,42 +444,51 @@ function add_ship($ship_name , $ship_type , $ship_main_image){
               
               $last_name = $result->name;
               
-              if ($last_name != $ship_name){
-              
-              
-                  //Update galaxy limit
-              $new_limit = $ship_limit + 1;
+              if ($last_name != $moon_name){
+                  //Add to database
+                  //Update star limit
+                  $new_limit = $ship_limit + 1;
               //insert the record into the galaxy table
-              $sql = "INSERT INTO ships (id, name, type, main_image)
-VALUES ('$new_limit', '$ship_name', '$ship_type', '$ship_main_image')";
-
-              $conn->exec($sql);
-
-              ////update limit for the new galaxy limit
-              $sql = $conn->prepare("UPDATE `limits` SET `ships` = '$new_limit' WHERE `id` = '1'");
+                $sql = "INSERT INTO ships (id, name, type, main_image)
+                        VALUES ('$new_limit', '$ship_name', '$ship_type', '$ship_main_image')";
+    
+                $conn->exec($sql);
+                
+                $sql = $conn->prepare("UPDATE `limits` SET `ships` = '$new_limit' WHERE `id` = '1'");
               $sql->execute();
+
               echo "<meta http-equiv='refresh' content='0'>";
+              
               }
-              else {
+              else{ //Dont add to database)
+                  }
+              }
+              
+              if($result == false && $galaxy_limit != 0){
+                  //add to database
+                  
+                  //Update star limit
+                  $new_limit = $ship_limit + 1;
+              //insert the record into the galaxy table
+                $sql = "INSERT INTO ships (id, name, type, main_image)
+                        VALUES ('$new_limit', '$ship_name', '$ship_type', '$ship_main_image')";
+    
+                $conn->exec($sql);
+                
+                $sql = $conn->prepare("UPDATE `limits` SET `ships` = '$new_limit' WHERE `id` = '1'");
+              $sql->execute();
+              
+              
+              
+              echo "<meta http-equiv='refresh' content='0'>";
                   
               }
-              }
-              if($result == false){
-                  //do same as before, just if the record does not exist but is not same
-                            //Update galaxy limit
-          $new_limit = $ship_limit + 1;
+}}
+    
+    
+    
+    
 
-          $sql = "INSERT INTO ships (id, name, type, main_image)
-VALUES ('$new_limit', '$ship_name', '$ship_type', '$ship_main_image')";
-
-          $conn->exec($sql);
-
-          $sql = $conn->prepare("UPDATE `limits` SET `ships` = '$new_limit' WHERE `id` = '1'");
-          $sql->execute();
-          echo "<meta http-equiv='refresh' content='0'>";
-      }
-      
-}
 
 
 
