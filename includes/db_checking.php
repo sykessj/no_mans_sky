@@ -242,6 +242,249 @@ function add_planet($planet_name , $planet_star , $planet_enviroment , $planet_c
 
 
 
+function add_moon($moon_name , $moon_star, $moon_parent , $moon_enviroment , $moon_climate , $moon_life , $moon_size , $moon_sentinals , 
+                    $moon_minerals , $moon_rating , $moon_image){
+    
+    global $conn;
+    global $planet_limit;
+    global $moon_limit;
+    
+    if($moon_name != NULL){
+    
+    $sql = $conn->prepare("SELECT * FROM `moons` WHERE `id` = :id");
+              $sql->bindParam('id', $moon_limit, PDO::PARAM_INT);
+              $sql->execute();
+
+              $result = $sql->fetchObject();
+              //check the result is real
+              if($result != false){
+              
+              $last_name = $result->name;
+              
+              if ($last_name != $moon_name){
+                  //Add to database
+                  //Update star limit
+                  $new_limit = $moon_limit + 1;
+              //insert the record into the galaxy table
+                $sql = "INSERT INTO moons (id, name, star_system, main_image, enviroment, climate, life_type, size, rating, sentinals, minerals, parent_planet, extra_image1, extra_image2)
+                        VALUES ('$new_limit', '$moon_name', '$moon_star', '$moon_image[0]', '$moon_enviroment', '$moon_climate', '$moon_life', '$moon_size', '$moon_rating', '$moon_sentinals', '$moon_minerals', '$moon_parent', '$moon_image[1]', '$moon_image[2]')";
+    
+                $conn->exec($sql);
+                
+                $sql = $conn->prepare("UPDATE `limits` SET `moons` = '$new_limit' WHERE `id` = '1'");
+              $sql->execute();
+              
+              $sql = $conn->prepare("SELECT * FROM `planets` WHERE `name` = :id");
+              $sql->bindParam('id', $moon_parent, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_moons = $result->no_moons;
+              $number_of_moons = $number_of_moons + 1;
+              
+              $sql = $conn->prepare("UPDATE `planets` SET `no_moons` = '$number_of_moons' WHERE `name` = '$moon_parent'");
+              $sql->execute();
+              
+              
+              echo "<meta http-equiv='refresh' content='0'>";
+              
+              }
+              else{ //Dont add to database)
+                  }
+              }
+              
+              if($result == false && $planet_limit != 0){
+                  //add to database
+                  
+                  //Update star limit
+                  $new_limit = $moon_limit + 1;
+              //insert the record into the galaxy table
+                $sql = "INSERT INTO moons (id, name, star_system, main_image, enviroment, climate, life_type, size, rating, sentinals, minerals, parent_planet, extra_image1, extra_image2)
+                        VALUES ('$new_limit', '$moon_name', '$moon_star', '$moon_image[0]', '$moon_enviroment', '$moon_climate', '$moon_life', '$moon_size', '$moon_rating', '$moon_sentinals', '$moon_minerals', '$moon_parent', '$moon_image[1]', '$moon_image[2]')";
+    
+                $conn->exec($sql);
+                
+                $sql = $conn->prepare("UPDATE `limits` SET `moons` = '$new_limit' WHERE `id` = '1'");
+              $sql->execute();
+              
+              $sql = $conn->prepare("SELECT * FROM `planets` WHERE `name` = :id");
+              $sql->bindParam('id', $moon_parent, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_moons = $result->no_moons;
+              $number_of_moons = $number_of_moons + 1;
+              
+              $sql = $conn->prepare("UPDATE `planets` SET `no_moons` = '$number_of_moons' WHERE `name` = '$moon_parent'");
+              $sql->execute();
+              
+              
+              echo "<meta http-equiv='refresh' content='0'>";
+                  
+              }
+    }
+    
+    
+    
+    
+}
+
+
+
+////////////////////////// ADD CREATURE  //////////////////////////////////////
+
+function add_creature($creature_name , $creature_planet , $creature_life_type , $creature_size , $creature_diet
+        , $creature_rating , $creature_main_image, $moon_or_planet){
+    
+    global $conn;
+    global $planet_limit;
+    global $moon_limit;
+    global $creature_limit;
+    
+    
+    
+    if($creature_name != NULL){
+        
+        
+    
+    $sql = $conn->prepare("SELECT * FROM `creatures` WHERE `id` = :id");
+              $sql->bindParam('id', $creature_limit, PDO::PARAM_INT);
+              $sql->execute();
+
+              $result = $sql->fetchObject();
+              //check the result is real
+              if($result != false){
+                  
+              $sql->execute();
+              
+              $last_name = $result->name;
+              
+              if ($last_name != $creature_name){
+                  //Add to database
+                  //Update star limit
+                  $new_limit = $creature_limit + 1;
+              //insert the record into the galaxy table
+                $sql = "INSERT INTO creatures (id, main_image, name, life_type, size, rating, parent_planet, diet)
+                        VALUES ('$new_limit', '$creature_main_image', '$creature_name', '$creature_life_type', '$creature_size', '$creature_rating', '$creature_planet', '$creature_diet')";
+    
+                $conn->exec($sql);
+                
+                $sql = $conn->prepare("UPDATE `limits` SET `creatures` = '$new_limit' WHERE `id` = '1'");
+              $sql->execute();
+              
+              $sql = $conn->prepare("SELECT * FROM `$moon_or_planet` WHERE `name` = :id");
+              $sql->bindParam('id', $creature_planet, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_creatures = $result->no_creatures;
+              $number_of_creatures = $number_of_creatures + 1;
+              
+              $sql = $conn->prepare("UPDATE `$moon_or_planet` SET `no_creatures` = '$number_of_creatures' WHERE `name` = '$creature_planet'");
+              $sql->execute();
+              
+              
+              echo "<meta http-equiv='refresh' content='0'>";
+              
+              }
+              else{ //Dont add to database)
+                  }
+              }
+              
+              if($result == false && $planet_limit != 0){
+                  //add to database
+                  
+                  //Update star limit
+                  $new_limit = $creature_limit + 1;
+              //insert the record into the galaxy table
+                $sql = "INSERT INTO creatures (id, main_image, name, life_type, size, rating, parent_planet, diet)
+                        VALUES ('$new_limit', '$creature_main_image', '$creature_name', '$creature_life_type', '$creature_size', '$creature_rating', '$creature_planet', '$creature_diet')";
+    
+                $conn->exec($sql);
+                
+                $sql = $conn->prepare("UPDATE `limits` SET `creatures` = '$new_limit' WHERE `id` = '1'");
+              $sql->execute();
+              
+              $sql = $conn->prepare("SELECT * FROM `$moon_or_planet` WHERE `name` = :id");
+              $sql->bindParam('id', $creature_planet, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_creatures = $result->no_creatures;
+              $number_of_creatures = $number_of_creatures + 1;
+              
+              $sql = $conn->prepare("UPDATE `$moon_or_planet` SET `no_creatures` = '$number_of_creatures' WHERE `name` = '$creature_planet'");
+              $sql->execute();
+              
+              
+              echo "<meta http-equiv='refresh' content='0'>";
+                  
+    }
+        }}
+
+
+
+
+
+/////////////////////////////  ADD SHIP /////////////////////////////////////////////////////
+
+function add_ship($ship_name , $ship_type , $ship_main_image){
+    //Get the connection to the db
+    global $conn;
+    //Get the last record
+    global $ship_limit;
+    //get last record of galaxy db
+    $sql = $conn->prepare("SELECT * FROM `galaxy` WHERE `Id` = :id");
+              $sql->bindParam('id', $ship_limit, PDO::PARAM_INT);
+              $sql->execute();
+
+              $result = $sql->fetchObject();
+              //check the result is real
+              if($result != false){
+              
+              $last_name = $result->name;
+              
+              if ($last_name != $ship_name){
+              
+              
+                  //Update galaxy limit
+              $new_limit = $ship_limit + 1;
+              //insert the record into the galaxy table
+              $sql = "INSERT INTO ships (id, name, type, main_image)
+VALUES ('$new_limit', '$ship_name', '$ship_type', '$ship_main_image')";
+
+              $conn->exec($sql);
+
+              ////update limit for the new galaxy limit
+              $sql = $conn->prepare("UPDATE `limits` SET `ships` = '$new_limit' WHERE `id` = '1'");
+              $sql->execute();
+              echo "<meta http-equiv='refresh' content='0'>";
+              }
+              else {
+                  
+              }
+              }
+              if($result == false){
+                  //do same as before, just if the record does not exist but is not same
+                            //Update galaxy limit
+          $new_limit = $ship_limit + 1;
+
+          $sql = "INSERT INTO ships (id, name, type, main_image)
+VALUES ('$new_limit', '$ship_name', '$ship_type', '$ship_main_image')";
+
+          $conn->exec($sql);
+
+          $sql = $conn->prepare("UPDATE `limits` SET `ships` = '$new_limit' WHERE `id` = '1'");
+          $sql->execute();
+          echo "<meta http-equiv='refresh' content='0'>";
+      }
+      
+}
+
+
+
+
+
+
+
+
+
 
 /////////////////////// SORTING ALGORITHMS ////////////////////////////////////
 
