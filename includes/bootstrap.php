@@ -103,6 +103,15 @@
 });
 </script>";
           }
+          if($link_id == 3){
+              echo "
+                  <script type='text/javascript'>
+    $(window).load(function()
+{
+    $('#flora_modal').modal('show');
+});
+</script>";
+          }
          
 ?>
         <!--/////////////////////////// NAV BAR  //////////////////////////// -->
@@ -112,6 +121,9 @@
                     <li><a href="#">Home</a></li>
                     <li><a href="#">Tables Dropdown</a></li>
                     <li><a href="#">Statistics</a></li>
+                    <li><a href="#">Planet Of The Day</a></li>
+                    <li><a href="#">Creature Of The Day</a></li>
+                    <li><a href="#">Periodic Table</a></li>
 
                 </ul>
                 <ul id="nav2" class="nav navbar-nav navbar-right">
@@ -159,7 +171,16 @@
                                   }
                                 ?>
                             </li>
-                            <li><a href="">Flora</a></li>
+                            <li>
+                                <?php
+                                  if ($planet_limit != 0) {
+                                      echo '<a href="" data-toggle="modal" data-target="#choice_modal_flora">Flora</a>';
+                                  } else {
+                                      
+                                      echo '<p1 id="link_css"> Flora </p1>';
+                                  }
+                                ?>
+                            </li>
                             <li><a href="" data-toggle="modal" data-target="#ship_modal">Ship</a></li>
                             
                         </ul>
@@ -1054,6 +1075,196 @@
                     </div>
                 </div>
             </div>
+                
+                
+                
+                
+                <!-- ////////////////////////////////// FLORA MODAL /////////////////////////////-->
+                
+                
+                
+                      <div class="modal fade" id="flora_modal" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel5" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <h1 id="title_id"> Add a Flora </h1>
+
+                    <?php
+                      $creature_name = "";
+                      $creature_planet = "";
+                      $creature_life_type = "";
+                      $creature_size = "";
+                      $creature_diet = "";
+                      $creature_rating = "";
+                      $creature_main_image[0] = "";
+                      
+                      $sql = $conn->prepare("SELECT * FROM `test` WHERE `id` = 5");
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $moon_star = $result->name;
+              $moon_or_planet = $result->owner;
+              if ($moon_or_planet == NULL){
+                  $moon_or_planet = "planets";
+              }
+                      
+
+
+                      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                          if (empty($_POST["flora_name"])) {
+                              $flora_name = "";
+                          } else {$flora_name = test_input($_POST["flora_name"]);}
+                          
+                          if (empty($_POST["flora_planet"])) {
+                              $flora_planet = "";
+                          } else {$flora_planet = test_input($_POST["flora_planet"]);}
+                          
+                          if (empty($_POST["flora_size"])) {
+                              $flora_size = "";
+                          } else {$flora_size = test_input($_POST["flora_size"]);}
+                          
+                          if (empty($_POST["flora_diet"])) {
+                              $flora_diet = "";
+                          } else {$flora_diet = test_input($_POST["flora_diet"]);}
+                          
+                          if (empty($_POST["flora_rating"])) {
+                              $flora_rating = "";
+                          } else {$flora_rating = test_input($_POST["flora_rating"]);}
+                          
+                          if (empty($_POST["flora_main_image"])) {
+                              $flora_main_image = "";
+                          } else {$flora_main_image = test_input($_POST["flora_main_image"]);}
+                              
+                          
+                          add_flora($flora_name , $flora_planet , $flora_size , $flora_diet
+        , $flora_rating , $flora_main_image, $moon_or_planet);
+                          
+                             
+                          }
+                      
+                    ?>
+                    <div id="formDiv">     
+                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">  
+                            
+                            <!--//// NAME -->
+                            <input class="form-control" type="text" name="flora_name" value="" placeholder="name">
+                            <br>
+                            <!--//// PLANET OR MOON -->
+                            <h4> Select Planet/Moon: </h4>
+                                    <select name="flora_planet" class="form-control" id="dropdownMenu1">
+
+                                        <?php
+                                      $id = 0;
+                                      global $planet_limit;
+                                      global $moon_limit;
+                                      $current_limit = 0;
+                                      $testing = "planets";
+                                      
+                                      
+                                      if($moon_or_planet == "planets"){
+                                          $current_limit = $planet_limit;
+                                      }else{
+                                          $current_limit = $moon_limit;
+                                      }
+                                      
+                                      $data_array = sort_table("$moon_or_planet" , $current_limit , "id" , "name" , "ASC" );
+                                      $array_count = count($data_array);
+                                      
+                                      
+                                      
+
+                                      while ($id <= $array_count) {
+                                          $sql = $conn->prepare("SELECT * FROM `$moon_or_planet` WHERE `id` = :id");
+                                          $sql->bindParam('id', $data_array[$id], PDO::PARAM_INT);
+                                          $sql->execute();
+
+                                          $result = $sql->fetchObject();
+
+                                          if ($result != false) {
+                                              
+                                              $current_star_system = $result->star_system;
+                                              
+                                              if($current_star_system == $moon_star){
+
+                                              $planet_name = $result->name;
+                                              ?>
+
+                                              <option value="<?= $planet_name; ?>"><?php echo $planet_name; ?></option>
+                                              <?php
+                                              } else{}
+                                          } else {
+                                              
+                                          }
+
+                                          $id++;
+                                      }
+                                      
+                                      
+                                      
+                                      
+                                    ?>
+                                        
+                                     
+                                    </select>
+                            <br>
+                            
+                            <!--//// SIZE -->
+                            <br>
+                            <h4> Size: </h4>
+                                    <!-- ENTER SIZE INFORMATION -->
+                                        <select name="flora_size" class="form-control" id="dropdownMenu1">
+                                        <option value="Tiny">Tiny</option>
+                                        <option value="Small">Small</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Large">Large</option>
+                                        <option value="Huge">Huge</option>
+                                    </select>
+                            
+                            <!--//// DIET -->
+                            <br>
+                            <h4> Diet: </h4>
+                                    <!-- ENTER DIET INFORMATION -->
+                                        <select name="flora_diet" class="form-control" id="dropdownMenu1">
+                                        <option value="Herbivore">Herbivore</option>
+                                        <option value="Carnivore">Carnivore</option>
+                                        <option value="Omnivore">Omnivore</option>
+                                    </select>
+                            
+                            <!--//// RATING -->
+                            <br>
+                            <h4> Rating: </h4>
+                                    <!-- ENTER RATING INFORMATION -->
+                                    <select name="flora_rating" class="form-control" id="dropdownMenu1">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                            
+                            <!--//// IMAGE -->
+                            <br>
+                            <h4> Select image to upload: </h4>
+                                <input class="btn btn-primary form-control" type="file" name="flora_main_image" id="fileToUpload">
+                            
+                            
+                    
+                       
+                            
+                            <br><br>
+                            </div>
+
+                            <input class="btn btn-success" id="submit_button" type="submit" name="submit_flora2" value="Submit" >  
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
                     
 
 
@@ -1354,6 +1565,97 @@ $('#moon_modal').modal('show');
                     </div>
                     
                     <input class="btn btn-success" id="submit_button" type="submit" name="submit" value="Submit">
+                    </form>
+                    
+                    
+                </div>
+                </div>
+                </div>
+                     
+                     
+                     
+                     
+                                 <!--/////////////////////////////////// CREATURE CHOICE ////////////////////////////////// -->
+                     
+                     
+                     
+                     <div class="modal fade" id="choice_modal_flora" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel5" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <h1 id="title_id"> Specify a Star System </h1>
+     
+                    <div id="formDiv">
+                    <form method="post" action="index.php?id=3">
+                        <h4> Planet or Moon:
+                                <select name="planet_or_moon2" class="form-control" id="dropdownMenu1">
+                            <option value="planets">Planet</option>
+                            <option value="moons">Moon</option>
+                                    
+                            </select>
+                            <br>
+                        
+                        
+                    <h4> Select Star System: </h4>
+                                    <select name="choice_star_flora" class="form-control" id="dropdownMenu1">
+
+                                        <?php
+                                      $id = 0;
+                                      global $star_system_limit;
+                                      
+                                      $data_array = sort_table("star_systems" , $star_system_limit , "ID" , "name" , "ASC" );
+                                      $array_count = count($data_array);
+                                      
+                                      
+
+                                      while ($id <= $array_count) {
+                                          $sql = $conn->prepare("SELECT * FROM `star_systems` WHERE `id` = :id");
+                                          $sql->bindParam('id', $data_array[$id], PDO::PARAM_INT);
+                                          $sql->execute();
+
+                                          $result = $sql->fetchObject();
+
+                                          if ($result != false) {
+
+                                              $star_name = $result->name;
+                                              ?>
+
+                                              <option value="<?= $star_name; ?>"><?php echo $star_name; ?></option>
+                                              <?php
+                                          } else {
+                                              
+                                          }
+
+                                          $id++;
+                                      }
+                                      
+                                      
+                                    ?>
+                                        
+                                     
+                                    </select>
+                    <br>
+                        <?php
+                          if (isset($_POST['submit_flora'])) {
+                              //save what is entered
+                              $choice_star = $_POST['choice_star_flora'];
+                              $moon_or_planet = $_POST['planet_or_moon2'];
+                              
+                              $sql = $conn->prepare("UPDATE `test` SET `name` = '$choice_star' WHERE `id` = '5'");
+              $sql->execute();
+              
+              $sql = $conn->prepare("UPDATE `test` SET `owner` = '$moon_or_planet' WHERE `id` = '5'");
+              $sql->execute();
+              
+              echo "<meta http-equiv='refresh' content='0'>";
+                          
+                          }
+                              ?>
+                          
+                    
+                    </div>
+                    
+                    <input class="btn btn-success" id="submit_button" type="submit" name="submit_flora" value="Submit">
                     </form>
                     
                     

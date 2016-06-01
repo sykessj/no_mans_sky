@@ -157,7 +157,7 @@ function add_star($star_name , $galaxy , $image){
     
 }
 
-
+//////////////////////// ADDING A PLANET  ///////////////////////////////////
 function add_planet($planet_name , $planet_star , $planet_enviroment , $planet_climate , $planet_life , $planet_size , $planet_sentinals , 
                     $planet_minerals , $planet_rating , $planet_image){
     
@@ -241,7 +241,7 @@ function add_planet($planet_name , $planet_star , $planet_enviroment , $planet_c
 }
 
 
-
+//////////////////////// ADDING A MOON  ///////////////////////////////////
 function add_moon($moon_name , $moon_star, $moon_parent , $moon_enviroment , $moon_climate , $moon_life , $moon_size , $moon_sentinals , 
                     $moon_minerals , $moon_rating , $moon_image){
     
@@ -419,9 +419,99 @@ function add_creature($creature_name , $creature_planet , $creature_life_type , 
         }}
 
 
+//////////////////////// ADDING A FLORA  ///////////////////////////////////
 
+function add_flora($flora_name , $flora_planet , $flora_size , $flora_diet
+        , $flora_rating , $flora_main_image, $moon_or_planet){
+    
+    global $conn;
+    global $planet_limit;
+    global $moon_limit;
+    global $flora_limit;
+    
+    
+    
+    if($flora_name != NULL){
+        
+        
+    
+    $sql = $conn->prepare("SELECT * FROM `flora` WHERE `id` = :id");
+              $sql->bindParam('id', $flora_limit, PDO::PARAM_INT);
+              $sql->execute();
 
-
+              $result = $sql->fetchObject();
+              //check the result is real
+              if($result != false){
+                  
+              $sql->execute();
+              
+              $last_name = $result->name;
+              
+              if ($last_name != $flora_name){
+                  //Add to database
+                  //Update star limit
+                  $new_limit = $flora_limit + 1;
+              //insert the record into the galaxy table
+                $sql = "INSERT INTO flora (id, name, diet, size, rating, parent_planet, main_image)
+                        VALUES ('$new_limit', '$flora_name', '$flora_diet', '$flora_size', '$flora_rating', '$flora_planet', '$flora_main_image')";
+    
+                $conn->exec($sql);
+                
+                $sql = $conn->prepare("UPDATE `limits` SET `flora` = '$new_limit' WHERE `id` = '1'");
+              $sql->execute();
+              
+              $sql = $conn->prepare("SELECT * FROM `$moon_or_planet` WHERE `name` = :id");
+              $sql->bindParam('id', $flora_planet, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_flora = $result->no_flora;
+              $number_of_flora = $number_of_flora + 1;
+              
+              $sql = $conn->prepare("UPDATE `$moon_or_planet` SET `no_flora` = '$number_of_flora' WHERE `name` = '$flora_planet'");
+              $sql->execute();
+              
+              
+              echo "<meta http-equiv='refresh' content='0'>";
+              
+              }
+              else{ //Dont add to database)
+                  }
+              }
+              
+              if($result == false && $planet_limit != 0){
+                  //add to database
+                  
+                  //Update star limit
+                  $new_limit = $flora_limit + 1;
+              //insert the record into the galaxy table
+                $sql = "INSERT INTO flora (id, name, diet, size, rating, parent_planet, main_image)
+                        VALUES ('$new_limit', '$flora_name', '$flora_diet', '$flora_size', '$flora_rating', '$flora_planet', '$flora_main_image')";
+    
+                $conn->exec($sql);
+                
+                $sql = $conn->prepare("UPDATE `limits` SET `flora` = '$new_limit' WHERE `id` = '1'");
+              $sql->execute();
+              
+              $sql = $conn->prepare("SELECT * FROM `$moon_or_planet` WHERE `name` = :id");
+              $sql->bindParam('id', $flora_planet, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_flora = $result->no_flora;
+              $number_of_flora = $number_of_flora + 1;
+              
+              $sql = $conn->prepare("UPDATE `$moon_or_planet` SET `no_flora` = '$number_of_flora' WHERE `name` = '$flora_planet'");
+              $sql->execute();
+              
+              
+              echo "<meta http-equiv='refresh' content='0'>";
+                  
+    }
+        }}
+        
+        
+        
+        
+        
 /////////////////////////////  ADD SHIP /////////////////////////////////////////////////////
 
 function add_ship($ship_name, $ship_type, $ship_main_image){
