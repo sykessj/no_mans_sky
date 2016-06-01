@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 13, 2016 at 06:07 AM
+-- Generation Time: Jun 01, 2016 at 08:04 AM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 7.0.3
 
@@ -30,13 +30,26 @@ CREATE TABLE `creatures` (
   `id` int(10) NOT NULL,
   `main_image` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `life-type` varchar(50) NOT NULL,
+  `life_type` varchar(50) NOT NULL,
   `size` varchar(50) NOT NULL,
   `rating` int(10) NOT NULL,
-  `date_logged` date NOT NULL,
+  `date_logged` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `parent_planet` varchar(50) NOT NULL,
   `diet` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `creatures`
+--
+
+INSERT INTO `creatures` (`id`, `main_image`, `name`, `life_type`, `size`, `rating`, `date_logged`, `parent_planet`, `diet`) VALUES
+(1, '', 'Zebra', 'Land', 'Medium', 9, '2016-05-30 17:47:03', 'Earth', 'Herbivore'),
+(2, '', 'Little Green Men', 'Land', 'Small', 2, '2016-05-30 17:47:42', 'The Moon', 'Omnivore'),
+(3, '', 'Zoprs', 'Air', 'Huge', 9, '2016-05-30 17:48:06', 'Kepteyn C', 'Carnivore'),
+(4, '', 'Robots', 'Land', 'Medium', 6, '2016-05-30 17:48:30', 'Mars', 'Omnivore'),
+(5, '12512704_10208425564216030_7197577395550368907_n.j', 'Lion', 'Land', 'Medium', 8, '2016-05-30 18:08:09', 'Earth', 'Carnivore'),
+(6, '', 'Lee', 'Land', 'Small', 10, '2016-05-30 18:24:55', 'ganymede', 'Omnivore'),
+(7, '', 'Pigeon', 'Air', 'Tiny', 4, '2016-05-30 19:09:34', 'Earth', 'Omnivore');
 
 -- --------------------------------------------------------
 
@@ -48,10 +61,21 @@ CREATE TABLE `flora` (
   `id` int(10) NOT NULL,
   `name` varchar(50) NOT NULL,
   `diet` varchar(50) NOT NULL,
+  `size` varchar(50) NOT NULL,
+  `rating` int(50) NOT NULL,
   `parent_planet` varchar(50) NOT NULL,
-  `date_logged` date NOT NULL,
-  `main_image` varchar(50) NOT NULL
+  `date_logged` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `main_image` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `flora`
+--
+
+INSERT INTO `flora` (`id`, `name`, `diet`, `size`, `rating`, `parent_planet`, `date_logged`, `main_image`) VALUES
+(1, 'Sunflower', 'Herbivore', 'Small', 5, 'Earth', '2016-06-01 05:53:29', 'mountains1.jpg'),
+(2, 'Rose', 'Herbivore', 'Small', 6, 'Earth', '2016-06-01 05:58:18', '12512704_10208425564216030_7197577395550368907_n.j'),
+(3, 'test Flora', 'Omnivore', 'Medium', 9, 'Kapteyns Moon', '2016-06-01 05:59:27', 'mum.jpg');
 
 -- --------------------------------------------------------
 
@@ -64,6 +88,13 @@ CREATE TABLE `galaxy` (
   `name` varchar(50) NOT NULL,
   `no_star_systems` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `galaxy`
+--
+
+INSERT INTO `galaxy` (`Id`, `name`, `no_star_systems`) VALUES
+(1, 'Milky Way', 2);
 
 -- --------------------------------------------------------
 
@@ -87,7 +118,7 @@ CREATE TABLE `limits` (
 --
 
 INSERT INTO `limits` (`id`, `galaxy`, `star_systems`, `planets`, `moons`, `creatures`, `flora`, `ships`) VALUES
-(1, 0, 0, 0, 0, 0, 0, 0);
+(1, 1, 2, 8, 4, 7, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -97,19 +128,33 @@ INSERT INTO `limits` (`id`, `galaxy`, `star_systems`, `planets`, `moons`, `creat
 
 CREATE TABLE `moons` (
   `id` int(10) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `main_image` varchar(50) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `star_system` varchar(100) NOT NULL,
+  `main_image` varchar(150) NOT NULL,
   `enviroment` varchar(50) NOT NULL,
+  `climate` varchar(50) NOT NULL,
   `life_type` varchar(50) NOT NULL,
   `size` varchar(50) NOT NULL,
   `rating` int(10) NOT NULL,
-  `sentinels` varchar(50) NOT NULL,
-  `date-logged` date NOT NULL,
+  `sentinals` varchar(50) NOT NULL,
+  `Minerals` varchar(200) NOT NULL,
   `parent_planet` varchar(50) NOT NULL,
-  `extra_image1` varchar(50) NOT NULL,
-  `extra_image2` varchar(50) NOT NULL,
-  `extra_image3` varchar(50) NOT NULL
+  `no_creatures` int(5) NOT NULL DEFAULT '0',
+  `no_flora` int(5) NOT NULL DEFAULT '0',
+  `extra_image1` varchar(150) NOT NULL,
+  `extra_image2` varchar(150) NOT NULL,
+  `date_logged` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `moons`
+--
+
+INSERT INTO `moons` (`id`, `name`, `star_system`, `main_image`, `enviroment`, `climate`, `life_type`, `size`, `rating`, `sentinals`, `Minerals`, `parent_planet`, `no_creatures`, `no_flora`, `extra_image1`, `extra_image2`, `date_logged`) VALUES
+(1, 'The Moon', 'The Solar System', '', 'Cold', 'Sub Zero', 'None', 'Tiny', 4, 'None', '', 'Earth', 1, 0, '', '', '2016-05-30 17:32:47'),
+(2, 'Europa', 'The Solar System', '', 'Normal', 'Tropical', 'None', 'Tiny', 1, 'None', '', 'Jupiter', 0, 0, '', '', '2016-05-30 17:33:20'),
+(3, 'ganymede', 'The Solar System', '', 'Normal', 'Tropical', 'None', 'Tiny', 1, 'None', '', 'Jupiter', 1, 0, '', '', '2016-05-30 17:33:40'),
+(4, 'Kapteyns Moon', 'Kapteyns Star', '', 'Normal', 'Tropical', 'None', 'Tiny', 1, 'None', '', 'Kapteyn B', 0, 1, '', '', '2016-05-30 17:35:43');
 
 -- --------------------------------------------------------
 
@@ -118,7 +163,7 @@ CREATE TABLE `moons` (
 --
 
 CREATE TABLE `planets` (
-  `ID` int(10) NOT NULL,
+  `id` int(10) NOT NULL,
   `main_image` varchar(150) NOT NULL,
   `name` varchar(100) NOT NULL,
   `star_system` varchar(50) NOT NULL,
@@ -130,10 +175,26 @@ CREATE TABLE `planets` (
   `sentinals` varchar(50) NOT NULL,
   `minerals` varchar(200) NOT NULL,
   `no_moons` int(5) NOT NULL,
+  `no_creatures` int(5) NOT NULL DEFAULT '0',
+  `no_flora` int(5) NOT NULL DEFAULT '0',
   `extra_image` varchar(150) NOT NULL,
   `extra_image2` varchar(150) NOT NULL,
   `date_logged` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `planets`
+--
+
+INSERT INTO `planets` (`id`, `main_image`, `name`, `star_system`, `enviroment`, `climate`, `life_type`, `size`, `rating`, `sentinals`, `minerals`, `no_moons`, `no_creatures`, `no_flora`, `extra_image`, `extra_image2`, `date_logged`) VALUES
+(1, '', 'Mercury', 'The Solar System', 'Hot', 'Dessert', 'None', 'Tiny', 5, 'None', '', 0, 0, 0, '', '', '2016-05-30 17:30:10'),
+(2, '', 'Venus', 'The Solar System', 'Hot', 'Dessert', 'None', 'Small', 5, 'None', '', 0, 0, 0, '', '', '2016-05-30 17:30:34'),
+(3, '', 'Earth', 'The Solar System', 'Normal', 'Tropical', 'Complex', 'Small', 9, 'None', '', 1, 3, 2, '', '', '2016-05-30 17:30:56'),
+(4, '', 'Jupiter', 'The Solar System', 'Toxic', 'Dessert', 'None', 'Large', 7, 'None', '', 2, 0, 0, '', '', '2016-05-30 17:31:29'),
+(5, '', 'Mars', 'The Solar System', 'Normal', 'Dessert', 'None', 'Small', 5, 'None', '', 0, 1, 0, '', '', '2016-05-30 17:31:55'),
+(6, '', 'Kapteyn B', 'Kapteyns Star', 'Normal', 'Tropical', 'None', 'Tiny', 1, 'None', '', 1, 2, 0, '', '', '2016-05-30 17:35:07'),
+(7, '', 'Kepteyn C', 'Kapteyns Star', 'Normal', 'Tropical', 'None', 'Tiny', 1, 'None', '', 0, 1, 0, '', '', '2016-05-30 17:35:19'),
+(8, '', 'Saturn', 'The Solar System', 'Toxic', 'Mediterranean', 'None', 'Large', 6, 'None', '', 0, 0, 0, '', '', '2016-05-30 17:59:56');
 
 -- --------------------------------------------------------
 
@@ -147,6 +208,14 @@ CREATE TABLE `ships` (
   `type` varchar(50) NOT NULL,
   `main_image` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ships`
+--
+
+INSERT INTO `ships` (`id`, `name`, `type`, `main_image`) VALUES
+(1, 'Galactica', 'Scientific', 'mountains1.jpg'),
+(2, 'The queen Lee', 'Combat', 'mum.jpg');
 
 -- --------------------------------------------------------
 
@@ -162,6 +231,14 @@ CREATE TABLE `star_systems` (
   `image` varchar(50) NOT NULL,
   `date_logged` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `star_systems`
+--
+
+INSERT INTO `star_systems` (`ID`, `name`, `galaxy`, `no_planets`, `image`, `date_logged`) VALUES
+(1, 'The Solar System', 'Milky Way', 6, 'mountains1.jpg', '2016-05-30 17:29:45'),
+(2, 'Kapteyns Star', 'Milky Way', 2, 'Upload image is empty', '2016-05-30 17:34:40');
 
 -- --------------------------------------------------------
 
@@ -183,8 +260,8 @@ CREATE TABLE `test` (
 INSERT INTO `test` (`ID`, `name`, `date`, `owner`) VALUES
 (1, 'Shanice Lee', '2016-04-22', 'joe'),
 (2, 'Joe Sykes', '2016-04-06', 'joe'),
-(3, 'Ali Zaidi', '2016-04-30', 'bob'),
-(5, 'blob', '2016-05-02', '');
+(3, '', '2016-04-30', 'bob'),
+(5, 'Kapteyns Star', '2016-05-02', 'moons');
 
 -- --------------------------------------------------------
 
