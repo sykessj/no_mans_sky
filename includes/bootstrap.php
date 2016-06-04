@@ -300,7 +300,7 @@
       }
 
       if (empty($_POST["fileToUpload"])) {
-          $star_upload_image[0] = "Upload image is empty";
+          $star_upload_image[0] = "";
       } else {
           $star_upload_image[0] = ($_POST["fileToUpload"]);
           // check if name only contains letters and whitespace
@@ -897,7 +897,7 @@
                       $sql = $conn->prepare("SELECT * FROM `test` WHERE `id` = 5");
               $sql->execute();
               $result = $sql->fetchObject();
-              $moon_star = $result->name;
+              $creature_star = $result->name;
               $moon_or_planet = $result->owner;
               if ($moon_or_planet == NULL){
                   $moon_or_planet = "planets";
@@ -936,7 +936,7 @@
                               
 
                           add_creature($creature_name , $creature_planet , $creature_life_type , $creature_size , $creature_diet
-                                         , $creature_rating , $creature_main_image, $moon_or_planet);
+                                         , $creature_rating , $creature_main_image, $moon_or_planet, $creature_star);
                           
                              
                           }
@@ -983,7 +983,7 @@
                                               
                                               $current_star_system = $result->star_system;
                                               
-                                              if($current_star_system == $moon_star){
+                                              if($current_star_system == $creature_star){
 
                                               $planet_name = $result->name;
                                               ?>
@@ -1101,7 +1101,7 @@
                       $sql = $conn->prepare("SELECT * FROM `test` WHERE `id` = 5");
               $sql->execute();
               $result = $sql->fetchObject();
-              $moon_star = $result->name;
+              $flora_star = $result->name;
               $moon_or_planet = $result->owner;
               if ($moon_or_planet == NULL){
                   $moon_or_planet = "planets";
@@ -1136,7 +1136,7 @@
                               
                           
                           add_flora($flora_name , $flora_planet , $flora_size , $flora_diet
-        , $flora_rating , $flora_main_image, $moon_or_planet);
+        , $flora_rating , $flora_main_image, $moon_or_planet, $flora_star);
                           
                              
                           }
@@ -1183,7 +1183,7 @@
                                               
                                               $current_star_system = $result->star_system;
                                               
-                                              if($current_star_system == $moon_star){
+                                              if($current_star_system == $flora_star){
 
                                               $planet_name = $result->name;
                                               ?>
@@ -1474,7 +1474,7 @@ $('#moon_modal').modal('show');
                     
                     </div>
                     
-                    <input class="btn btn-success" id="submit_button" type="submit" name="submit1" value="Submit">
+                    <input class="btn btn-success" id="submit_button" type="submit" name="submit1" value="Continue">
             </form>
                     
                     
@@ -1564,7 +1564,7 @@ $('#moon_modal').modal('show');
                     
                     </div>
                     
-                    <input class="btn btn-success" id="submit_button" type="submit" name="submit" value="Submit">
+                    <input class="btn btn-success" id="submit_button" type="submit" name="submit" value="Continue">
                     </form>
                     
                     
@@ -1575,7 +1575,7 @@ $('#moon_modal').modal('show');
                      
                      
                      
-                                 <!--/////////////////////////////////// CREATURE CHOICE ////////////////////////////////// -->
+                                 <!--/////////////////////////////////// FLORA CHOICE ////////////////////////////////// -->
                      
                      
                      
@@ -1655,7 +1655,7 @@ $('#moon_modal').modal('show');
                     
                     </div>
                     
-                    <input class="btn btn-success" id="submit_button" type="submit" name="submit_flora" value="Submit">
+                    <input class="btn btn-success" id="submit_button" type="submit" name="submit_flora" value="Continue">
                     </form>
                     
                     

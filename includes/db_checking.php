@@ -32,8 +32,8 @@ function add_galaxy($name){
                   //Update galaxy limit
               $new_limit = $galaxy_limit + 1;
               //insert the record into the galaxy table
-              $sql = "INSERT INTO galaxy (id, name, no_star_systems)
-VALUES ('$new_limit', '$name', '0')";
+              $sql = "INSERT INTO galaxy (id, name)
+VALUES ('$new_limit', '$name')";
 
               $conn->exec($sql);
 
@@ -51,8 +51,8 @@ VALUES ('$new_limit', '$name', '0')";
                             //Update galaxy limit
           $new_limit = $galaxy_limit + 1;
 
-          $sql = "INSERT INTO galaxy (id, name, no_star_systems)
-          VALUES ('$new_limit', '$name', '0')";
+          $sql = "INSERT INTO galaxy (id, name)
+          VALUES ('$new_limit', '$name')";
 
           $conn->exec($sql);
 
@@ -200,6 +200,18 @@ function add_planet($planet_name , $planet_star , $planet_enviroment , $planet_c
               $sql = $conn->prepare("UPDATE `star_systems` SET `no_planets` = '$number_of_planets' WHERE `name` = '$planet_star'");
               $sql->execute();
               
+              $planet_galaxy = $result->galaxy;
+              
+              $sql = $conn->prepare("SELECT * FROM `galaxy` WHERE `name` = :id");
+              $sql->bindParam('id', $planet_galaxy, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_planets = $result->no_planets;
+              $number_of_planets = $number_of_planets + 1;
+              
+              $sql = $conn->prepare("UPDATE `galaxy` SET `no_planets` = '$number_of_planets' WHERE `name` = '$planet_galaxy'");
+              $sql->execute();
+              
               
               echo "<meta http-equiv='refresh' content='0'>";
               
@@ -230,6 +242,18 @@ function add_planet($planet_name , $planet_star , $planet_enviroment , $planet_c
               $number_of_planets = $number_of_planets + 1;
               
               $sql = $conn->prepare("UPDATE `star_systems` SET `no_planets` = '$number_of_planets' WHERE `name` = '$planet_star'");
+              $sql->execute();
+              
+              $planet_galaxy = $result->galaxy;
+              
+              $sql = $conn->prepare("SELECT * FROM `galaxy` WHERE `name` = :id");
+              $sql->bindParam('id', $planet_galaxy, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_planets = $result->no_planets;
+              $number_of_planets = $number_of_planets + 1;
+              
+              $sql = $conn->prepare("UPDATE `galaxy` SET `no_planets` = '$number_of_planets' WHERE `name` = '$planet_galaxy'");
               $sql->execute();
               
               
@@ -284,6 +308,28 @@ function add_moon($moon_name , $moon_star, $moon_parent , $moon_enviroment , $mo
               $sql = $conn->prepare("UPDATE `planets` SET `no_moons` = '$number_of_moons' WHERE `name` = '$moon_parent'");
               $sql->execute();
               
+              $sql = $conn->prepare("SELECT * FROM `star_systems` WHERE `name` = :id");
+              $sql->bindParam('id', $moon_star, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_moons = $result->no_moons;
+              $number_of_moons = $number_of_moons + 1;
+              
+              $sql = $conn->prepare("UPDATE `star_systems` SET `no_moons` = '$number_of_moons' WHERE `name` = '$moon_star'");
+              $sql->execute();
+              
+              $moon_galaxy = $result->galaxy;
+              
+              $sql = $conn->prepare("SELECT * FROM `galaxy` WHERE `name` = :id");
+              $sql->bindParam('id', $moon_galaxy, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_moons = $result->no_moons;
+              $number_of_moons = $number_of_moons + 1;
+              
+              $sql = $conn->prepare("UPDATE `galaxy` SET `no_moons` = '$number_of_moons' WHERE `name` = '$moon_galaxy'");
+              $sql->execute();
+              
               
               echo "<meta http-equiv='refresh' content='0'>";
               
@@ -316,6 +362,28 @@ function add_moon($moon_name , $moon_star, $moon_parent , $moon_enviroment , $mo
               $sql = $conn->prepare("UPDATE `planets` SET `no_moons` = '$number_of_moons' WHERE `name` = '$moon_parent'");
               $sql->execute();
               
+              $sql = $conn->prepare("SELECT * FROM `star_systems` WHERE `name` = :id");
+              $sql->bindParam('id', $moon_star, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_moons = $result->no_moons;
+              $number_of_moons = $number_of_moons + 1;
+              
+              $sql = $conn->prepare("UPDATE `star_systems` SET `no_moons` = '$number_of_moons' WHERE `name` = '$moon_star'");
+              $sql->execute();
+              
+              $moon_galaxy = $result->galaxy;
+              
+              $sql = $conn->prepare("SELECT * FROM `galaxy` WHERE `name` = :id");
+              $sql->bindParam('id', $moon_galaxy, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_moons = $result->no_moons;
+              $number_of_moons = $number_of_moons + 1;
+              
+              $sql = $conn->prepare("UPDATE `galaxy` SET `no_moons` = '$number_of_moons' WHERE `name` = '$moon_galaxy'");
+              $sql->execute();
+              
               
               echo "<meta http-equiv='refresh' content='0'>";
                   
@@ -332,12 +400,18 @@ function add_moon($moon_name , $moon_star, $moon_parent , $moon_enviroment , $mo
 ////////////////////////// ADD CREATURE  //////////////////////////////////////
 
 function add_creature($creature_name , $creature_planet , $creature_life_type , $creature_size , $creature_diet
-        , $creature_rating , $creature_main_image, $moon_or_planet){
+        , $creature_rating , $creature_main_image, $moon_or_planet, $creature_star){
     
     global $conn;
     global $planet_limit;
     global $moon_limit;
     global $creature_limit;
+    
+    if($moon_or_planet == "planets"){
+        $parent_type = "Planet";
+    } else{
+        $parent_type = "Moon";
+    }
     
     
     
@@ -362,8 +436,8 @@ function add_creature($creature_name , $creature_planet , $creature_life_type , 
                   //Update star limit
                   $new_limit = $creature_limit + 1;
               //insert the record into the galaxy table
-                $sql = "INSERT INTO creatures (id, main_image, name, life_type, size, rating, parent_planet, diet)
-                        VALUES ('$new_limit', '$creature_main_image', '$creature_name', '$creature_life_type', '$creature_size', '$creature_rating', '$creature_planet', '$creature_diet')";
+                $sql = "INSERT INTO creatures (id, main_image, name, life_type, size, rating, parent_planet, parent_type, diet)
+                        VALUES ('$new_limit', '$creature_main_image', '$creature_name', '$creature_life_type', '$creature_size', '$creature_rating', '$creature_planet', '$parent_type', '$creature_diet')";
     
                 $conn->exec($sql);
                 
@@ -379,6 +453,33 @@ function add_creature($creature_name , $creature_planet , $creature_life_type , 
               
               $sql = $conn->prepare("UPDATE `$moon_or_planet` SET `no_creatures` = '$number_of_creatures' WHERE `name` = '$creature_planet'");
               $sql->execute();
+              
+              $sql = $conn->prepare("SELECT * FROM `star_systems` WHERE `name` = :id");
+              $sql->bindParam('id', $creature_star, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_creatures = $result->no_creatures;
+              $number_of_creatures = $number_of_creatures + 1;
+              
+              $sql = $conn->prepare("UPDATE `star_systems` SET `no_creatures` = '$number_of_creatures' WHERE `name` = '$creature_star'");
+              $sql->execute();
+              
+              $creature_galaxy = $result->galaxy;
+              
+              $sql = $conn->prepare("SELECT * FROM `galaxy` WHERE `name` = :id");
+              $sql->bindParam('id', $creature_galaxy, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_creatures = $result->no_creatures;
+              $number_of_creatures = $number_of_creatures + 1;
+              
+              $sql = $conn->prepare("UPDATE `galaxy` SET `no_creatures` = '$number_of_creatures' WHERE `name` = '$creature_galaxy'");
+              $sql->execute();
+              
+              
+              
+              
+             
               
               
               echo "<meta http-equiv='refresh' content='0'>";
@@ -394,8 +495,8 @@ function add_creature($creature_name , $creature_planet , $creature_life_type , 
                   //Update star limit
                   $new_limit = $creature_limit + 1;
               //insert the record into the galaxy table
-                $sql = "INSERT INTO creatures (id, main_image, name, life_type, size, rating, parent_planet, diet)
-                        VALUES ('$new_limit', '$creature_main_image', '$creature_name', '$creature_life_type', '$creature_size', '$creature_rating', '$creature_planet', '$creature_diet')";
+                $sql = "INSERT INTO creatures (id, main_image, name, life_type, size, rating, parent_planet, parent_type, diet)
+                        VALUES ('$new_limit', '$creature_main_image', '$creature_name', '$creature_life_type', '$creature_size', '$creature_rating', '$creature_planet', '$parent_type', '$creature_diet')";
     
                 $conn->exec($sql);
                 
@@ -412,6 +513,28 @@ function add_creature($creature_name , $creature_planet , $creature_life_type , 
               $sql = $conn->prepare("UPDATE `$moon_or_planet` SET `no_creatures` = '$number_of_creatures' WHERE `name` = '$creature_planet'");
               $sql->execute();
               
+              $sql = $conn->prepare("SELECT * FROM `star_systems` WHERE `name` = :id");
+              $sql->bindParam('id', $creature_star, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_creatures = $result->no_creatures;
+              $number_of_creatures = $number_of_creatures + 1;
+              
+              $sql = $conn->prepare("UPDATE `star_systems` SET `no_creatures` = '$number_of_creatures' WHERE `name` = '$creature_star'");
+              $sql->execute();
+              
+              $creature_galaxy = $result->galaxy;
+              
+              $sql = $conn->prepare("SELECT * FROM `galaxy` WHERE `name` = :id");
+              $sql->bindParam('id', $creature_galaxy, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_creatures = $result->no_creatures;
+              $number_of_creatures = $number_of_creatures + 1;
+              
+              $sql = $conn->prepare("UPDATE `galaxy` SET `no_creatures` = '$number_of_creatures' WHERE `name` = '$creature_galaxy'");
+              $sql->execute();
+              
               
               echo "<meta http-equiv='refresh' content='0'>";
                   
@@ -422,12 +545,18 @@ function add_creature($creature_name , $creature_planet , $creature_life_type , 
 //////////////////////// ADDING A FLORA  ///////////////////////////////////
 
 function add_flora($flora_name , $flora_planet , $flora_size , $flora_diet
-        , $flora_rating , $flora_main_image, $moon_or_planet){
+        , $flora_rating , $flora_main_image, $moon_or_planet, $flora_star){
     
     global $conn;
     global $planet_limit;
     global $moon_limit;
     global $flora_limit;
+    
+    if($moon_or_planet == "planets"){
+        $parent_type = "Planet";
+    } else{
+        $parent_type = "Moon";
+    }
     
     
     
@@ -452,8 +581,8 @@ function add_flora($flora_name , $flora_planet , $flora_size , $flora_diet
                   //Update star limit
                   $new_limit = $flora_limit + 1;
               //insert the record into the galaxy table
-                $sql = "INSERT INTO flora (id, name, diet, size, rating, parent_planet, main_image)
-                        VALUES ('$new_limit', '$flora_name', '$flora_diet', '$flora_size', '$flora_rating', '$flora_planet', '$flora_main_image')";
+                $sql = "INSERT INTO flora (id, name, diet, size, rating, parent_planet, parent_type, main_image)
+                        VALUES ('$new_limit', '$flora_name', '$flora_diet', '$flora_size', '$flora_rating', '$flora_planet', '$parent_type', '$flora_main_image')";
     
                 $conn->exec($sql);
                 
@@ -468,6 +597,28 @@ function add_flora($flora_name , $flora_planet , $flora_size , $flora_diet
               $number_of_flora = $number_of_flora + 1;
               
               $sql = $conn->prepare("UPDATE `$moon_or_planet` SET `no_flora` = '$number_of_flora' WHERE `name` = '$flora_planet'");
+              $sql->execute();
+              
+              $sql = $conn->prepare("SELECT * FROM `star_systems` WHERE `name` = :id");
+              $sql->bindParam('id', $flora_star, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_flora = $result->no_flora;
+              $number_of_flora = $number_of_flora + 1;
+              
+              $sql = $conn->prepare("UPDATE `star_systems` SET `no_flora` = '$number_of_flora' WHERE `name` = '$flora_star'");
+              $sql->execute();
+              
+              $flora_galaxy = $result->galaxy;
+              
+              $sql = $conn->prepare("SELECT * FROM `galaxy` WHERE `name` = :id");
+              $sql->bindParam('id', $flora_galaxy, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_flora = $result->no_flora;
+              $number_of_flora = $number_of_flora + 1;
+              
+              $sql = $conn->prepare("UPDATE `galaxy` SET `no_flora` = '$number_of_flora' WHERE `name` = '$flora_galaxy'");
               $sql->execute();
               
               
@@ -500,6 +651,28 @@ function add_flora($flora_name , $flora_planet , $flora_size , $flora_diet
               $number_of_flora = $number_of_flora + 1;
               
               $sql = $conn->prepare("UPDATE `$moon_or_planet` SET `no_flora` = '$number_of_flora' WHERE `name` = '$flora_planet'");
+              $sql->execute();
+              
+              $sql = $conn->prepare("SELECT * FROM `star_systems` WHERE `name` = :id");
+              $sql->bindParam('id', $flora_star, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_flora = $result->no_flora;
+              $number_of_flora = $number_of_flora + 1;
+              
+              $sql = $conn->prepare("UPDATE `star_systems` SET `no_flora` = '$number_of_flora' WHERE `name` = '$flora_star'");
+              $sql->execute();
+              
+              $flora_galaxy = $result->galaxy;
+              
+              $sql = $conn->prepare("SELECT * FROM `galaxy` WHERE `name` = :id");
+              $sql->bindParam('id', $flora_galaxy, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              $number_of_flora = $result->no_flora;
+              $number_of_flora = $number_of_flora + 1;
+              
+              $sql = $conn->prepare("UPDATE `galaxy` SET `no_flora` = '$number_of_flora' WHERE `name` = '$flora_galaxy'");
               $sql->execute();
               
               
