@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 05, 2016 at 12:48 AM
+-- Generation Time: Jun 05, 2016 at 06:26 AM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 7.0.3
 
@@ -44,18 +44,12 @@ CREATE TABLE `creatures` (
 --
 
 INSERT INTO `creatures` (`id`, `main_image`, `name`, `life_type`, `size`, `rating`, `date_logged`, `parent_planet`, `parent_type`, `diet`) VALUES
-(1, '', 'Zebra', 'Land', 'Medium', 9, '2016-05-30 17:47:03', 'Earth', '', 'Herbivore'),
-(2, '', 'Little Green Men', 'Land', 'Small', 2, '2016-05-30 17:47:42', 'The Moon', '', 'Omnivore'),
-(3, '', 'Zoprs', 'Air', 'Huge', 9, '2016-05-30 17:48:06', 'Kepteyn C', '', 'Carnivore'),
-(4, '', 'Robots', 'Land', 'Medium', 6, '2016-05-30 17:48:30', 'Mars', '', 'Omnivore'),
-(5, '12512704_10208425564216030_7197577395550368907_n.j', 'Lion', 'Land', 'Medium', 8, '2016-05-30 18:08:09', 'Earth', '', 'Carnivore'),
-(6, '', 'Lee', 'Land', 'Small', 10, '2016-05-30 18:24:55', 'ganymede', '', 'Omnivore'),
-(7, '', 'Pigeon', 'Air', 'Tiny', 4, '2016-05-30 19:09:34', 'Earth', '', 'Omnivore'),
-(8, '', 'Giraffe', 'Land', 'Large', 7, '2016-06-04 18:40:22', 'Earth', 'Planet', 'Herbivore'),
-(9, '', 'Zorg', 'Air', 'Medium', 6, '2016-06-04 18:41:01', 'Kapteyns Moon', 'Moon', 'Carnivore'),
-(10, '', 'Bell Creature', 'Land', 'Tiny', 1, '2016-06-04 22:08:32', 'Bell Planet', 'Planet', 'Herbivore'),
-(11, '', 'Meerkat', 'Land', 'Small', 4, '2016-06-04 22:31:38', 'Earth', 'Planet', 'Carnivore'),
-(12, '', 'maoslso', 'Land', 'Tiny', 1, '2016-06-04 22:32:43', 'Bell Moon', 'Moon', 'Herbivore');
+(1, '12512704_10208425564216030_7197577395550368907_n.j', 'Giraffe', 'Land', 'Large', 8, '2016-06-05 03:12:13', 'Earth', 'Planet', 'Herbivore'),
+(2, '', 'Xuimin', 'Land', 'Small', 8, '2016-06-05 03:40:36', 'Kyungsoo', 'Moon', 'Omnivore'),
+(3, '', 'Hyolyn', 'Air', 'Medium', 10, '2016-06-05 03:42:24', 'CL', 'Planet', 'Herbivore'),
+(4, '', 'Heize', 'Sea', 'Tiny', 10, '2016-06-05 03:43:24', 'Hyuna', 'Moon', 'Carnivore'),
+(5, '', 'Zelo', 'Air', 'Huge', 10, '2016-06-05 03:44:18', 'Jinhong', 'Planet', 'Omnivore'),
+(6, '', 'Akamaru', 'Land', 'Tiny', 5, '2016-06-05 04:24:45', 'Kiba Inuzuka', 'Moon', 'Herbivore');
 
 -- --------------------------------------------------------
 
@@ -80,16 +74,9 @@ CREATE TABLE `flora` (
 --
 
 INSERT INTO `flora` (`id`, `name`, `diet`, `size`, `rating`, `parent_planet`, `parent_type`, `date_logged`, `main_image`) VALUES
-(1, 'Sunflower', 'Herbivore', 'Small', 5, 'Earth', '', '2016-06-01 05:53:29', 'mountains1.jpg'),
-(2, 'Rose', 'Herbivore', 'Small', 6, 'Earth', '', '2016-06-01 05:58:18', '12512704_10208425564216030_7197577395550368907_n.j'),
-(3, 'test Flora', 'Omnivore', 'Medium', 9, 'Kapteyns Moon', '', '2016-06-01 05:59:27', 'mum.jpg'),
-(4, 'Planty', 'Carnivore', 'Small', 7, 'ganymede', 'Moon', '2016-06-04 18:46:03', ''),
-(5, 'planty', 'Herbivore', 'Medium', 8, 'ganymede', 'Moon', '2016-06-04 18:46:24', ''),
-(6, 'dandy', 'Omnivore', 'Large', 2, 'Kapteyn B', 'Planet', '2016-06-04 18:47:05', ''),
-(7, 'Bell Flora', 'Herbivore', 'Tiny', 1, 'Bell Moon', 'Moon', '2016-06-04 22:08:50', ''),
-(8, 'Moon Rock', 'Herbivore', 'Tiny', 1, 'The Moon', 'Moon', '2016-06-04 22:41:57', ''),
-(9, 'Planty Mcplanterson', 'Herbivore', 'Tiny', 1, 'Kapteyn B', 'Planet', '2016-06-04 22:43:52', ''),
-(10, 'Grass', 'Herbivore', 'Small', 1, 'Bell Planet', 'Planet', '2016-06-04 22:45:05', '');
+(1, 'Sad Plant', 'Herbivore', 'Small', 6, 'Sad planet', '', '2016-06-05 03:21:47', '12512704_10208425564216030_7197577395550368907_n.jpg'),
+(2, 'Unni', 'Carnivore', 'Large', 6, 'CL', 'Planet', '2016-06-05 03:45:33', ''),
+(3, 'Pix', 'Herbivore', 'Small', 4, 'Lee Hi', 'Moon', '2016-06-05 03:46:25', '');
 
 -- --------------------------------------------------------
 
@@ -112,9 +99,10 @@ CREATE TABLE `galaxy` (
 --
 
 INSERT INTO `galaxy` (`Id`, `name`, `no_star_systems`, `no_planets`, `no_moons`, `no_creatures`, `no_flora`) VALUES
-(1, 'Milky Way', 2, 1, 1, 1, 2),
-(2, 'AndromadA', 1, 1, 1, 1, 1),
-(3, 'coulnet', 0, 0, 0, 0, 0);
+(1, 'Milky Way', 1, 2, 0, 1, 0),
+(2, 'Andromada', 1, 1, 0, 0, 1),
+(3, 'Double A', 3, 7, 4, 4, 2),
+(4, 'The Hidden Leaf', 4, 4, 12, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -138,7 +126,7 @@ CREATE TABLE `limits` (
 --
 
 INSERT INTO `limits` (`id`, `galaxy`, `star_systems`, `planets`, `moons`, `creatures`, `flora`, `ships`) VALUES
-(1, 3, 3, 10, 7, 12, 10, 2);
+(1, 4, 9, 14, 16, 6, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -171,13 +159,22 @@ CREATE TABLE `moons` (
 --
 
 INSERT INTO `moons` (`id`, `name`, `star_system`, `main_image`, `enviroment`, `climate`, `life_type`, `size`, `rating`, `sentinals`, `Minerals`, `parent_planet`, `no_creatures`, `no_flora`, `extra_image1`, `extra_image2`, `date_logged`) VALUES
-(1, 'The Moon', 'The Solar System', '', 'Cold', 'Sub Zero', 'None', 'Tiny', 4, 'None', '', 'Earth', 1, 1, '', '', '2016-05-30 17:32:47'),
-(2, 'Europa', 'The Solar System', '', 'Normal', 'Tropical', 'None', 'Tiny', 1, 'None', '', 'Jupiter', 0, 0, '', '', '2016-05-30 17:33:20'),
-(3, 'ganymede', 'The Solar System', '', 'Normal', 'Tropical', 'None', 'Tiny', 1, 'None', '', 'Jupiter', 1, 2, '', '', '2016-05-30 17:33:40'),
-(4, 'Kapteyns Moon', 'Kapteyns Star', '', 'Normal', 'Tropical', 'None', 'Tiny', 1, 'None', '', 'Kapteyn B', 1, 1, '', '', '2016-05-30 17:35:43'),
-(5, 'Mooney Moon', 'The Solar System', 'no_mans_sky.png', 'Cold', 'Mediterranean', 'Basic', 'Medium', 8, 'Medium Waves', 'mineral mineral', 'Pluto', 0, 0, 'mountains1.jpg', 'mum.jpg', '2016-06-04 21:39:42'),
-(6, 'Monest', 'The Solar System', '', 'Normal', 'Tropical', 'None', 'Tiny', 1, 'None', '', 'Saturn', 0, 0, '', '', '2016-06-04 22:03:45'),
-(7, 'Bell Moon', 'Bell Star', '', 'Normal', 'Tropical', 'None', 'Tiny', 1, 'None', '', 'Bell Planet', 1, 1, '', '', '2016-06-04 22:08:13');
+(1, 'Kyungsoo', 'Eunhyuk', '', 'Toxic', 'Temperate', 'None', 'Small', 9, 'Large Waves', '', 'Heechul', 1, 0, '', '', '2016-06-05 03:35:21'),
+(2, 'Hyuna', 'Bom', '', 'Hot', 'Tropical', 'Basic', 'Medium', 7, 'Huge Waves', '', 'CL', 1, 0, '', '', '2016-06-05 03:36:48'),
+(3, 'Nakta', 'Aoora', '', 'Normal', 'Temperate', 'None', 'Large', 6, 'Small Waves', 'Camels', 'Hyanggi', 0, 0, '', '', '2016-06-05 03:38:05'),
+(4, 'Lee Hi', 'Bom', '', 'Normal', 'Mediterranean', 'Basic', 'Medium', 4, 'Medium Waves', '', 'CL', 0, 1, '', '', '2016-06-05 03:39:12'),
+(5, 'Naruto Uzamaki', 'Team Seven', '', 'Normal', 'Tropical', 'None', 'Tiny', 10, 'None', '', 'Kakashi', 0, 0, '', '', '2016-06-05 04:02:43'),
+(6, 'Sasuke Uchiha', 'Team Seven', '', 'Normal', 'Tropical', 'None', 'Tiny', 10, 'None', '', 'Kakashi', 0, 0, '', '', '2016-06-05 04:03:55'),
+(7, 'Sakura Haruno', 'Team Seven', '', 'Normal', 'Tropical', 'None', 'Tiny', 6, 'None', '', 'Kakashi', 0, 0, '', '', '2016-06-05 04:04:30'),
+(8, 'Shikamaru Nara', 'Team Ten', '', 'Normal', 'Tropical', 'None', 'Tiny', 7, 'None', '', 'Asuma', 0, 0, '', '', '2016-06-05 04:05:44'),
+(9, 'Ino Yamanaka', 'Team Ten', '', 'Normal', 'Tropical', 'None', 'Tiny', 5, 'None', '', 'Asuma', 0, 0, '', '', '2016-06-05 04:06:16'),
+(10, 'Choji Akamichi', 'Team Ten', '', 'Normal', 'Tropical', 'None', 'Tiny', 6, 'None', '', 'Asuma', 0, 0, '', '', '2016-06-05 04:06:47'),
+(11, 'Hinata Hyuga', 'Team Eight', '', 'Normal', 'Tropical', 'None', 'Tiny', 7, 'None', '', 'Kurenai', 0, 0, '', '', '2016-06-05 04:08:29'),
+(12, 'Kiba Inuzuka', 'Team Eight', '', 'Normal', 'Tropical', 'None', 'Tiny', 5, 'None', '', 'Kurenai', 1, 0, '', '', '2016-06-05 04:09:05'),
+(13, 'Shino Aburame', 'Team Eight', '', 'Normal', 'Tropical', 'None', 'Tiny', 5, 'None', '', 'Kurenai', 0, 0, '', '', '2016-06-05 04:09:47'),
+(14, 'Rock Lee', 'Team Guy', '', 'Normal', 'Tropical', 'None', 'Tiny', 8, 'None', '', 'Guy', 0, 0, '', '', '2016-06-05 04:11:02'),
+(15, 'Neji Hyuga', 'Team Guy', '', 'Normal', 'Tropical', 'None', 'Tiny', 7, 'None', '', 'Guy', 0, 0, '', '', '2016-06-05 04:12:04'),
+(16, 'Tenten', 'Team Guy', '', 'Normal', 'Tropical', 'None', 'Tiny', 4, 'None', '', 'Guy', 0, 0, '', '', '2016-06-05 04:12:29');
 
 -- --------------------------------------------------------
 
@@ -210,16 +207,20 @@ CREATE TABLE `planets` (
 --
 
 INSERT INTO `planets` (`id`, `main_image`, `name`, `star_system`, `enviroment`, `climate`, `life_type`, `size`, `rating`, `sentinals`, `minerals`, `no_moons`, `no_creatures`, `no_flora`, `extra_image`, `extra_image2`, `date_logged`) VALUES
-(1, '', 'Mercury', 'The Solar System', 'Hot', 'Dessert', 'None', 'Tiny', 5, 'None', '', 0, 0, 0, '', '', '2016-05-30 17:30:10'),
-(2, '', 'Venus', 'The Solar System', 'Hot', 'Dessert', 'None', 'Small', 5, 'None', '', 0, 0, 0, '', '', '2016-05-30 17:30:34'),
-(3, '', 'Earth', 'The Solar System', 'Normal', 'Tropical', 'Complex', 'Small', 9, 'None', '', 1, 5, 2, '', '', '2016-05-30 17:30:56'),
-(4, '', 'Jupiter', 'The Solar System', 'Toxic', 'Dessert', 'None', 'Large', 7, 'None', '', 2, 0, 0, '', '', '2016-05-30 17:31:29'),
-(5, '', 'Mars', 'The Solar System', 'Normal', 'Dessert', 'None', 'Small', 5, 'None', '', 0, 1, 0, '', '', '2016-05-30 17:31:55'),
-(6, '', 'Kapteyn B', 'Kapteyns Star', 'Normal', 'Tropical', 'None', 'Tiny', 1, 'None', '', 1, 2, 2, '', '', '2016-05-30 17:35:07'),
-(7, '', 'Kepteyn C', 'Kapteyns Star', 'Normal', 'Tropical', 'None', 'Tiny', 1, 'None', '', 0, 1, 0, '', '', '2016-05-30 17:35:19'),
-(8, '', 'Saturn', 'The Solar System', 'Toxic', 'Mediterranean', 'None', 'Large', 6, 'None', '', 1, 0, 0, '', '', '2016-05-30 17:59:56'),
-(9, '', 'Pluto', 'The Solar System', 'Cold', 'Sub Zero', 'None', 'Tiny', 4, 'None', '', 1, 0, 0, '', '', '2016-06-04 18:57:46'),
-(10, '', 'Bell Planet', 'Bell Star', 'Normal', 'Tropical', 'None', 'Tiny', 1, 'None', '', 1, 1, 1, '', '', '2016-06-04 22:07:44');
+(1, '12512704_10208425564216030_7197577395550368907_n.jpg', 'Earth', 'The Solar System', 'Normal', 'Tropical', 'Complex', 'Medium', 8, 'Huge Waves', 'Lots of minerals', 0, 1, 0, 'mountains1.jpg', 'mum.jpg', '2016-06-05 03:07:24'),
+(2, '', 'Saturn', 'The Solar System', 'Toxic', 'Sub Arctic', 'None', 'Large', 8, 'None', '', 0, 0, 0, '', '', '2016-06-05 03:11:39'),
+(3, '12512704_10208425564216030_7197577395550368907_n.jpg', 'Sad planet', 'Sad Star', 'Cold', 'Highland', 'Basic', 'Large', 6, 'Medium Waves', 'lots and Lots', 0, 0, 1, 'mountains1.jpg', 'mum.jpg', '2016-06-05 03:20:29'),
+(4, '', 'Hyanggi', 'Aoora', 'Toxic', 'Dessert', 'None', 'Tiny', 1, 'Huge Waves', '', 1, 0, 0, '', '', '2016-06-05 03:27:11'),
+(5, '', 'Woosang', 'Aoora', 'Hot', 'Savannah', 'Complex', 'Medium', 9, 'Medium Waves', 'Doughnut', 0, 0, 0, '', '', '2016-06-05 03:28:23'),
+(6, '', 'Hoik', 'Aoora', 'Normal', 'Highland', 'Complex', 'Small', 7, 'Small Waves', 'Glasses', 0, 0, 0, '', '', '2016-06-05 03:29:24'),
+(7, '', 'John', 'Aoora', 'Normal', 'Humid Subtropical', 'Basic', 'Medium', 1, 'Small Waves', 'Chicken Breast', 0, 0, 0, '', '', '2016-06-05 03:30:28'),
+(8, '', 'Jinhong', 'Aoora', 'Normal', 'Savannah', 'Bacterial', 'Tiny', 6, 'Small Waves', 'Babies', 0, 1, 0, '', '', '2016-06-05 03:31:19'),
+(9, '', 'CL', 'Bom', 'Hot', 'Mediterranean', 'Complex', 'Huge', 8, 'Large Waves', 'Gbz', 2, 1, 1, '', '', '2016-06-05 03:32:45'),
+(10, '', 'Heechul', 'Eunhyuk', 'Cold', 'Sub Zero', 'Complex', 'Huge', 9, 'Huge Waves', 'Cats', 1, 0, 0, '', '', '2016-06-05 03:34:03'),
+(11, '', 'Kakashi', 'Team Seven', 'Normal', 'Tropical', 'None', 'Tiny', 8, 'None', '', 3, 0, 0, '', '', '2016-06-05 04:02:04'),
+(12, '', 'Asuma', 'Team Ten', 'Normal', 'Tropical', 'None', 'Tiny', 7, 'None', '', 3, 0, 0, '', '', '2016-06-05 04:05:15'),
+(13, '', 'Kurenai', 'Team Eight', 'Normal', 'Tropical', 'None', 'Tiny', 6, 'None', '', 3, 0, 0, '', '', '2016-06-05 04:07:42'),
+(14, '', 'Guy', 'Team Guy', 'Normal', 'Tropical', 'None', 'Tiny', 7, 'None', '', 3, 0, 0, '', '', '2016-06-05 04:10:33');
 
 -- --------------------------------------------------------
 
@@ -239,8 +240,7 @@ CREATE TABLE `ships` (
 --
 
 INSERT INTO `ships` (`id`, `name`, `type`, `main_image`) VALUES
-(1, 'Galactica', 'Scientific', 'mountains1.jpg'),
-(2, 'The queen Lee', 'Combat', 'mum.jpg');
+(1, 'Cheesecake', 'Explorer', '');
 
 -- --------------------------------------------------------
 
@@ -265,9 +265,15 @@ CREATE TABLE `star_systems` (
 --
 
 INSERT INTO `star_systems` (`ID`, `name`, `galaxy`, `no_planets`, `no_moons`, `no_creatures`, `no_flora`, `image`, `date_logged`) VALUES
-(1, 'The Solar System', 'Milky Way', 7, 1, 1, 1, 'mountains1.jpg', '2016-05-30 17:29:45'),
-(2, 'Kapteyns Star', 'Milky Way', 2, 0, 0, 1, 'Upload image is empty', '2016-05-30 17:34:40'),
-(3, 'Bell Star', 'AndromadA', 1, 1, 1, 1, 'Upload image is empty', '2016-06-04 22:06:42');
+(1, 'The Solar System', 'Milky Way', 2, 0, 1, 0, 'no_mans_sky.png', '2016-06-05 03:03:56'),
+(2, 'Sad Star', 'Andromada', 1, 0, 0, 1, '12512704_10208425564216030_7197577395550368907_n.j', '2016-06-05 03:19:02'),
+(3, 'Aoora', 'Double A', 5, 1, 1, 0, 'no_mans_sky.png', '2016-06-05 03:23:05'),
+(4, 'Bom', 'Double A', 1, 2, 2, 2, '', '2016-06-05 03:23:36'),
+(5, 'Eunhyuk', 'Double A', 1, 1, 1, 0, '', '2016-06-05 03:24:00'),
+(6, 'Team Seven', 'The Hidden Leaf', 4, 3, 0, 0, '', '2016-06-05 03:50:21'),
+(7, 'Team Ten', 'The Hidden Leaf', 1, 3, 0, 0, '', '2016-06-05 03:51:05'),
+(8, 'Team Eight', 'The Hidden Leaf', 1, 3, 1, 0, '', '2016-06-05 04:07:05'),
+(9, 'Team Guy', 'The Hidden Leaf', 1, 3, 0, 0, '', '2016-06-05 04:10:08');
 
 -- --------------------------------------------------------
 
@@ -290,7 +296,7 @@ INSERT INTO `test` (`ID`, `name`, `date`, `owner`) VALUES
 (1, 'Shanice Lee', '2016-04-22', 'joe'),
 (2, 'Joe Sykes', '2016-04-06', 'joe'),
 (3, '', '2016-04-30', 'bob'),
-(5, 'Bell Star', '2016-05-02', 'planets');
+(5, 'Team Eight', '2016-05-02', 'moons');
 
 -- --------------------------------------------------------
 

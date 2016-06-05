@@ -181,7 +181,16 @@
                                   }
                                 ?>
                             </li>
-                            <li><a href="" data-toggle="modal" data-target="#ship_modal">Ship</a></li>
+                            <li>
+                                <?php
+                                  if ($planet_limit != 0) {
+                                      echo '<a href="" data-toggle="modal" data-target="#ship_modal">Ship</a>';
+                                  } else {
+                                      
+                                      echo '<p1 id="link_css"> Ship </p1>';
+                                  }
+                                ?>
+                            </li>
                             
                         </ul>
                     </li>
