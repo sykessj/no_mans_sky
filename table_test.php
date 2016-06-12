@@ -1,9 +1,22 @@
 <?php
-  require_once("../includes/db.php");
+  $current_page = "table_test";
+  require_once('C:\xampp\htdocs\no_mans_sky\includes\db.php');
   require_once('C:\xampp\htdocs\no_mans_sky\includes\db_checking.php');
   include('C:\xampp\htdocs\no_mans_sky\includes\bootstrap.php');
   global $conn;
   global $galaxy_limit;
+   $test_id1 = 0;
+   $test_id2 = 0;
+   
+  if (isset($_GET['test_id1'])) {
+  $test_id1 = $_GET['test_id1'];}
+  if (isset($_GET['test_id2'])) {
+  $test_id2 = $_GET['test_id2'];}
+  
+  echo "Test Id 1 = " , $test_id1 , "</br>";
+  echo "Test Id 2 = " , $test_id2 , "</br>";
+  
+  
   
   //possible global variable or stored in another database
   //limit for different databases
@@ -12,8 +25,8 @@
   //Inital link id
   $link_id = 1;
   //If another link id has been given in the URL that will become th enew link id
-  if (isset($_GET['id'])) {
-  $link_id = $_GET['id'];
+  if (isset($_GET['idv'])) {
+  $link_id = $_GET['idv'];
   }
   echo $link_id;
   

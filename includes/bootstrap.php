@@ -11,6 +11,7 @@
   $link_id = 0;
   if (isset($_GET['id'])) {
   $link_id = $_GET['id'];
+  
   }?>
   
  
@@ -119,14 +120,32 @@
             <div class="container-fluid">
                 <ul id="nav" class="nav navbar-nav">
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">Tables Dropdown</a></li>
                     <li><a href="#">Statistics</a></li>
-                    <li><a href="#">Planet Of The Day</a></li>
-                    <li><a href="#">Creature Of The Day</a></li>
                     <li><a href="#">Periodic Table</a></li>
+                    <li class="dropdown">
+                        <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">View <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="table.php?table_type=galaxy&column=name&order=ASC&page=1">Galaxies</a></li>
+                            <li><a href="table.php?table_type=star_systems&column=name&order=ASC">Star Systems</a></li>
+                            <li><a href="table.php?table_type=planets&column=name&order=ASC">Planets</a></li>
+                            <li><a href="table.php?table_type=moons&column=name&order=ASC">Moons</a></li>
+                            <li><a href="table.php?table_type=creatures&column=name&order=ASC">Creatures</a></li>
+                            <li><a href="table.php?table_type=flora&column=name&order=ASC">Flora</a></li>
+                            <li><a href="table.php?table_type=ships&column=name&order=ASC">Ships</a></li>
+                            <li><a href="table.php?table_type=testing&column=name&order=ASC">Test</a></li> 
+                        </ul>
+                    </li>
+                    
+                    
 
                 </ul>
                 <ul id="nav2" class="nav navbar-nav navbar-right">
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Search</button>
+                    </form>
 
                     <li class="dropdown">
                         <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Add <span class="caret"></span></a>
@@ -279,6 +298,8 @@
 
 <?php
   $star_name = "";
+  $star_colour = "";
+  $star_type = "";
   $star_upload_image = "";
   $star_system = "";
   $star_upload_image[0] = "";
@@ -317,16 +338,28 @@
               
           }
       }
+      
+      if (empty($_POST["star_type"])) {
+          $star_type = "";
+      } else {
+          $star_type = test_input($_POST["star_type"]);
+      }
+      
+      if (empty($_POST["star_colour"])) {
+          $star_colour = "";
+      } else {
+          $star_colour = test_input($_POST["star_colour"]);
+      }
 
 
-      add_star($star_name, $galaxy_inside, $star_upload_image);
+      add_star($star_name, $star_type, $star_colour, $galaxy_inside, $star_upload_image);
   }
 ?>
 
                             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">  
                                 <input class="form-control" type="text" name="star_name" value="" placeholder="name">
                                 <br>
-                                <h4> select galaxy: </h4>
+                                <h4> Galaxy: </h4>
                                 <select name="galaxy_inside" class="form-control" id="dropdownMenu1">
                                     <?php
                                       $id = 1;
@@ -354,6 +387,25 @@
                                           $id++;
                                       }
                                     ?>
+                                </select>
+                                <br>
+                                <h4> Star Type: </h4>
+                                <select name="star_type" class="form-control" id="dropdownMenu1">
+                                    <option value="Binary">Binary</option>
+                                    <option value="Dwarf">Dwarf</option>
+                                    <option value="Giant">Giant</option>
+                                    <option value="Neutron">Neutron</option>
+                                    <option value="Pulsar">Pulsar</option>
+                                    <option value="Supergiant">Supergiant</option>
+                                </select>
+                                <br>
+                                <h4> Star Colour: </h4>
+                                <select name="star_colour" class="form-control" id="dropdownMenu1">
+                                    <option value="Red">Red</option>
+                                    <option value="Orange">Orange</option>
+                                    <option value="Yellow">Yellow</option>
+                                    <option value="White">White</option>
+                                    <option value="Blue">Blue</option>
                                 </select>
                                 <br>
                                 <h4> Select main image to upload: </h4>
@@ -1427,7 +1479,7 @@ $('#moon_modal').modal('show');
                     <h1 id="title_id"> Select a choice </h1>
      
                     <div id="formDiv">
-                    <form method="post" action="index.php?id=1">
+                    <form method="post" action="<?=$current_page?>.php?id=1">
                     <h4> Select Star System: </h4>
                                     <select name="choice_star_moon" class="form-control" id="dropdownMenu1">
 
@@ -1504,7 +1556,7 @@ $('#moon_modal').modal('show');
                     <h1 id="title_id"> Specify a Star System </h1>
      
                     <div id="formDiv">
-                    <form method="post" action="index.php?id=2">
+                    <form method="post" action="<?=$current_page?>.php?id=2">
                         <h4> Planet or Moon:
                                 <select name="planet_or_moon" class="form-control" id="dropdownMenu1">
                             <option value="planets">Planet</option>
@@ -1595,7 +1647,7 @@ $('#moon_modal').modal('show');
                     <h1 id="title_id"> Specify a Star System </h1>
      
                     <div id="formDiv">
-                    <form method="post" action="index.php?id=3">
+                    <form method="post" action="<?=$current_page?>.php?id=3">
                         <h4> Planet or Moon:
                                 <select name="planet_or_moon2" class="form-control" id="dropdownMenu1">
                             <option value="planets">Planet</option>

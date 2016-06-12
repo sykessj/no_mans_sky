@@ -75,7 +75,7 @@ VALUES ('$new_limit', '$name')";
 
 //////////////////////// ADDING A STAR SYSTEM  ///////////////////////////////////
 
-function add_star($star_name , $galaxy , $image){
+function add_star($star_name, $star_type, $star_colour, $galaxy ,  $image){
     global $conn;
     global $star_system_limit;
     global $galaxy_limit;
@@ -98,8 +98,8 @@ function add_star($star_name , $galaxy , $image){
                   //Update star limit
                   $new_limit = $star_system_limit + 1;
               //insert the record into the galaxy table
-                $sql = "INSERT INTO star_systems (ID, name, galaxy, no_planets, image)
-                        VALUES ('$new_limit', '$star_name', '$galaxy', '0', '$image[0]')";
+                $sql = "INSERT INTO star_systems (ID, name, galaxy, star_type, star_colour, image)
+                        VALUES ('$new_limit', '$star_name', '$galaxy', '$star_type', '$star_colour', '$image[0]')";
     
                 $conn->exec($sql);
                 
@@ -130,8 +130,8 @@ function add_star($star_name , $galaxy , $image){
                   //Update star limit
                   $new_limit = $star_system_limit + 1;
               //insert the record into the galaxy table
-                $sql = "INSERT INTO star_systems (ID, name, galaxy, no_planets, image)
-                        VALUES ('$new_limit', '$star_name', '$galaxy', '0', '$image[0]')";
+                $sql = "INSERT INTO star_systems (ID, name, galaxy, star_type, star_colour, image)
+                        VALUES ('$new_limit', '$star_name', '$galaxy', '$star_type', '$star_colour', '$image[0]')";
     
                 $conn->exec($sql);
                 
@@ -797,15 +797,36 @@ function sort_table($table , $limit , $id_column , $order_column , $direction){
      }else{
          asort($test_array);
      }
-     print_r($test_array);
-     echo "</br>";
+//     print_r($test_array);
+//     echo "</br>";
      foreach ($test_array as $key => $val) {
-    echo "$key = $val\n";
+//    echo "$key = $val\n";
     array_push($data_array, $key);
 }
-     echo "</br>";
-     print_r($data_array);
+//     echo "</br>";
+//     print_r($data_array);
      return $data_array;
+    }
+    
+    function add_many(){
+        global $conn;
+        $id = 400;
+        $limit = 1000;
+        
+        while ($id < $limit){
+        
+        $name = "Name " + $id;
+        $attr_one = "Attr " + $id;
+        $attr_two = "Attr " + $id;
+        
+        $sql = "INSERT INTO testing (name, attr_one, attr_two)
+                        VALUES ('$name', '$attr_one', '$attr_two')";
+    
+                $conn->exec($sql);
+                $id++;
+        }
+        
+        
     }
     
     $table = "star_systems";
