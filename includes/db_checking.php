@@ -6,7 +6,7 @@ global $star_system_limit;
 
 
 
-
+// <editor-fold defaultstate="collapsed" desc="Add Galaxy">
 //////////////////////  ADDING A GALAXY  ///////////////////////////
 
 
@@ -62,16 +62,9 @@ VALUES ('$new_limit', '$name')";
       }
       
 }
+// </editor-fold>
 
-
-
-
-
-
-
-
-
-
+// <editor-fold defaultstate="collapsed" desc="Add a star system">
 
 //////////////////////// ADDING A STAR SYSTEM  ///////////////////////////////////
 
@@ -157,6 +150,10 @@ function add_star($star_name, $star_type, $star_colour, $galaxy ,  $image){
     
 }
 
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="Add a Planet">
+// 
 //////////////////////// ADDING A PLANET  ///////////////////////////////////
 function add_planet($planet_name , $planet_star , $planet_enviroment , $planet_climate , $planet_life , $planet_size , $planet_sentinals , 
                     $planet_minerals , $planet_rating , $planet_image){
@@ -263,8 +260,9 @@ function add_planet($planet_name , $planet_star , $planet_enviroment , $planet_c
     }
     
 }
+// </editor-fold>
 
-
+// <editor-fold defaultstate="collapsed" desc="Add a Moon">
 //////////////////////// ADDING A MOON  ///////////////////////////////////
 function add_moon($moon_name , $moon_star, $moon_parent , $moon_enviroment , $moon_climate , $moon_life , $moon_size , $moon_sentinals , 
                     $moon_minerals , $moon_rating , $moon_image){
@@ -394,8 +392,9 @@ function add_moon($moon_name , $moon_star, $moon_parent , $moon_enviroment , $mo
     
     
 }
+// </editor-fold>
 
-
+// <editor-fold defaultstate="collapsed" desc="Add a Creature">
 
 ////////////////////////// ADD CREATURE  //////////////////////////////////////
 
@@ -540,8 +539,9 @@ function add_creature($creature_name , $creature_planet , $creature_life_type , 
                   
     }
         }}
+        // </editor-fold>
 
-
+// <editor-fold defaultstate="collapsed" desc="Add a Flora">
 //////////////////////// ADDING A FLORA  ///////////////////////////////////
 
 function add_flora($flora_name , $flora_planet , $flora_size , $flora_diet
@@ -680,10 +680,9 @@ function add_flora($flora_name , $flora_planet , $flora_size , $flora_diet
                   
     }
         }}
-        
-        
-        
-        
+        // </editor-fold>
+           
+// <editor-fold defaultstate="collapsed" desc="Add a Ship">
         
 /////////////////////////////  ADD SHIP /////////////////////////////////////////////////////
 
@@ -747,21 +746,10 @@ function add_ship($ship_name, $ship_type, $ship_main_image){
                   
               }
 }}
+
+// </editor-fold>
     
-    
-    
-    
-
-
-
-
-
-
-
-
-
-
-
+// <editor-fold defaultstate="collapsed" desc="Sort Table">
 /////////////////////// SORTING ALGORITHMS ////////////////////////////////////
 
 function sort_table($table , $limit , $id_column , $order_column , $direction){
@@ -829,18 +817,6 @@ function sort_table($table , $limit , $id_column , $order_column , $direction){
         
     }
     
-    $table = "star_systems";
-    $limit = $star_system_limit;
-    $id_column = "ID";
-    $order_column = "date_logged";
-    $direction = "DESC";
+    // </editor-fold>
     
-//    $output = sort_table($table , $limit , $id_column , $order_column , $direction);
-//    echo "</br>";
-//    echo $output[0];
-//    echo "</br>";
-//    echo $output[1];
-//    echo "</br>";
-//    echo $output[2];
-//    echo "</br>";
     
