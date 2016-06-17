@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 12, 2016 at 08:10 AM
+-- Generation Time: Jun 17, 2016 at 10:55 PM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 7.0.3
 
@@ -50,7 +50,8 @@ INSERT INTO `creatures` (`id`, `main_image`, `name`, `life_type`, `size`, `ratin
 (4, '', 'Heize', 'Sea', 'Tiny', 10, '2016-06-05 03:43:24', 'Hyuna', 'Moon', 'Carnivore'),
 (5, '', 'Zelo', 'Air', 'Huge', 10, '2016-06-05 03:44:18', 'Jinhong', 'Planet', 'Omnivore'),
 (6, '', 'Akamaru', 'Land', 'Tiny', 5, '2016-06-05 04:24:45', 'Kiba Inuzuka', 'Moon', 'Herbivore'),
-(7, '', 'Lemur', 'Land', 'Small', 5, '2016-06-05 18:24:39', 'Earth', 'Planet', 'Herbivore');
+(7, '', 'Lemur', 'Land', 'Small', 5, '2016-06-05 18:24:39', 'Earth', 'Planet', 'Herbivore'),
+(8, '', 'Hidden Sands', 'Land', 'Medium', 5, '2016-06-12 07:38:46', 'Sandy', 'Planet', 'Omnivore');
 
 -- --------------------------------------------------------
 
@@ -77,7 +78,8 @@ CREATE TABLE `flora` (
 INSERT INTO `flora` (`id`, `name`, `diet`, `size`, `rating`, `parent_planet`, `parent_type`, `date_logged`, `main_image`) VALUES
 (1, 'Sad Plant', 'Herbivore', 'Small', 6, 'Sad planet', '', '2016-06-05 03:21:47', '12512704_10208425564216030_7197577395550368907_n.jpg'),
 (2, 'Unni', 'Carnivore', 'Large', 6, 'CL', 'Planet', '2016-06-05 03:45:33', ''),
-(3, 'Pix', 'Herbivore', 'Small', 4, 'Lee Hi', 'Moon', '2016-06-05 03:46:25', '');
+(3, 'Pix', 'Herbivore', 'Small', 4, 'Lee Hi', 'Moon', '2016-06-05 03:46:25', ''),
+(4, 'Banora', 'Herbivore', 'Tiny', 1, 'Bangor', 'Planet', '2016-06-13 04:44:35', '');
 
 -- --------------------------------------------------------
 
@@ -100,12 +102,12 @@ CREATE TABLE `galaxy` (
 --
 
 INSERT INTO `galaxy` (`Id`, `name`, `no_star_systems`, `no_planets`, `no_moons`, `no_creatures`, `no_flora`) VALUES
-(1, 'Milky Way', 3, 3, 1, 2, 0),
-(2, 'Andromada', 1, 1, 0, 0, 1),
+(1, 'Milky Way', 3, 3, 2, 2, 0),
+(2, 'Andromada', 4, 1, 0, 0, 1),
 (3, 'Double A', 3, 7, 4, 4, 2),
 (4, 'The Hidden Leaf', 4, 4, 12, 1, 0),
-(5, 'The Village Hidden in the Sand', 4, 1, 0, 0, 0),
-(6, 'Test Galaxy', 0, 0, 0, 0, 0);
+(5, 'The Village Hidden in the Sand', 4, 2, 0, 1, 1),
+(6, 'Test Galaxy', 3, 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -129,7 +131,7 @@ CREATE TABLE `limits` (
 --
 
 INSERT INTO `limits` (`id`, `galaxy`, `star_systems`, `planets`, `moons`, `creatures`, `flora`, `ships`) VALUES
-(1, 6, 15, 16, 17, 7, 3, 1);
+(1, 6, 21, 18, 19, 8, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -178,7 +180,9 @@ INSERT INTO `moons` (`id`, `name`, `star_system`, `main_image`, `enviroment`, `c
 (14, 'Rock Lee', 'Team Guy', '', 'Normal', 'Tropical', 'None', 'Tiny', 8, 'None', '', 'Guy', 0, 0, '', '', '2016-06-05 04:11:02'),
 (15, 'Neji Hyuga', 'Team Guy', '', 'Normal', 'Tropical', 'None', 'Tiny', 7, 'None', '', 'Guy', 0, 0, '', '', '2016-06-05 04:12:04'),
 (16, 'Tenten', 'Team Guy', '', 'Normal', 'Tropical', 'None', 'Tiny', 4, 'None', '', 'Guy', 0, 0, '', '', '2016-06-05 04:12:29'),
-(17, 'Moonster', 'The Solar System', '', 'Hot', 'Dessert', 'Basic', 'Large', 5, 'Huge Waves', '', 'Saturn', 0, 0, '', '', '2016-06-05 18:08:40');
+(17, 'Moonster', 'The Solar System', '', 'Hot', 'Dessert', 'Basic', 'Large', 5, 'Huge Waves', '', 'Saturn', 0, 0, '', '', '2016-06-05 18:08:40'),
+(18, 'The Moon', 'The Solar System', '', 'Cold', 'Sub Arctic', 'None', 'Tiny', 5, 'None', '', 'Earth', 0, 0, '', '', '2016-06-16 22:05:10'),
+(19, 'Moon 9', 'Another Test System', '', 'Normal', 'Tropical', 'Complex', 'Tiny', 1, 'None', '', 'Planet 9', 0, 0, '', '', '2016-06-17 06:23:41');
 
 -- --------------------------------------------------------
 
@@ -211,7 +215,7 @@ CREATE TABLE `planets` (
 --
 
 INSERT INTO `planets` (`id`, `main_image`, `name`, `star_system`, `enviroment`, `climate`, `life_type`, `size`, `rating`, `sentinals`, `minerals`, `no_moons`, `no_creatures`, `no_flora`, `extra_image`, `extra_image2`, `date_logged`) VALUES
-(1, '12512704_10208425564216030_7197577395550368907_n.jpg', 'Earth', 'The Solar System', 'Normal', 'Tropical', 'Complex', 'Medium', 8, 'Huge Waves', 'Lots of minerals', 0, 2, 0, 'mountains1.jpg', 'mum.jpg', '2016-06-05 03:07:24'),
+(1, '12512704_10208425564216030_7197577395550368907_n.jpg', 'Earth', 'The Solar System', 'Normal', 'Tropical', 'Complex', 'Medium', 8, 'Huge Waves', 'Lots of minerals', 1, 2, 0, 'mountains1.jpg', 'mum.jpg', '2016-06-05 03:07:24'),
 (2, '', 'Saturn', 'The Solar System', 'Toxic', 'Sub Arctic', 'None', 'Large', 8, 'None', '', 1, 0, 0, '', '', '2016-06-05 03:11:39'),
 (3, '12512704_10208425564216030_7197577395550368907_n.jpg', 'Sad planet', 'Sad Star', 'Cold', 'Highland', 'Basic', 'Large', 6, 'Medium Waves', 'lots and Lots', 0, 0, 1, 'mountains1.jpg', 'mum.jpg', '2016-06-05 03:20:29'),
 (4, '', 'Hyanggi', 'Aoora', 'Toxic', 'Dessert', 'None', 'Tiny', 1, 'Huge Waves', '', 1, 0, 0, '', '', '2016-06-05 03:27:11'),
@@ -226,7 +230,9 @@ INSERT INTO `planets` (`id`, `main_image`, `name`, `star_system`, `enviroment`, 
 (13, '', 'Kurenai', 'Team Eight', 'Normal', 'Tropical', 'None', 'Tiny', 6, 'None', '', 3, 0, 0, '', '', '2016-06-05 04:07:42'),
 (14, '', 'Guy', 'Team Guy', 'Normal', 'Tropical', 'None', 'Tiny', 7, 'None', '', 3, 0, 0, '', '', '2016-06-05 04:10:33'),
 (15, '', 'Jupiter', 'The Solar System', 'Toxic', 'Dessert', 'None', 'Huge', 8, 'None', '', 0, 0, 0, '', '', '2016-06-05 20:51:48'),
-(16, '', 'Sandy', 'Wales', 'Toxic', 'Humid Subtropical', 'Complex', 'Medium', 8, 'Medium Waves', '', 0, 0, 0, '', '', '2016-06-12 03:11:43');
+(16, '', 'Sandy', 'Wales', 'Toxic', 'Humid Subtropical', 'Complex', 'Medium', 8, 'Medium Waves', '', 0, 1, 0, '', '', '2016-06-12 03:11:43'),
+(17, '', 'Bangor', 'Hamsik', 'Normal', 'Tropical', 'None', 'Tiny', 1, 'None', '', 0, 0, 1, '', '', '2016-06-13 04:44:18'),
+(18, '', 'Planet 9', 'Another Test System', 'Toxic', 'Dessert', 'Complex', 'Large', 7, 'Small Waves', '', 1, 0, 0, '', '', '2016-06-17 06:22:34');
 
 -- --------------------------------------------------------
 
@@ -273,21 +279,27 @@ CREATE TABLE `star_systems` (
 --
 
 INSERT INTO `star_systems` (`ID`, `name`, `galaxy`, `star_type`, `star_colour`, `no_planets`, `no_moons`, `no_creatures`, `no_flora`, `image`, `date_logged`) VALUES
-(1, 'The Solar System', 'Milky Way', NULL, NULL, 3, 1, 2, 0, 'no_mans_sky.png', '2016-06-05 03:03:56'),
+(1, 'The Solar System', 'Milky Way', NULL, NULL, 3, 2, 2, 0, 'no_mans_sky.png', '2016-06-05 03:03:56'),
 (2, 'Sad Star', 'Andromada', NULL, NULL, 1, 0, 0, 1, '12512704_10208425564216030_7197577395550368907_n.j', '2016-06-05 03:19:02'),
 (3, 'Aoora', 'Double A', NULL, NULL, 5, 1, 1, 0, 'no_mans_sky.png', '2016-06-05 03:23:05'),
 (4, 'Bom', 'Double A', NULL, NULL, 1, 2, 2, 2, '', '2016-06-05 03:23:36'),
 (5, 'Eunhyuk', 'Double A', NULL, NULL, 1, 1, 1, 0, '', '2016-06-05 03:24:00'),
-(6, 'Team Seven', 'The Hidden Leaf', NULL, NULL, 4, 3, 0, 0, '', '2016-06-05 03:50:21'),
+(6, 'Team Seven', 'The Hidden Leaf', NULL, NULL, 1, 3, 0, 0, '', '2016-06-05 03:50:21'),
 (7, 'Team Ten', 'The Hidden Leaf', NULL, NULL, 1, 3, 0, 0, '', '2016-06-05 03:51:05'),
 (8, 'Team Eight', 'The Hidden Leaf', NULL, NULL, 1, 3, 1, 0, '', '2016-06-05 04:07:05'),
 (9, 'Team Guy', 'The Hidden Leaf', NULL, NULL, 1, 3, 0, 0, '', '2016-06-05 04:10:08'),
 (10, 'Otra', 'Milky Way', 'Giant', 'Orange', 0, 0, 0, 0, '', '2016-06-09 00:24:22'),
 (11, 'Drigisha', 'Milky Way', 'Dwarf', 'White', 0, 0, 0, 0, 'no_mans_sky.png', '2016-06-09 00:25:29'),
-(12, 'Wales', 'The Village Hidden in the Sand', 'Giant', 'Yellow', 1, 0, 0, 0, '', '2016-06-12 03:06:24'),
+(12, 'Wales', 'The Village Hidden in the Sand', 'Giant', 'Yellow', 1, 0, 1, 0, '', '2016-06-12 03:06:24'),
 (13, 'Skrtyl', 'The Village Hidden in the Sand', 'Giant', 'Yellow', 0, 0, 0, 0, '', '2016-06-12 03:15:09'),
-(14, 'Hamsik', 'The Village Hidden in the Sand', 'Giant', 'Yellow', 0, 0, 0, 0, '', '2016-06-12 03:17:25'),
-(15, 'Florent', 'The Village Hidden in the Sand', 'Neutron', 'Orange', 0, 0, 0, 0, '', '2016-06-12 03:17:55');
+(14, 'Hamsik', 'The Village Hidden in the Sand', 'Giant', 'Yellow', 1, 0, 0, 1, '', '2016-06-12 03:17:25'),
+(15, 'Florent', 'The Village Hidden in the Sand', 'Neutron', 'Orange', 0, 0, 0, 0, '', '2016-06-12 03:17:55'),
+(16, 'Test System', 'Test Galaxy', 'Giant', 'Yellow', 0, 0, 0, 0, '', '2016-06-12 08:18:54'),
+(17, 'Finally PM', 'Andromada', 'Pulsar', 'Blue', 0, 0, 0, 0, '', '2016-06-12 12:21:53'),
+(18, 'Lee Lee', 'Andromada', 'Supergiant', 'Red', 0, 0, 0, 0, '', '2016-06-15 14:46:29'),
+(19, 'Hungry', 'Test Galaxy', 'Binary', 'Blue', 0, 0, 0, 0, '', '2016-06-15 14:55:25'),
+(20, 'Another Test System', 'Test Galaxy', 'Pulsar', 'White', 1, 1, 0, 0, '', '2016-06-15 15:52:53'),
+(21, 'Checking', 'Andromada', 'Binary', 'Red', 0, 0, 0, 0, '', '2016-06-15 15:53:27');
 
 -- --------------------------------------------------------
 

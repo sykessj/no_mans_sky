@@ -119,7 +119,7 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <ul id="nav" class="nav navbar-nav">
-                    <li><a href="#">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="#">Statistics</a></li>
                     <li><a href="#">Periodic Table</a></li>
                     <li class="dropdown">
@@ -148,7 +148,7 @@
                     </form>
 
                     <li class="dropdown">
-                        <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Add <span class="caret"></span></a>
+                        <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">✚ <span class="caret"></span></a>
                         <ul class="dropdown-menu">
 
                             <li><a href="" data-toggle="modal" data-target="#galaxy_modal">Galaxy</a></li>
@@ -595,8 +595,8 @@
                                     <!-- ENTER ENVIROMENT INFORMATION -->
                                     <select name="planet_enviroment" class="form-control" id="dropdownMenu1">
                                         <option value="Normal">Normal</option>
-                                        <option value="Hot">Extreme Heat</option>
-                                        <option value="Cold">Extreme Cold</option>
+                                        <option value="Extreme Heat">Extreme Heat</option>
+                                        <option value="Extreme Cold">Extreme Cold</option>
                                         <option value="Toxic">Toxic</option>
                                     </select>
                                     <br>
