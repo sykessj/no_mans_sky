@@ -61,12 +61,15 @@ $current_page = "index";
   global $conn;
   global $planet_limit;
   global $moon_limit;
+  global $creature_limit;
+  global $flora_limit;
+  global $ship_limit;
   
   
   // <editor-fold defaultstate="collapsed" desc="Variables and Get from URL Functions">
   global $galaxy_limit;
   global $star_system_limit;
-  $items_per_page = 20;
+  $items_per_page = 10;
   $offical_items_per_page = $items_per_page;
   
   $id = 0;
@@ -267,7 +270,7 @@ $current_page = "index";
               $result = $sql->fetchObject();
               
               if ($result != false){
-              
+              $current_id = $result->Id;
               $name = $result->name;
               $no_star_systems = $result->no_star_systems;
               $no_planets = $result->no_planets;
@@ -277,7 +280,7 @@ $current_page = "index";
               ?>
       <tr>
           <th scope="row"><?= ($id + 1); ?></th>
-          <td><?= $name; ?></td>
+          <td><a href="item.php?database_type=<?= $table; ?>&item_id=<?= $current_id; ?>"><?= $name; ?></a></td>
           <td><?= $no_star_systems; ?></td>
           <td text-align="center"><?= $no_planets; ?></td>
           <td><?= $no_moons; ?></td>
@@ -352,7 +355,7 @@ $current_page = "index";
                   
 //                  $disable = "enabled";
               
-              $object_id = $result->ID;
+              $current_id = $result->ID;
               $name = $result->name;
               $galaxy = $result->galaxy;
               $star_type = $result->star_type;
@@ -382,7 +385,7 @@ $current_page = "index";
                         ?>
       <tr>
           <th scope="row"><?= $id + 1; ?></th>
-          <td><?= $name; ?></td>
+          <td><a href="item.php?database_type=<?= $table; ?>&item_id=<?= $current_id; ?>"><?= $name; ?></a></td>
           <td><?= $galaxy; ?></td>
           <td><?= $star_type; ?></td>
           <td><?= $star_colour; ?></td>
@@ -1105,13 +1108,20 @@ $current_page = "index";
           break;
           
           // </editor-fold>
-        
-      // <editor-fold defaultstate="collapsed" desc="Testing Case">
-      case "testing":
-          //page
-          //id
+          
+      // <editor-fold defaultstate="collapsed" desc="Creatures Case">
+      case "creatures":
+//          echo "This is the planets case";
+          ?>
+              
+              <br>
+              
+              <h1 id="column_name">Creatures</h1>
+              <br>
+              <?php
+          
           $limit = 1100;
-          $data_array = sort_table("$table" , $limit , "test_id" , "$column" , "$order" );
+          $data_array = sort_table("$table" , $creature_limit , "id" , "$column" , "$order" );
           $total_limit = count($data_array);
            ?>
           
@@ -1124,9 +1134,14 @@ $current_page = "index";
   <thead>
       <tr>
           <th>#</th>
-          <th id="column_name">Name</th>
-          <th id="column_name">Attribute One</th>
-          <th id="column_name">Attribute Two</th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=name&order=<?= $column1; ?>&order_id=<?= "column1_" . $column1; ?>"> Name </a></th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=parent_planet&order=<?= $column2; ?>&order_id=<?= "column2_" . $column2; ?>">Parent World</a></th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=parent_type&order=<?= $column4; ?>&order_id=<?= "column4_" . $column4; ?>">Parent Type</a></th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=life_type&order=<?= $column5; ?>&order_id=<?= "column5_" . $column5; ?>">Domain</a></th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=size&order=<?= $column6; ?>&order_id=<?= "column6_" . $column6; ?>">Size</a></th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=diet&order=<?= $column7; ?>&order_id=<?= "column7_" . $column7; ?>">Diet</a></th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=rating&order=<?= $column8; ?>&order_id=<?= "column8_" . $column8; ?>">Rating</a></th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=date_logged&order=<?= $column9; ?>&order_id=<?= "column9_" . $column9; ?>">Date Logged</a></th>
  
       </tr>
   </thead>
@@ -1135,7 +1150,7 @@ $current_page = "index";
         
          while ($id < $page){
           
-          $sql = $conn->prepare("SELECT * FROM `$table` WHERE `test_id` = :id");
+          $sql = $conn->prepare("SELECT * FROM `$table` WHERE `ID` = :id");
               $sql->bindParam('id', $data_array[$id], PDO::PARAM_INT);
               $sql->execute();
 
@@ -1143,43 +1158,604 @@ $current_page = "index";
               
               if ($result != false){
                   
-                  $disable = "enabled";
+//                  $disable = "enabled";
               
-              $test_id = $result->test_id;
-              $name = $result->name;
-              $attr_one = $result->attr_one;
-              $attr_two = $result->attr_two;
-              
-              ?>
+              $object_id = $result->id;
+              $creature_name = $result->name;
+              $creature_life_type = $result->life_type;
+              $creature_size = $result->size;
+              $creature_rating = $result->rating;
+              $date_logged = $result->date_logged;
+              $creature_parent = $result->parent_planet;
+              $creature_parent_type = $result->parent_type;
+              $creature_diet = $result->diet;
+    
+              $timestamp = strtotime($date_logged);
+                        $date_logged = date("H:ia  d/M/y", $timestamp);
+                        
+                        if($column1_filter != "none"){
+                            if($column1_filter != $creature_parent_type){
+                                $filters = true;
+                            }else{}
+                        }
+                        
+                        if($column2_filter != "none"){
+                            if($column2_filter != $creature_life_type){
+                                $filters = true;
+                            }else{}
+                        }
+                        
+                        if($column3_filter != "none"){
+                            if($column3_filter != $creature_size){
+                                $filters = true;
+                            }else{}
+                        }
+                        
+                        if($column4_filter != "none"){
+                            if($column4_filter != $creature_diet){
+                                $filters = true;
+                            }else{}
+                        }
+                        
+                        if($filters == false){
+                        ?>
       <tr>
           <th scope="row"><?= $id + 1; ?></th>
-          <td><?= $name; ?></td>
-          <td><?= $attr_one; ?></td>
-          <td><?= $attr_two; ?></td>
+          <td><?= $creature_name; ?></td>
+          <td><?= $creature_parent; ?></td>
+          <td><?= $creature_parent_type; ?></td>
+          <td><?= $creature_life_type; ?></td>
+          <td><?= $creature_size; ?></td>
+          <td><?= $creature_diet; ?></td>
+          <td><?= $creature_rating; ?></td>
+          <td><?= $date_logged; ?></td>
       </tr>
       <?php
+                        }else{}
               }else {
                   $id = $page;
-                  echo "No more results found";
+//                  echo "No more results found";
                   $disable = "disabled";
               }
+              $filters = false;
               $id++;
-          }
+  }
           ?>
           
           
   <ul class="pager">
-    <li><a href="table.php?table_type=<?= $table; ?>&column=<?= $column; ?>&order=<?= $order; ?>&current_id=<?= ($id - ($items_per_page * 2)); ?>&page=<?= ($page - $items_per_page); ?>">Previous</a></li>
-    <?php
+      <?php
+        if($id >= $total_limit){
+       $number1 = $id / $items_per_page;
+       $number1 = round($number1, 0, PHP_ROUND_HALF_UP);
+       $number1 = $items_per_page * $number1;
+       $id = $number1;
+   }
+   
+        if($id > $items_per_page){ ?>
+    <li><a href="table.php?table_type=<?= $table; ?>&column=<?= $column; ?>&order=<?= $order; ?>&current_id=<?= ($id - ($items_per_page * 2)); ?>&page=<?= ($page - $items_per_page); ?>&items_per_page=<?= $offical_items_per_page; ?>">Previous</a></li>
+        <?php }
     if($id < $total_limit){
         ?>
-    <li><a href="table.php?table_type=<?= $table; ?>&column=<?= $column; ?>&order=<?= $order; ?>&current_id=<?= $id; ?>&page=<?= ($page + $items_per_page); ?>">Next</a></li>
-  <?php
-    
+   <li><a href="table.php?table_type=<?= $table; ?>&column=<?= $column; ?>&order=<?= $order; ?>&current_id=<?= $id; ?>&page=<?= ($page + $items_per_page); ?>&items_per_page=<?= $offical_items_per_page; ?>">Next</a></li>
+   
+   
+   <?php
   }
     ?>
-  </ul>
+   
+   <br>
+   <br>
+   
+   <!-- ////////////////////////////////// FILTERS /////////////////////////////////////////////-->
+  <p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#collapseCreature" aria-expanded="false" aria-controls="collapseCreature">
+    Filters ▼
+  </a>
+</p>
+<div class="collapse" id="collapseCreature">
+  <div class="container-fluid">
+      
+      <?php
+        $planet_enviroment_filter = "none";
+        $planet_climate_filter = "none";
+                          if (isset($_POST['filter_creature'])) {
+                              //save what is entered
+                              $creature_parent_type_filter = $_POST['creature_parent_type_filter'];
+                              $creature_diet_filter = $_POST['creature_diet_filter'];
+                              $creature_life_type_filter = $_POST['creature_life_type_filter'];
+                              $creature_size_filter = $_POST['creature_size_filter'];
+                              if($creature_parent_type_filter == "none" && $creature_diet_filter == "none" 
+                                      && $creature_life_type_filter == "none" && $creature_size_filter == "none"){
+                                  echo "<meta http-equiv='refresh' content='0; table.php?table_type=$table&column=$column&order=$order&column1_filter=$creature_parent_type_filter"
+                                          . "&column2_filter=$creature_life_type_filter"
+                                          . "&column3_filter=$creature_size_filter"
+                                          . "&column4_filter=$creature_diet_filter"
+                                          . "&items_per_page=$offical_items_per_page'>";
+                              }else{
+                              echo "<meta http-equiv='refresh' content='0; table.php?table_type=$table&column=$column&order=$order&column1_filter=$creature_parent_type_filter"
+                                          . "&column2_filter=$creature_life_type_filter"
+                                          . "&column3_filter=$creature_size_filter"
+                                          . "&column4_filter=$creature_diet_filter"
+                                          . "&items_per_page=500'>";
+                              }
+                              
+                              }
+                              ?>
+      
+      <form class="form-inline" method="post" action="">
+          
+              <div class="row-fluid">
+                <div class="col-md-2">
+              
+            <h4> Parent Type:
+                            <select name="creature_parent_type_filter" class="form-control" id="form_css">
+                            <option value="none">No Filter</option> 
+                            <option value="Planet">Planet</option>
+                            <option value="Moon">Moon</option>
+                            
+                                    
+                            </select>
+                </div>
+              
+            <div class="col-md-2">
+              
+            <h4> Domain:
+                            <select name="creature_life_type_filter" class="form-control" id="form_css">
+                            <option value="none">No Filter</option>    
+                            <option value="Air">Air</option>
+                            <option value="Land">Land</option>
+                            <option value="Sea">Sea</option>
+                                    
+                            </select>
+                
+            </div>
+                  
+                  <div class="col-md-2">
+              
+            <h4> Size:
+                            <select name="creature_size_filter" class="form-control" id="form_css">
+                            <option value="none">No Filter</option>    
+                            <option value="Tiny">Tiny</option>
+                            <option value="Small">Small</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Large">Large</option>
+                            <option value="Huge">Huge</option>
+                                    
+                            </select>
+                
+            </div>
+                  
+                  <div class="col-md-2">
+              
+            <h4> Diet:
+                            <select name="creature_diet_filter" class="form-control" id="form_css">
+                            <option value="none">No Filter</option>    
+                            <option value="Herbivore">Herbivore</option>
+                            <option value="Carnivore">Carnivore</option>
+                            <option value="Omnivore">Omnivore</option>
+                                    
+                            </select>
+                
+            </div>
+         
+                  
+                  
+              
+                
+          <div style="margin-left: 620px; margin-bottom: 30px;" class="col-md-2">
+            <input class="btn btn-success" id="button_filter" type="submit" name="filter_creature" value="Filter">
+            </div>  
+                  
+                  </div>
+      
+    </form>
+    </div>
+  </div>
+   
+</div>
+   
   <?php
+          
+          
+          
+          
+          break;
+          
+          // </editor-fold>
+          
+      // <editor-fold defaultstate="collapsed" desc="Flora Case">
+      case "flora":
+//          echo "This is the planets case";
+          ?>
+              
+              <br>
+              
+              <h1 id="column_name">Flora</h1>
+              <br>
+              <?php
+          
+          $limit = 1100;
+          $data_array = sort_table("$table" , $flora_limit , "id" , "$column" , "$order" );
+          $total_limit = count($data_array);
+           ?>
+          
+          <html>
+    
+    <table id="table1" class="table">
+        <col width="10">
+        <col width="160">
+        <col width="240">
+  <thead>
+      <tr>
+          <th>#</th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=name&order=<?= $column1; ?>&order_id=<?= "column1_" . $column1; ?>"> Name </a></th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=parent_planet&order=<?= $column2; ?>&order_id=<?= "column2_" . $column2; ?>">Parent World</a></th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=parent_type&order=<?= $column4; ?>&order_id=<?= "column4_" . $column4; ?>">Parent Type</a></th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=size&order=<?= $column6; ?>&order_id=<?= "column6_" . $column6; ?>">Size</a></th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=diet&order=<?= $column7; ?>&order_id=<?= "column7_" . $column7; ?>">Diet</a></th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=rating&order=<?= $column8; ?>&order_id=<?= "column8_" . $column8; ?>">Rating</a></th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=date_logged&order=<?= $column9; ?>&order_id=<?= "column9_" . $column9; ?>">Date Logged</a></th>
+ 
+      </tr>
+  </thead>
+  <tbody>
+      <?php
+        
+         while ($id < $page){
+          
+          $sql = $conn->prepare("SELECT * FROM `$table` WHERE `ID` = :id");
+              $sql->bindParam('id', $data_array[$id], PDO::PARAM_INT);
+              $sql->execute();
+
+              $result = $sql->fetchObject();
+              
+              if ($result != false){
+                  
+//                  $disable = "enabled";
+              
+              $object_id = $result->id;
+              $flora_name = $result->name;
+              $flora_size = $result->size;
+              $flora_rating = $result->rating;
+              $date_logged = $result->date_logged;
+              $flora_parent = $result->parent_planet;
+              $flora_parent_type = $result->parent_type;
+              $flora_diet = $result->diet;
+    
+              $timestamp = strtotime($date_logged);
+                        $date_logged = date("H:ia  d/M/y", $timestamp);
+                        
+                        if($column1_filter != "none"){
+                            if($column1_filter != $flora_parent_type){
+                                $filters = true;
+                            }else{}
+                        }
+                        
+                        if($column3_filter != "none"){
+                            if($column3_filter != $flora_size){
+                                $filters = true;
+                            }else{}
+                        }
+                        
+                        if($column4_filter != "none"){
+                            if($column4_filter != $flora_diet){
+                                $filters = true;
+                            }else{}
+                        }
+                        
+                        if($filters == false){
+                        ?>
+      <tr>
+          <th scope="row"><?= $id + 1; ?></th>
+          <td><?= $flora_name; ?></td>
+          <td><?= $flora_parent; ?></td>
+          <td><?= $flora_parent_type; ?></td>
+          <td><?= $flora_size; ?></td>
+          <td><?= $flora_diet; ?></td>
+          <td><?= $flora_rating; ?></td>
+          <td><?= $date_logged; ?></td>
+      </tr>
+      <?php
+                        }else{}
+              }else {
+                  $id = $page;
+//                  echo "No more results found";
+                  $disable = "disabled";
+              }
+              $filters = false;
+              $id++;
+  }
+          ?>
+          
+          
+  <ul class="pager">
+      <?php
+        if($id >= $total_limit){
+       $number1 = $id / $items_per_page;
+       $number1 = round($number1, 0, PHP_ROUND_HALF_UP);
+       $number1 = $items_per_page * $number1;
+       $id = $number1;
+   }
+   
+        if($id > $items_per_page){ ?>
+    <li><a href="table.php?table_type=<?= $table; ?>&column=<?= $column; ?>&order=<?= $order; ?>&current_id=<?= ($id - ($items_per_page * 2)); ?>&page=<?= ($page - $items_per_page); ?>&items_per_page=<?= $offical_items_per_page; ?>">Previous</a></li>
+        <?php }
+    if($id < $total_limit){
+        ?>
+   <li><a href="table.php?table_type=<?= $table; ?>&column=<?= $column; ?>&order=<?= $order; ?>&current_id=<?= $id; ?>&page=<?= ($page + $items_per_page); ?>&items_per_page=<?= $offical_items_per_page; ?>">Next</a></li>
+   
+   
+   <?php
+  }
+    ?>
+   
+   <br>
+   <br>
+   
+   <!-- ////////////////////////////////// FILTERS /////////////////////////////////////////////-->
+  <p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#collapseFlora" aria-expanded="false" aria-controls="collapseFlora">
+    Filters ▼
+  </a>
+</p>
+<div class="collapse" id="collapseFlora">
+  <div class="container-fluid">
+      
+      <?php
+        $planet_enviroment_filter = "none";
+        $planet_climate_filter = "none";
+                          if (isset($_POST['filter_flora'])) {
+                              //save what is entered
+                              $flora_parent_type_filter = $_POST['flora_parent_type_filter'];
+                              $flora_diet_filter = $_POST['flora_diet_filter'];
+                              $flora_size_filter = $_POST['flora_size_filter'];
+                              if($flora_parent_type_filter == "none" && $flora_diet_filter == "none" 
+                                       && $flora_size_filter == "none"){
+                                  echo "<meta http-equiv='refresh' content='0; table.php?table_type=$table&column=$column&order=$order&column1_filter=$flora_parent_type_filter"
+                                          . "&column3_filter=$flora_size_filter"
+                                          . "&column4_filter=$flora_diet_filter"
+                                          . "&items_per_page=$offical_items_per_page'>";
+                              }else{
+                              echo "<meta http-equiv='refresh' content='0; table.php?table_type=$table&column=$column&order=$order&column1_filter=$flora_parent_type_filter"
+                                          . "&column3_filter=$flora_size_filter"
+                                          . "&column4_filter=$flora_diet_filter"
+                                          . "&items_per_page=500'>";
+                              }
+                              
+                              }
+                              ?>
+      
+      <form class="form-inline" method="post" action="">
+          
+              <div class="row-fluid">
+                <div class="col-md-4">
+              
+            <h4> Parent Type:
+                            <select name="flora_parent_type_filter" class="form-control" id="form_css">
+                            <option value="none">No Filter</option> 
+                            <option value="Planet">Planet</option>
+                            <option value="Moon">Moon</option>
+                            
+                                    
+                            </select>
+                </div>
+                  
+                  <div class="col-md-4">
+              
+            <h4> Size:
+                            <select name="flora_size_filter" class="form-control" id="form_css">
+                            <option value="none">No Filter</option>    
+                            <option value="Tiny">Tiny</option>
+                            <option value="Small">Small</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Large">Large</option>
+                            <option value="Huge">Huge</option>
+                                    
+                            </select>
+                
+            </div>
+                  
+                  <div class="col-md-4">
+              
+            <h4> Diet:
+                            <select name="flora_diet_filter" class="form-control" id="form_css">
+                            <option value="none">No Filter</option>    
+                            <option value="Herbivore">Herbivore</option>
+                            <option value="Carnivore">Carnivore</option>
+                            <option value="Omnivore">Omnivore</option>
+                                    
+                            </select>
+                
+            </div>
+         
+                  
+                  
+              
+                
+          <div style="margin-left: 620px; margin-bottom: 30px;" class="col-md-1">
+            <input class="btn btn-success" id="button_filter" type="submit" name="filter_flora" value="Filter">
+            </div>  
+                  
+                  </div>
+      
+    </form>
+    </div>
+  </div>
+   
+</div>
+   
+  <?php
+          
+          
+          
+          
+          break;
+          
+          // </editor-fold>
+          
+      // <editor-fold defaultstate="collapsed" desc="Ships Case">
+      case "ships":
+//          echo "This is the planets case";
+          ?>
+              
+              <br>
+              
+              <h1 id="column_name">Ships</h1>
+              <br>
+              <?php
+          
+          $limit = 1100;
+          $data_array = sort_table("$table" , $ship_limit , "id" , "$column" , "$order" );
+          $total_limit = count($data_array);
+           ?>
+          
+          <html>
+    
+    <table id="table1" class="table">
+        <col width="10">
+  <thead>
+      <tr>
+          <th>#</th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=name&order=<?= $column1; ?>&order_id=<?= "column1_" . $column1; ?>"> Name </a></th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=parent_planet&order=<?= $column2; ?>&order_id=<?= "column2_" . $column2; ?>">Ship Type</a></th>
+ 
+      </tr>
+  </thead>
+  <tbody>
+      <?php
+        
+         while ($id < $page){
+          
+          $sql = $conn->prepare("SELECT * FROM `$table` WHERE `ID` = :id");
+              $sql->bindParam('id', $data_array[$id], PDO::PARAM_INT);
+              $sql->execute();
+
+              $result = $sql->fetchObject();
+              
+              if ($result != false){
+                  
+//                  $disable = "enabled";
+              
+              $object_id = $result->id;
+              $ship_name = $result->name;
+              $ship_type = $result->type;
+    
+              
+                        
+                        if($column2_filter != "none"){
+                            if($column2_filter != $ship_type){
+                                $filters = true;
+                            }else{}
+                        }
+                        
+                        if($filters == false){
+                        ?>
+      <tr>
+          <th scope="row"><?= $id + 1; ?></th>
+          <td><?= $ship_name; ?></td>
+          <td><?= $ship_type; ?></td>
+      </tr>
+      <?php
+                        }else{}
+              }else {
+                  $id = $page;
+//                  echo "No more results found";
+                  $disable = "disabled";
+              }
+              $filters = false;
+              $id++;
+  }
+          ?>
+          
+          
+  <ul class="pager">
+      <?php
+        if($id >= $total_limit){
+       $number1 = $id / $items_per_page;
+       $number1 = round($number1, 0, PHP_ROUND_HALF_UP);
+       $number1 = $items_per_page * $number1;
+       $id = $number1;
+   }
+   
+        if($id > $items_per_page){ ?>
+    <li><a href="table.php?table_type=<?= $table; ?>&column=<?= $column; ?>&order=<?= $order; ?>&current_id=<?= ($id - ($items_per_page * 2)); ?>&page=<?= ($page - $items_per_page); ?>&items_per_page=<?= $offical_items_per_page; ?>">Previous</a></li>
+        <?php }
+    if($id < $total_limit){
+        ?>
+   <li><a href="table.php?table_type=<?= $table; ?>&column=<?= $column; ?>&order=<?= $order; ?>&current_id=<?= $id; ?>&page=<?= ($page + $items_per_page); ?>&items_per_page=<?= $offical_items_per_page; ?>">Next</a></li>
+   
+   
+   <?php
+  }
+    ?>
+   
+   <br>
+   <br>
+   
+   <!-- ////////////////////////////////// FILTERS /////////////////////////////////////////////-->
+  <p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#collapseShip" aria-expanded="false" aria-controls="collapseShip">
+    Filters ▼
+  </a>
+</p>
+<div class="collapse" id="collapseShip">
+  <div class="container-fluid">
+      
+      <?php
+        $planet_enviroment_filter = "none";
+        $planet_climate_filter = "none";
+                          if (isset($_POST['filter_ships'])) {
+                              //save what is entered
+                              $ship_type_filter = $_POST['ship_type_filter'];
+                              if($ship_type_filter == "none"){
+                                  echo "<meta http-equiv='refresh' content='0; table.php?table_type=$table&column=$column&order=$order&column2_filter=$ship_type_filter"
+                                          . "&items_per_page=$offical_items_per_page'>";
+                              }else{
+                              echo "<meta http-equiv='refresh' content='0; table.php?table_type=$table&column=$column&order=$order&column2_filter=$ship_type_filter"
+                                          . "&items_per_page=500'>";
+                              }
+                              
+                              }
+                              ?>
+      
+      <form class="form-inline" method="post" action="">
+          
+              <div class="row-fluid">
+                <div class="col-md-3">
+              
+            <h4> Ship Type:
+                            <select name="ship_type_filter" class="form-control" id="form_css">
+                            <option value="none">No Filter</option> 
+                            <option value="Scientific">Scientific</option>
+                            <option value="Combat">Combat</option>
+                            <option value="Explorer">Explorer</option>
+                            <option value="Trader">Trader</option>
+                            
+                                    
+                            </select>
+                </div>
+         
+                  
+                  
+              
+                
+          <div style="margin-left: 0px; margin-bottom: 10px; margin-top: 2px;" class="col-md-3">
+            <input class="btn btn-success" id="button_filter" type="submit" name="filter_ships" value="Filter">
+            </div>  
+                  
+                  </div>
+      
+    </form>
+    </div>
+  </div>
+   
+</div>
+   
+  <?php
+          
+          
+          
           
           break;
           

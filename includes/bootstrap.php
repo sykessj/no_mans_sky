@@ -132,7 +132,6 @@
                             <li><a href="table.php?table_type=creatures&column=name&order=ASC">Creatures</a></li>
                             <li><a href="table.php?table_type=flora&column=name&order=ASC">Flora</a></li>
                             <li><a href="table.php?table_type=ships&column=name&order=ASC">Ships</a></li>
-                            <li><a href="table.php?table_type=testing&column=name&order=ASC">Test</a></li> 
                         </ul>
                     </li>
                     
