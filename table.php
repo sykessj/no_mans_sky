@@ -227,7 +227,7 @@ $current_page = "index";
           
 
               <br>
-              <h1 id="column_name">Galaxies</h1>
+              <h1 id="column_name" style="font-family: noMansFont; font-size: 40pt;">Galaxies</h1>
               <br>
               <?php
           $limit = $galaxy_limit;
@@ -310,7 +310,7 @@ $current_page = "index";
               
               <br>
               
-              <h1 id="column_name">Star Systems</h1>
+              <h1 id="column_name" style="font-family: noMansFont; font-size: 40pt;">Star Systems</h1>
               <br>
               <?php
           
@@ -386,7 +386,7 @@ $current_page = "index";
       <tr>
           <th scope="row"><?= $id + 1; ?></th>
           <td><a href="item.php?database_type=<?= $table; ?>&item_id=<?= $current_id; ?>"><?= $name; ?></a></td>
-          <td><?= $galaxy; ?></td>
+          <td><a href="item.php?database_type=galaxy&item_name=<?= $galaxy; ?>"><?= $galaxy; ?></a></td>
           <td><?= $star_type; ?></td>
           <td><?= $star_colour; ?></td>
           <td><?= $no_planets; ?></td>
@@ -520,7 +520,7 @@ $current_page = "index";
               
               <br>
               
-              <h1 id="column_name">Planets</h1>
+              <h1 id="column_name" style="font-family: noMansFont; font-size: 40pt;">Planets</h1>
               <br>
               <?php
           
@@ -619,8 +619,8 @@ $current_page = "index";
                         ?>
       <tr>
           <th scope="row"><?= $id + 1; ?></th>
-          <td><?= $planet_name; ?></td>
-          <td><?= $planet_star_system; ?></td>
+          <td><a href="item.php?database_type=<?= $table; ?>&item_id=<?= $object_id; ?>"><?= $planet_name; ?></a></td>
+          <td><a href="item.php?database_type=star_systems&item_name=<?= $planet_star_system; ?>"><?= $planet_star_system; ?></a></td>
           <td><?= $planet_enviroment; ?></td>
           <td><?= $planet_climate; ?></td>
           <td><?= $planet_life_type; ?></td>
@@ -818,7 +818,7 @@ $current_page = "index";
               
               <br>
               
-              <h1 id="column_name">Moons</h1>
+              <h1 id="column_name" style="font-family: noMansFont; font-size: 40pt;">Moons</h1>
               <br>
               <?php
           
@@ -1116,7 +1116,7 @@ $current_page = "index";
               
               <br>
               
-              <h1 id="column_name">Creatures</h1>
+              <h1 id="column_name" style="font-family: noMansFont; font-size: 40pt;">Creatures</h1>
               <br>
               <?php
           
@@ -1371,7 +1371,7 @@ $current_page = "index";
               
               <br>
               
-              <h1 id="column_name">Flora</h1>
+              <h1 id="column_name" style="font-family: noMansFont; font-size: 40pt;">Flora</h1>
               <br>
               <?php
           
@@ -1601,7 +1601,7 @@ $current_page = "index";
               
               <br>
               
-              <h1 id="column_name">Ships</h1>
+              <h1 id="column_name" style="font-family: noMansFont; font-size: 40pt;">Ships</h1>
               <br>
               <?php
           

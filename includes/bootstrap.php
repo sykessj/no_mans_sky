@@ -80,6 +80,11 @@
             }
             
             .modal { overflow: auto !important; }
+            
+            @font-face {
+                font-family: noMansFont;
+                src: url(fonts/geonms-webfont.ttf) format('truetype');
+            }
 
 
         </style>
