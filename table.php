@@ -280,7 +280,7 @@ $current_page = "index";
               ?>
       <tr>
           <th scope="row"><?= ($id + 1); ?></th>
-          <td><a href="item.php?database_type=<?= $table; ?>&item_id=<?= $current_id; ?>"><?= $name; ?></a></td>
+          <td><a  style="color: black;" href="item.php?database_type=<?= $table; ?>&item_id=<?= $current_id; ?>"><?= $name; ?></a></td>
           <td><?= $no_star_systems; ?></td>
           <td text-align="center"><?= $no_planets; ?></td>
           <td><?= $no_moons; ?></td>
@@ -385,8 +385,8 @@ $current_page = "index";
                         ?>
       <tr>
           <th scope="row"><?= $id + 1; ?></th>
-          <td><a href="item.php?database_type=<?= $table; ?>&item_id=<?= $current_id; ?>"><?= $name; ?></a></td>
-          <td><a href="item.php?database_type=galaxy&item_name=<?= $galaxy; ?>"><?= $galaxy; ?></a></td>
+          <td><a  style="color: black;" href="item.php?database_type=<?= $table; ?>&item_id=<?= $current_id; ?>"><?= $name; ?></a></td>
+          <td><a  style="color: black;" href="item.php?database_type=galaxy&item_name=<?= $galaxy; ?>"><?= $galaxy; ?></a></td>
           <td><?= $star_type; ?></td>
           <td><?= $star_colour; ?></td>
           <td><?= $no_planets; ?></td>
@@ -619,8 +619,8 @@ $current_page = "index";
                         ?>
       <tr>
           <th scope="row"><?= $id + 1; ?></th>
-          <td><a href="item.php?database_type=<?= $table; ?>&item_id=<?= $object_id; ?>"><?= $planet_name; ?></a></td>
-          <td><a href="item.php?database_type=star_systems&item_name=<?= $planet_star_system; ?>"><?= $planet_star_system; ?></a></td>
+          <td><a style="color: black;" href="item.php?database_type=<?= $table; ?>&item_id=<?= $object_id; ?>"><?= $planet_name; ?></a></td>
+          <td><a style="color: black;" href="item.php?database_type=star_systems&item_name=<?= $planet_star_system; ?>"><?= $planet_star_system; ?></a></td>
           <td><?= $planet_enviroment; ?></td>
           <td><?= $planet_climate; ?></td>
           <td><?= $planet_life_type; ?></td>
@@ -917,15 +917,15 @@ $current_page = "index";
                         ?>
       <tr>
           <th scope="row"><?= $id + 1; ?></th>
-          <td><?= $planet_name; ?></td>
-          <td><?= $planet_star_system; ?></td>
+          <td><a style="color: black;" href="item.php?database_type=<?= $table; ?>&item_id=<?= $object_id; ?>"><?= $planet_name; ?></a></td>
+          <td><a style="color: black;" href="item.php?database_type=star_systems&item_name=<?= $planet_star_system; ?>"><?= $planet_star_system; ?><a/></td>
           <td><?= $planet_enviroment; ?></td>
           <td><?= $planet_climate; ?></td>
           <td><?= $planet_life_type; ?></td>
           <td><?= $planet_size; ?></td>
           <td><?= $planet_sentinals; ?></td>
           <td><?= $planet_rating; ?></td>
-          <td><?= $planet_parent; ?></td>
+          <td><a style="color: black;" href="item.php?database_type=planets&item_name=<?= $planet_parent; ?>"><?= $planet_parent; ?></a></td>
           <td><?= $planet_no_creatures; ?></td>
           <td><?= $planet_no_flora; ?></td>
           <td><?= $date_logged; ?></td>
@@ -1169,6 +1169,12 @@ $current_page = "index";
               $creature_parent = $result->parent_planet;
               $creature_parent_type = $result->parent_type;
               $creature_diet = $result->diet;
+              
+              if ($creature_parent_type == "Planet"){
+                            $parent_type_db = "planets";          
+                        }else{
+                            $parent_type_db = "moons";
+                        }
     
               $timestamp = strtotime($date_logged);
                         $date_logged = date("H:ia  d/M/y", $timestamp);
@@ -1201,8 +1207,8 @@ $current_page = "index";
                         ?>
       <tr>
           <th scope="row"><?= $id + 1; ?></th>
-          <td><?= $creature_name; ?></td>
-          <td><?= $creature_parent; ?></td>
+          <td><a style="color: black;" href="item.php?database_type=<?= $table; ?>&item_id=<?= $object_id; ?>"><?= $creature_name; ?></a></td>
+          <td><a style="color: black;" href="item.php?database_type=<?= $parent_type_db; ?>&item_name=<?= $creature_parent; ?>"><?= $creature_parent; ?></a></td>
           <td><?= $creature_parent_type; ?></td>
           <td><?= $creature_life_type; ?></td>
           <td><?= $creature_size; ?></td>
@@ -1422,6 +1428,12 @@ $current_page = "index";
               $flora_parent = $result->parent_planet;
               $flora_parent_type = $result->parent_type;
               $flora_diet = $result->diet;
+              
+              if ($flora_parent_type == "Planet"){
+                            $parent_type_db = "planets";          
+                        }else{
+                            $parent_type_db = "moons";
+                        }
     
               $timestamp = strtotime($date_logged);
                         $date_logged = date("H:ia  d/M/y", $timestamp);
@@ -1448,8 +1460,8 @@ $current_page = "index";
                         ?>
       <tr>
           <th scope="row"><?= $id + 1; ?></th>
-          <td><?= $flora_name; ?></td>
-          <td><?= $flora_parent; ?></td>
+          <td><a style="color: black;" href="item.php?database_type=<?= $table; ?>&item_id=<?= $object_id; ?>"><?= $flora_name; ?></a></td>
+          <td><a style="color: black;" href="item.php?database_type=<?= $parent_type_db; ?>&item_name=<?= $flora_parent; ?>"><?= $flora_parent; ?></a></td>
           <td><?= $flora_parent_type; ?></td>
           <td><?= $flora_size; ?></td>
           <td><?= $flora_diet; ?></td>
@@ -1653,7 +1665,7 @@ $current_page = "index";
                         ?>
       <tr>
           <th scope="row"><?= $id + 1; ?></th>
-          <td><?= $ship_name; ?></td>
+          <td><a style="color: black;" href="item.php?database_type=<?= $table ?>&item_id=<?= $object_id ?>"><?= $ship_name; ?></a></td>
           <td><?= $ship_type; ?></td>
       </tr>
       <?php

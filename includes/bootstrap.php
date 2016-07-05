@@ -85,6 +85,53 @@
                 font-family: noMansFont;
                 src: url(fonts/geonms-webfont.ttf) format('truetype');
             }
+            
+            nav{
+                background-image: url("images/pw_maze_black_2X.png");
+            }
+            
+            #nav_links {
+                color: white;
+                font-family: noMansFont;
+                font-size: 30pt;
+                
+                
+            }
+            
+            .dropdown-menu{
+                background: black;
+                color: white;
+            }
+            
+            #nav_links:hover{
+                color: white;
+                
+                background: url("images/background3.jpg");
+                
+            }
+            
+            #nav_links:active{
+                
+                font-weight: bold;
+            }
+            
+            #nav_links:focus{
+                background: url("images/background3.jpg");
+                font-weight: bold;
+            }
+            
+            .dropdown-menu li a{
+                color: white;
+                font-family: noMansFont;
+                font-size: 14pt;
+           }
+           
+           .dropdown-menu>li>a:hover{
+               color: white;
+               font-weight: bold;
+               background: url("images/background3.jpg");
+           }
+/*style="color: white; font-family: noMansFont; font-size: 14pt;*/
 
 
         </style>
@@ -124,11 +171,11 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <ul id="nav" class="nav navbar-nav">
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="#">Statistics</a></li>
-                    <li><a href="#">Periodic Table</a></li>
+                    <li><a id="nav_links" href="index.php">Home</a></li>
+                    <li><a id="nav_links" href="#">Statistics</a></li>
+                    <li><a id="nav_links" href="#">Periodic Table</a></li>
                     <li class="dropdown">
-                        <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">View <span class="caret"></span></a>
+                        <a id="nav_links" href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">View <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="table.php?table_type=galaxy&column=name&order=ASC&page=1">Galaxies</a></li>
                             <li><a href="table.php?table_type=star_systems&column=name&order=ASC">Star Systems</a></li>
@@ -148,11 +195,11 @@
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Search">
                         </div>
-                        <button type="submit" class="btn btn-default">Search</button>
+                        <button   type="submit" class="btn btn-default">Search</button>
                     </form>
 
                     <li class="dropdown">
-                        <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">✚ <span class="caret"></span></a>
+                        <a id="nav_links"  href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">✚ <span class="caret"></span></a>
                         <ul class="dropdown-menu">
 
                             <li><a href="" data-toggle="modal" data-target="#galaxy_modal">Galaxy</a></li>
