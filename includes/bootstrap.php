@@ -320,8 +320,9 @@
                     <h1 id="title_id"> Edit Ship </h1>
      
                     <div id="formDiv">
-                    <form method="post" action="index.php">
-                        <input style="display: none;" id="ship_input" class="form-control" type="text" name="edit_object_id" value="<?= $edit_var4;?>" placeholder="name">
+                    <form method="post" action="item.php?database_type=ships&item_id=<?= $edit_var4; ?>">
+                        <input style="display: none;"  name="edit_object_id" value="<?= $edit_var4;?>">
+                        <input style="display: none;"  name="edit_original_image" value="<?= $edit_var3;?>">
                             <input id="ship_input" class="form-control" type="text" name="edit_ship_name" value="<?= $edit_var1;?>" placeholder="name">
                             <br><br>
                             <h4> Ship Type: </h4>
@@ -353,6 +354,11 @@
                               $edit_var2 = $_POST['edit_ship_type'];
                               $edit_var3 = $_POST['edit_ship_main_image'];
                               $edit_var4 = $_POST['edit_object_id'];
+                              $original_image = $_POST['edit_original_image'];
+                              
+                              if($edit_var3 == NULL){
+                                  $edit_var3 = $original_image;
+                              }
                               
                               edit_ship($edit_var1, $edit_var2, $edit_var3, $edit_var4);
                               

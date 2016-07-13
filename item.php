@@ -26,7 +26,7 @@
         background-image: url("images/background3.jpg");
     }
     
-    #button1:hover{
+    #button1{
         background-image: url("images/background3.jpg");
     }
 
@@ -993,7 +993,7 @@ $current_page = "index";
   ?>
                   
                   <!--////////////////////////////// DELETE MODAL ////////////////////////////// -->
-                  <div class="modal fade" id="delete_modal" tabindex="-1" role="dialog"
+                  <div class="modal fade" style="margin-top:200px;" id="delete_modal" tabindex="-1" role="dialog"
              aria-labelledby="myModalLabel5" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">

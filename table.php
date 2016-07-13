@@ -1643,7 +1643,7 @@ $current_page = "index";
       <tr>
           <th>#</th>
           <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=name&order=<?= $column1; ?>&order_id=<?= "column1_" . $column1; ?>"> Name </a></th>
-          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=parent_planet&order=<?= $column2; ?>&order_id=<?= "column2_" . $column2; ?>">Ship Type</a></th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=type&order=<?= $column2; ?>&order_id=<?= "column2_" . $column2; ?>">Ship Type</a></th>
  
       </tr>
   </thead>
