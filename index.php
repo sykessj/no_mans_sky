@@ -3,7 +3,7 @@
   $current_page = "index";
   require_once('C:\xampp\htdocs\no_mans_sky\includes\db.php');
   require_once('C:\xampp\htdocs\no_mans_sky\includes\db_checking.php');
-  include('C:\xampp\htdocs\no_mans_sky\includes\bootstrap.php');
+  include_once('C:\xampp\htdocs\no_mans_sky\includes\bootstrap.php');
   global $conn;
   ?>
 

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 05, 2016 at 06:31 PM
+-- Generation Time: Jul 14, 2016 at 12:24 AM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 7.0.3
 
@@ -53,7 +53,8 @@ INSERT INTO `creatures` (`id`, `main_image`, `name`, `life_type`, `size`, `ratin
 (7, '', 'Lemur', 'Land', 'Small', 5, '2016-06-05 18:24:39', 'Earth', 'Planet', 'Herbivore'),
 (8, '', 'Hidden Sands', 'Land', 'Medium', 5, '2016-06-12 07:38:46', 'Sandy', 'Planet', 'Omnivore'),
 (9, 'background2.jpg', 'Nine Tailed Fox', 'Land', 'Huge', 10, '2016-07-03 12:07:21', 'Kakashi', 'Planet', 'Carnivore'),
-(10, 'diplo.png', 'Diplo', 'Land', 'Huge', 9, '2016-07-04 22:58:06', 'Earth', 'Planet', 'Herbivore');
+(10, 'diplo.png', 'Diplo', 'Land', 'Huge', 9, '2016-07-04 22:58:06', 'Earth', 'Planet', 'Herbivore'),
+(11, 'Gek.png', 'Gek', 'Land', 'Small', 7, '2016-07-12 02:36:14', 'Saturn', 'Planet', 'Herbivore');
 
 -- --------------------------------------------------------
 
@@ -106,12 +107,13 @@ CREATE TABLE `galaxy` (
 --
 
 INSERT INTO `galaxy` (`Id`, `name`, `no_star_systems`, `no_planets`, `no_moons`, `no_creatures`, `no_flora`) VALUES
-(1, 'Milky Way', 4, 3, 2, 3, 0),
+(1, 'Milky Way', 4, 3, 2, 4, 0),
 (2, 'Andromada', 5, 2, 1, 0, 1),
 (3, 'Double A', 3, 8, 4, 4, 3),
 (4, 'The Hidden Leaf', 4, 4, 12, 2, 0),
 (5, 'The Village Hidden in the Sand', 4, 2, 0, 1, 1),
-(6, 'Test Galaxy', 3, 1, 1, 0, 1);
+(6, 'Test Galaxy', 3, 1, 1, 0, 1),
+(7, 'hfiehbf', 1, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -135,7 +137,7 @@ CREATE TABLE `limits` (
 --
 
 INSERT INTO `limits` (`id`, `galaxy`, `star_systems`, `planets`, `moons`, `creatures`, `flora`, `ships`) VALUES
-(1, 6, 23, 20, 20, 10, 6, 3);
+(1, 7, 24, 20, 20, 11, 6, 3);
 
 -- --------------------------------------------------------
 
@@ -221,7 +223,7 @@ CREATE TABLE `planets` (
 
 INSERT INTO `planets` (`id`, `main_image`, `name`, `star_system`, `enviroment`, `climate`, `life_type`, `size`, `rating`, `sentinals`, `minerals`, `no_moons`, `no_creatures`, `no_flora`, `extra_image`, `extra_image2`, `date_logged`) VALUES
 (1, '12512704_10208425564216030_7197577395550368907_n.jpg', 'Earth', 'The Solar System', 'Normal', 'Tropical', 'Complex', 'Medium', 8, 'Huge Waves', 'Lots of minerals', 1, 3, 0, 'mountains1.jpg', 'mum.jpg', '2016-06-05 03:07:24'),
-(2, '', 'Saturn', 'The Solar System', 'Toxic', 'Sub Arctic', 'None', 'Large', 8, 'None', '', 1, 0, 0, '', '', '2016-06-05 03:11:39'),
+(2, '', 'Saturn', 'The Solar System', 'Toxic', 'Sub Arctic', 'None', 'Large', 8, 'None', '', 1, 1, 0, '', '', '2016-06-05 03:11:39'),
 (3, '12512704_10208425564216030_7197577395550368907_n.jpg', 'Sad planet', 'Sad Star', 'Cold', 'Highland', 'Basic', 'Large', 6, 'Medium Waves', 'lots and Lots', 0, 0, 1, 'mountains1.jpg', 'mum.jpg', '2016-06-05 03:20:29'),
 (4, '', 'Hyanggi', 'Aoora', 'Toxic', 'Dessert', 'None', 'Tiny', 1, 'Huge Waves', '', 1, 0, 0, '', '', '2016-06-05 03:27:11'),
 (5, '', 'Woosang', 'Aoora', 'Hot', 'Savannah', 'Complex', 'Medium', 9, 'Medium Waves', 'Doughnut', 0, 0, 0, '', '', '2016-06-05 03:28:23'),
@@ -259,9 +261,9 @@ CREATE TABLE `ships` (
 --
 
 INSERT INTO `ships` (`id`, `name`, `type`, `main_image`) VALUES
-(1, 'Cheesecake', 'Explorer', ''),
-(2, 'Exploree', 'Trader', ''),
-(3, 'Helvetica', 'Explorer', 'Helvetica.jpg');
+(1, 'Tesla', 'Scientific', 'grunt.png'),
+(2, 'Wolf King', 'Trader', 'Helvetica.jpg'),
+(3, 'Geralt', 'Explorer', 'Helvetica.jpg');
 
 -- --------------------------------------------------------
 
@@ -288,7 +290,7 @@ CREATE TABLE `star_systems` (
 --
 
 INSERT INTO `star_systems` (`ID`, `name`, `galaxy`, `star_type`, `star_colour`, `no_planets`, `no_moons`, `no_creatures`, `no_flora`, `image`, `date_logged`) VALUES
-(1, 'The Solar System', 'Milky Way', NULL, NULL, 3, 2, 3, 0, 'no_mans_sky.png', '2016-06-05 03:03:56'),
+(1, 'The Solar System', 'Milky Way', NULL, NULL, 3, 2, 4, 0, 'no_mans_sky.png', '2016-06-05 03:03:56'),
 (2, 'Sad Star', 'Andromada', NULL, NULL, 1, 0, 0, 1, '12512704_10208425564216030_7197577395550368907_n.j', '2016-06-05 03:19:02'),
 (3, 'Aoora', 'Double A', NULL, NULL, 6, 1, 1, 0, 'no_mans_sky.png', '2016-06-05 03:23:05'),
 (4, 'Bom', 'Double A', NULL, NULL, 1, 2, 2, 3, '', '2016-06-05 03:23:36'),
@@ -310,7 +312,8 @@ INSERT INTO `star_systems` (`ID`, `name`, `galaxy`, `star_type`, `star_colour`, 
 (20, 'Another Test System', 'Test Galaxy', 'Pulsar', 'White', 1, 1, 0, 1, '', '2016-06-15 15:52:53'),
 (21, 'Checking', 'Andromada', 'Binary', 'Red', 0, 0, 0, 0, '', '2016-06-15 15:53:27'),
 (22, 'Doulinhota', 'Andromada', 'Neutron', 'Yellow', 1, 1, 0, 0, 'main_image.png', '2016-06-19 14:17:01'),
-(23, 'Orolis-Ogua', 'Milky Way', 'Pulsar', 'Orange', 0, 0, 0, 0, 'Arolis-Ogua.png', '2016-07-05 16:24:21');
+(23, 'Orolis-Ogua', 'Milky Way', 'Pulsar', 'Orange', 0, 0, 0, 0, 'Arolis-Ogua.png', '2016-07-05 16:24:21'),
+(24, 'blubdd', 'hfiehbf', 'Giant', 'Yellow', 0, 0, 0, 0, 'Arolis-Ogua.png', '2016-07-13 21:27:25');
 
 -- --------------------------------------------------------
 
@@ -360,7 +363,7 @@ CREATE TABLE `test2` (
 INSERT INTO `test2` (`planet_id`, `image`, `name`, `enviroment`, `life_type`, `size`, `rating`, `sentinels`, `date_discovered`) VALUES
 (1, 'test.png', 'test', 'ice', 'complex', 'large', 7, 'yes', '2016-05-09'),
 (2, 'test2.png', 'balari', 'hot', 'none', 'small', 5, 'no', '2016-05-05'),
-(3, 'test3.png', 'bla', 'toxic', 'complex', 'large', 5, 'no', '2016-05-01'),
+(3, 'test3.png', '', 'Trader', 'complex', 'large', 0, 'no', '2016-05-01'),
 (6, 'test4.png', 'tester', 'hot', 'none', 'small', 9, 'yes', '2016-05-01');
 
 -- --------------------------------------------------------

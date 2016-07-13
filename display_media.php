@@ -8,10 +8,6 @@
   
   $current_page = "index";
   
-  require_once('C:\xampp\htdocs\no_mans_sky\includes\db.php');
-  require_once('C:\xampp\htdocs\no_mans_sky\includes\db_checking.php');
-  include('C:\xampp\htdocs\no_mans_sky\includes\bootstrap.php');
-  
   $media_type = "";
   $media= "";
   $folder = "";
@@ -44,12 +40,37 @@
     else{
         $image = "images/$media";
     }
+  
+  require_once('C:\xampp\htdocs\no_mans_sky\includes\db.php');
+  require_once('C:\xampp\htdocs\no_mans_sky\includes\db_checking.php');
+  ?>
+  <html lang="en">
+    <head>
+        <title><?= $name ?></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </head>
+    
+    <style>
+        
+        
+        @font-face {
+                font-family: noMansFont;
+                src: url(fonts/geonms-webfont.ttf) format('truetype');
+            }
+    </style>
+  
+        <?php
+  
     
   
   switch($media_type){
       case "image":
           ?>
-          <img style="margin-top: 70px; margin-left:auto; margin-right: auto; display:block;" src="<?= $image ?>" width="1000" height="600"/>
+          <img style="margin-top: 20px; margin-left:auto; margin-right: auto; display:block;" src="<?= $image ?>" width="1000" height="600"/>
           <h1 style="margin-top: 20px; margin-bottom: 20px; text-align: center; font-family: noMansFont; font-size: 40pt; "> <?= $name ?></h1>
           
         <?php
@@ -61,6 +82,7 @@
       
   }
       ?>
+  </html>
       
       
       

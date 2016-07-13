@@ -1,3 +1,7 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
 <style>
     
     
@@ -21,6 +25,10 @@
     body{
         background-image: url("images/background3.jpg");
     }
+    
+    #button1:hover{
+        background-image: url("images/background3.jpg");
+    }
 
 </style>
 
@@ -31,15 +39,17 @@
 $current_page = "index";
   require_once('C:\xampp\htdocs\no_mans_sky\includes\db.php');
   require_once('C:\xampp\htdocs\no_mans_sky\includes\db_checking.php');
-  include('C:\xampp\htdocs\no_mans_sky\includes\bootstrap.php');
+  require_once('C:\xampp\htdocs\no_mans_sky\includes\edit_and_delete_functions.php');
+  require_once('C:\xampp\htdocs\no_mans_sky\includes\bootstrap.php');
   global $planet_limit;
   global $moon_limit;
   global $creature_limit;
   $test_var = "No Change";
   
-  $table = "";
+  $table = "none";
   $id = 0;
-  $item_name = "";
+  $item_name = "none";
+  $delete = "false";
   
   
   if (isset($_GET['database_type'])) {
@@ -51,8 +61,17 @@ $current_page = "index";
   if (isset($_GET['item_name'])) {
   $item_name = $_GET['item_name'];}
   
+  if (isset($_GET['delete'])) {
+  $delete = $_GET['delete'];}
   
   
+  
+ 
+  
+  
+  
+  
+  if($table != "none"){
   if($id != 0){
   $sql = $conn->prepare("SELECT * FROM `$table` WHERE `ID` = :id");
               $sql->bindParam('id', $id, PDO::PARAM_INT);
@@ -64,6 +83,8 @@ $current_page = "index";
               $sql->execute();
   }
               $result = $sql->fetchObject();
+              
+  }
   
   switch($table){
       // <editor-fold defaultstate="collapsed" desc="Galaxy Case">
@@ -171,14 +192,14 @@ $current_page = "index";
                   ?>
                 
                   <h1 style="text-align: center; font-family: noMansFont; font-size: 60pt; color: white" > <?= $name ?> System</h1>
-                  <button class="btn btn-lg btn-success" style="background: url('images/background3.jpg'); float: right; margin-left: 10px; margin-right: 10px;">Edit Record</button>
-                  <button class="btn btn-lg btn-success" style="background: url('images/background3.jpg'); float: right;">Delete Record</button>
+                  <a data-toggle="modal" data-target="#delete_modal" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Delete</a>
+                  <button class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right;">Edit</button>
                   <br>
                   <br>
                   <div style="margin-top: 50px;" class="container">
                       <div class="row">
                           <div class="col-md-8">
-                              <a href="display_media.php?media_type=image&media=<?= $image ?>&folder=<?= $table ?>&name=<?= $name ?>"><img style="margin-left:auto; margin-right: auto; display:block;" src="<?= $find_image ?>" width="700" height="400"/></a>
+                              <a target="_blank" href="display_media.php?media_type=image&media=<?= $image ?>&folder=<?= $table ?>&name=<?= $name ?>"><img style="margin-left:auto; margin-right: auto; display:block;" src="<?= $find_image ?>" width="700" height="400"/></a>
                   </div>
                          <div class="col-md-3"> 
                       <h1 id="stat"> Planets: <?= $no_planets ?> </h1>
@@ -226,6 +247,8 @@ $current_page = "index";
                   
                   
                   <?php
+                    
+                    
               }else{echo "Sorry, Could not find this item";}
           break;
           
@@ -401,7 +424,7 @@ $current_page = "index";
                   <div style="margin-top: 50px;" class="container">
                       <div class="row">
                           <div class="col-md-8">
-                              <a href="display_media.php?media_type=image&media=<?= $image ?>&folder=<?= $table ?>&folder1=<?= $name ?>&name=<?= $name ?>"><img style="margin-left:auto; margin-right: auto; display:block;" src="<?= $find_image ?>" width="700" height="400"/></a>
+                              <a target="_blank" href="display_media.php?media_type=image&media=<?= $image ?>&folder=<?= $table ?>&folder1=<?= $name ?>&name=<?= $name ?>"><img style="margin-left:auto; margin-right: auto; display:block;" src="<?= $find_image ?>" width="700" height="400"/></a>
                   </div>
                          <div class="col-md-3">
                       <h1 id="stat"> Moons: <?= $no_moons ?> </h1>
@@ -491,10 +514,10 @@ $current_page = "index";
                       
                       <div class="row" style='margin-top: 20px;'>
                           <div class="col-md-6">
-                              <a href="display_media.php?media_type=image&media=<?= $extra_image ?>&folder=<?= $table ?>&folder1=<?= $name ?>&name=<?= $name ?>"><img style="margin-left: 10px;" src="<?= $find_image1 ?>" width="550" height="340"/></a>
+                              <a target="_blank" href="display_media.php?media_type=image&media=<?= $extra_image ?>&folder=<?= $table ?>&folder1=<?= $name ?>&name=<?= $name ?>"><img style="margin-left: 10px;" src="<?= $find_image1 ?>" width="550" height="340"/></a>
                   </div>
                           <div class="col-md-6">
-                              <a href="display_media.php?media_type=image&media=<?= $extra_image2 ?>&folder=<?= $table ?>&folder1=<?= $name ?>&name=<?= $name ?>"><img src="<?= $find_image2 ?>" width="550" height="340"/></a>      
+                              <a target="_blank" href="display_media.php?media_type=image&media=<?= $extra_image2 ?>&folder=<?= $table ?>&folder1=<?= $name ?>&name=<?= $name ?>"><img src="<?= $find_image2 ?>" width="550" height="340"/></a>      
                           
                   </div>
                       </div>
@@ -650,7 +673,7 @@ $current_page = "index";
                   <div style="margin-top: 50px;" class="container">
                       <div class="row">
                           <div class="col-md-8">
-                              <a href="display_media.php?media_type=image&media=<?= $image ?>&folder=<?= $table ?>&folder1=<?= $name ?>&name=<?= $name ?>"><img style="margin-left:auto; margin-right: auto; display:block;" src="<?= $find_image ?>" width="700" height="400"/></a>
+                              <a target="_blank" href="display_media.php?media_type=image&media=<?= $image ?>&folder=<?= $table ?>&folder1=<?= $name ?>&name=<?= $name ?>"><img style="margin-left:auto; margin-right: auto; display:block;" src="<?= $find_image ?>" width="700" height="400"/></a>
                   </div>
                          <div class="col-md-3">
                       <h1 id="stat"> Creatures: <?= $no_creatures ?> </h1>
@@ -719,10 +742,10 @@ $current_page = "index";
                       
                       <div class="row" style='margin-top: 20px;'>
                           <div class="col-md-6">
-                              <a href="display_media.php?media_type=image&media=<?= $extra_image ?>&folder=<?= $table ?>&folder1=<?= $name ?>&name=<?= $name ?>"><img style="margin-left: 10px;" src="<?= $find_image1 ?>" width="550" height="340"/></a>
+                              <a target="_blank" href="display_media.php?media_type=image&media=<?= $extra_image ?>&folder=<?= $table ?>&folder1=<?= $name ?>&name=<?= $name ?>"><img style="margin-left: 10px;" src="<?= $find_image1 ?>" width="550" height="340"/></a>
                   </div>
                           <div class="col-md-6">
-                              <a href="display_media.php?media_type=image&media=<?= $extra_image2 ?>&folder=<?= $table ?>&folder1=<?= $name ?>&name=<?= $name ?>"><img src="<?= $find_image2 ?>" width="550" height="340"/></a>      
+                              <a target="_blank" href="display_media.php?media_type=image&media=<?= $extra_image2 ?>&folder=<?= $table ?>&folder1=<?= $name ?>&name=<?= $name ?>"><img src="<?= $find_image2 ?>" width="550" height="340"/></a>      
                           
                   </div>
                       </div>
@@ -786,7 +809,7 @@ $current_page = "index";
                   <div style="margin-top: 50px;" class="container">
                       <div class="row">
                           <div class="col-md-8">
-                              <a href="display_media.php?media_type=image&media=<?= $image ?>&folder=<?= $table ?>&name=<?= $name ?>"><img style="margin-left:auto; margin-right: auto; display:block;" src="<?= $find_image ?>" width="700" height="400"/></a>
+                              <a target="_blank" href="display_media.php?media_type=image&media=<?= $image ?>&folder=<?= $table ?>&name=<?= $name ?>"><img style="margin-left:auto; margin-right: auto; display:block;" src="<?= $find_image ?>" width="700" height="400"/></a>
                   </div>
                          <div class="col-md-3">
                       <h1 id="stat"> Name: <?= $name ?> </h1>
@@ -799,7 +822,7 @@ $current_page = "index";
                          
                           <div class="col-md-12" style="text-align: center; margin-top: 30px;">
                               <h1 style="text-align: center; font-family: noMansFont; font-size: 60pt; color: white" > Bio</h1>
-                              <h1 id="stat"> Parent Planet: <a style='color: white;' href='item.php?database_type=<?= $parent_type_db; ?>&item_id=<?= $parent_planet_id; ?>'><?= $parent_planet ?></a> </h1>
+                              <h1 id="stat"> Parent World: <a style='color: white;' href='item.php?database_type=<?= $parent_type_db; ?>&item_id=<?= $parent_planet_id; ?>'><?= $parent_planet ?></a> </h1>
                       <h1 id="stat"> Parent Type: <?= $parent_type ?> </h1>
                       <h1 id="stat"> Domain: <?= $life_type ?> </h1>
                       <h1 id="stat"> Size: <?= $size ?> </h1>
@@ -863,7 +886,7 @@ $current_page = "index";
                   <div style="margin-top: 50px;" class="container">
                       <div class="row">
                           <div class="col-md-8">
-                              <a href="display_media.php?media_type=image&media=<?= $image ?>&folder=<?= $table ?>&name=<?= $name ?>"><img style="margin-left:auto; margin-right: auto; display:block;" src="<?= $find_image ?>" width="700" height="400"/></a>
+                              <a target="_blank" href="display_media.php?media_type=image&media=<?= $image ?>&folder=<?= $table ?>&name=<?= $name ?>"><img style="margin-left:auto; margin-right: auto; display:block;" src="<?= $find_image ?>" width="700" height="400"/></a>
                   </div>
                          <div class="col-md-3">
                       <h1 id="stat"> Name: <?= $name ?> </h1>
@@ -876,7 +899,7 @@ $current_page = "index";
                          
                           <div class="col-md-12" style="text-align: center; margin-top: 30px;">
                               <h1 style="text-align: center; font-family: noMansFont; font-size: 60pt; color: white" > Bio</h1>
-                              <h1 id="stat"> Parent: <a style='color: white;' href='item.php?database_type=<?= $parent_type_db; ?>&item_id=<?= $parent_planet_id; ?>'><?= $parent_planet ?></a> </h1>
+                              <h1 id="stat"> Parent World: <a style='color: white;' href='item.php?database_type=<?= $parent_type_db; ?>&item_id=<?= $parent_planet_id; ?>'><?= $parent_planet ?></a> </h1>
                       <h1 id="stat"> Parent Type: <?= $parent_type ?> </h1>
                       <h1 id="stat"> Size: <?= $size ?> </h1>
                       <h1 id="stat"> Rating: <?= $rating ?> </h1>
@@ -916,14 +939,14 @@ $current_page = "index";
                   ?>
                 
                   <h1 style="text-align: center; font-family: noMansFont; font-size: 60pt; color: white" > <?= $name ?></h1>
-                  <button class="btn btn-lg btn-success" style="background: url('images/background3.jpg'); float: right; margin-left: 10px; margin-right: 10px;">Delete Record</button>
-                  <button class="btn btn-lg btn-success" style="background: url('images/background3.jpg'); float: right;">Edit Record</button>
+                  <a data-toggle="modal" data-target="#delete_modal" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Delete</a>
+                  <a href="item.php?database_type=<?= $table; ?>&item_id=<?= $object_id; ?>&id=4&edit_var1=<?= $name ?>&edit_var2=<?= $type ?>&edit_var3=<?= $image ?>&edit_var4=<?= $object_id; ?>" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Edit</a>
                   <br>
                   <br>
                   <div style="margin-top: 50px;" class="container">
                       <div class="row">
                           <div class="col-md-8">
-                              <a href="display_media.php?media_type=image&media=<?= $image ?>&folder=<?= $table ?>&name=<?= $name ?>"><img style="margin-left:auto; margin-right: auto; display:block;" src="<?= $find_image ?>" width="700" height="400"/></a>
+                              <a target="_blank" href="display_media.php?media_type=image&media=<?= $image ?>&folder=<?= $table ?>&name=<?= $name ?>"><img style="margin-left:auto; margin-right: auto; display:block;" src="<?= $find_image ?>" width="700" height="400"/></a>
                   </div>
                          <div class="col-md-3">
                              <h1 id="stat"> Name: <?= $name ?></h1>
@@ -940,6 +963,18 @@ $current_page = "index";
                   
                   
                   <?php
+                    
+                    if($delete == "true"){
+      //Check which database type it is
+      //take all possible info
+      //send through the relevant method.
+      delete_item($table , $name);
+      
+      
+      
+  }
+            
+            
               }else{echo "Sorry, Could not find this item";}
           break;
           
@@ -951,8 +986,52 @@ $current_page = "index";
       
           
   }
+  
+  
+  // <editor-fold defaultstate="collapsed" desc="Delete Modal">
+  
   ?>
+                  
+                  <!--////////////////////////////// DELETE MODAL ////////////////////////////// -->
+                  <div class="modal fade" id="delete_modal" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel5" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                   
+                     
+                         <div class="modal-content">
+<!--        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <p1>Delete?</p1>
+        </div>-->
+        <div class="modal-body">
+            <p1>Are you sure you want to delete this item?</p1>
+            <p2>This will delete all assosiated items</p2>
+        </div>
+        <div class="modal-footer">
+            <a href="item.php?database_type=<?= $table; ?>&item_id=<?= $id; ?>&delete=true" type="button" class="btn btn-danger">Delete</a>
+            
+            <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+          
+          
+        </div>
+      </div>
+                    
+                    </div>
+                </div>
+            </div>
+                  
+                  
+                  <?php
+                    // </editor-fold>
+                    
+                    
+                    
+                    
+                    ?>
   </body>
   
+</html>
+
   
 

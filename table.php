@@ -47,10 +47,23 @@
         display: inline;
     }
     
+    body {
+        background: url(images/background9.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+        
+    }
+    
+    
+    
     
     
     
 </style>
+
+<body>
 
 <?php
 
@@ -1781,6 +1794,7 @@ $current_page = "index";
   }
   
   ?>
+  </body>
   
 
 

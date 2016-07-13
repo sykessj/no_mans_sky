@@ -2,6 +2,7 @@
 <?php
   require_once('C:\xampp\htdocs\no_mans_sky\includes\db.php');
   require_once('C:\xampp\htdocs\no_mans_sky\includes\db_checking.php');
+  require_once('C:\xampp\htdocs\no_mans_sky\includes\edit_and_delete_functions.php');
   global $galaxy_limit;
   global $star_system_limit;
   global $planet_limit;
@@ -9,10 +10,30 @@
   $moon_star = "this is not really working";
   
   $link_id = 0;
-  if (isset($_GET['id'])) {
-  $link_id = $_GET['id'];
+  $edit_name = "none";
+  $edit_type = "none";
+  $edit_image = "none";
   
-  }?>
+  
+  
+  if (isset($_GET['id'])) {
+  $link_id = $_GET['id'];}
+  
+  if (isset($_GET['edit_var1'])) {
+  $edit_var1 = $_GET['edit_var1'];}
+  
+  if (isset($_GET['edit_var2'])) {
+  $edit_var2 = $_GET['edit_var2'];}
+  
+  if (isset($_GET['edit_var3'])) {
+  $edit_var3 = $_GET['edit_var3'];}
+  
+  if (isset($_GET['edit_var4'])) {
+  $edit_var4 = $_GET['edit_var4'];}
+  
+  
+  
+  ?>
   
  
   
@@ -40,7 +61,9 @@
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+    </head>
 
+    
         <style>
             #nav_button{
                 color: white;
@@ -88,6 +111,7 @@
             
             nav{
                 background-image: url("images/pw_maze_black_2X.png");
+                
             }
             
             #nav_links {
@@ -135,6 +159,8 @@
 
 
         </style>
+        
+        
     <body>
         
         <?php
@@ -165,8 +191,19 @@
 });
 </script>";
           }
-         
-?>
+          
+          if($link_id == 4){
+              echo "
+                  <script type='text/javascript'>
+    $(window).load(function()
+{
+    $('#ship_edit_modal').modal('show');
+});
+</script>";
+          }?>
+        <?php
+// <editor-fold defaultstate="collapsed" desc="Nav Bar">?>
+        
         <!--/////////////////////////// NAV BAR  //////////////////////////// -->
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -206,14 +243,14 @@
                             <li><?php
 
                                   if ($galaxy_limit != 0) {
-                                      echo '<a href="" data-toggle="modal" data-target="#star_modal">Star System</a>';
+                                        echo '<a href="" data-toggle="modal" data-target="#star_modal">Star System</a>';
                                   } else {
                                       echo '<p1 id="link_css"> Star System </p1>';
                                   }
                                 ?>
                             </li>
                             <li><?php
-                                  if ($star_system_limit != 0) {
+                                  if ($star_system_limit != 0)       {
                                       echo '<a href="" data-toggle="modal" data-target="#planet_modal">Planet</a>';
                                   } else {
                                       
@@ -267,8 +304,83 @@
                 </ul>
             </div>
         </nav>
-
-        <!-- Button trigger modal -->
+        
+        <?php
+                    // </editor-fold>
+                    
+        
+        // <editor-fold defaultstate="collapsed" desc="Ship edit modal">
+  
+  ?>
+                  
+                  <div class="modal fade" id="ship_edit_modal" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel5" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <h1 id="title_id"> Edit Ship </h1>
+     
+                    <div id="formDiv">
+                    <form method="post" action="index.php">
+                        <input style="display: none;" id="ship_input" class="form-control" type="text" name="edit_object_id" value="<?= $edit_var4;?>" placeholder="name">
+                            <input id="ship_input" class="form-control" type="text" name="edit_ship_name" value="<?= $edit_var1;?>" placeholder="name">
+                            <br><br>
+                            <h4> Ship Type: </h4>
+                                    <!-- ENTER SHIP INFORMATION -->
+                                        <select name="edit_ship_type" class="form-control" id="dropdownMenu1">
+                                            <option value="<?= $edit_var2;?>">Current: <?= $edit_var2;?></option>
+                                        <option value="Scientific">Scientific</option>
+                                        <option value="Combat">Combat</option>
+                                        <option value="Explorer">Explorer</option>
+                                        <option value="Trader">Trader</option>
+                                    </select>
+                                    <br><br>
+                                    <h4> Select image to upload: </h4>
+                                <input class="btn btn-primary form-control" type="file" name="edit_ship_main_image" id="fileToUpload">
+                                <br>
+                                    
+                                    
+                                    
+                                    
+                                    
+                            </div>
+                        
+                    <br>
+                        <?php
+                          if (isset($_POST['edit_ship_submit'])) {
+                              global $edit_var4;
+                              //save what is entered
+                              $edit_var1 = $_POST['edit_ship_name'];
+                              $edit_var2 = $_POST['edit_ship_type'];
+                              $edit_var3 = $_POST['edit_ship_main_image'];
+                              $edit_var4 = $_POST['edit_object_id'];
+                              
+                              edit_ship($edit_var1, $edit_var2, $edit_var3, $edit_var4);
+                              
+//                              $sql = $conn->prepare("UPDATE `test2` SET `name` = '$edit_var4' WHERE `planet_id` = '3'");
+//              $sql->execute();
+//              
+//              $sql = $conn->prepare("UPDATE `test2` SET `enviroment` = '$edit_var2' WHERE `planet_id` = '3'");
+//              $sql->execute();
+              
+              
+                          
+                          }
+                              ?>
+                          
+                    
+                    
+                    
+                    <input class="btn btn-success" id="submit_button" type="submit" name="edit_ship_submit" value="Confirm">
+                    
+                    
+                    
+                </div>
+                </div>
+                </div>
+                
+                  <?php
+                    // </editor-fold>
+                    ?>
         
         
         
@@ -278,11 +390,10 @@
         
         
         
-        
-        
-        
-        
-
+        <?php
+        // <editor-fold defaultstate="collapsed" desc="Galaxy Modal">
+  
+  ?>
 
         <!-- //////////////////////////////////////// GALAXY MODAL ////////////////////////////////////////////// -->
 
@@ -327,13 +438,14 @@
                 </div>
             </div>
 
+<?php
+                    // </editor-fold>
+                    ?>
 
-
-
-
-
-
-
+<?php
+        // <editor-fold defaultstate="collapsed" desc="Star System Modal">
+  
+  ?>
 
 
             <!--  ////////////////////////////  STAR SYSTEM MODAL ///////////////////////////////////// -->
@@ -469,13 +581,15 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
+            
+            <?php
+                    // </editor-fold>
+                    ?>
+            
+            <?php
+        // <editor-fold defaultstate="collapsed" desc="Planet Modal">
+  
+  ?>
                 <!--  ///////////////////////////////////  PLANET MODAL  ///////////////////////////////////// -->
                 <div class="modal fade" id="planet_modal" tabindex="-1" role="dialog"
                      aria-labelledby="myModalLabel5" aria-hidden="true">
@@ -739,9 +853,16 @@
                                 </form>
                             </div>
                         </div>
-                    </div>   
+                    </div> 
                 
+                <?php
+                    // </editor-fold>
+                    ?>
                 
+                <?php
+        // <editor-fold defaultstate="collapsed" desc="Moon Modal">
+  
+  ?>
                 
                 
                 <!-- //////////////////////////////// MOON MODAL //////////////////////////////-->
@@ -977,18 +1098,14 @@
                 </div>
             </div>
                  
-         
+         <?php
+                    // </editor-fold>
+                    ?>
                     
-                
-                
-                
-                
-               
-                
-                
-                
-                
-                
+                <?php
+        // <editor-fold defaultstate="collapsed" desc="Creature Modal">
+  
+  ?>
                 <!--/////////////////////////////////// CREATURE MODAL  //////////////////////////////////// -->
                 
                 <div class="modal fade" id="creature_modal" tabindex="-1" role="dialog"
@@ -1188,9 +1305,14 @@
                 </div>
             </div>
                 
+                <?php
+                    // </editor-fold>
+                    ?>
                 
-                
-                
+               <?php
+        // <editor-fold defaultstate="collapsed" desc="Flora Modal">
+  
+  ?> 
                 <!-- ////////////////////////////////// FLORA MODAL /////////////////////////////-->
                 
                 
@@ -1377,6 +1499,10 @@
                     </div>
                 </div>
             </div>
+                
+                <?php
+                    // </editor-fold>
+                    ?>
                     
 
 
@@ -1384,7 +1510,10 @@
                 
                 
                 
-                
+                <?php
+        // <editor-fold defaultstate="collapsed" desc="Ship Modal">
+  
+  ?>
                 
                 
                 <!--//////////////////////////////////////// SHIP MODAL  ////////////////////////////////////////////// -->
@@ -1449,25 +1578,10 @@
                 </div>
             </div>
                 
-
-                    
-
-                    <?php
-                     
-//                                 echo "name: " , $creature_name , "</br>";
-//                                  echo "Parent Planet: " , $creature_planet , "</br>";
-////                                  echo "enviromet: " , $moon_enviroment , "</br>";
-////                                  echo "climate: " , $moon_climate , "</br>";
-//                                  echo "life type: " , $creature_life_type , "</br>";
-//                                  echo "size: " , $creature_size , "</br>";
-//                                  echo "diet: " , $creature_diet , "</br>";
-////                                  echo "minerals: " , $moon_minerals , "</br>";
-//                                  echo "rating: " , $creature_rating , "</br>";
-//                                  echo "main image: " , $creature_main_image[0] , "</br>";
-////                                  echo "extra image: " , $moon_image[1] , "</br>";
-////                                  echo "extra image 2: " , $moon_image[2] , "</br>";
-
+                <?php
+                    // </editor-fold>
                     ?>
+                
                 
                 <script>
                     
@@ -1498,7 +1612,6 @@
 
 function launchFunction(){
 $('#moon_modal').modal('show');
-})
 }
                     
                     
@@ -1519,7 +1632,10 @@ $('#moon_modal').modal('show');
                      <!--///////////////////////////////////////// CHOICE MODALS //////////////////////////////////////////// -->
                      
                      
-                     
+                     <?php
+        // <editor-fold defaultstate="collapsed" desc="Moon Choice Modal">
+  
+  ?>
                      <!-- /////////////////////////////// MOON CHOICE //////////////////////////////////////// -->
                 
                  
@@ -1595,7 +1711,15 @@ $('#moon_modal').modal('show');
                 </div>
                      </div>
                      
+                     <?php
+                    // </editor-fold>
+                    ?>
                      
+                     
+                     <?php
+        // <editor-fold defaultstate="collapsed" desc="Creature Choice Modal">
+  
+  ?>
                      <!--/////////////////////////////////// CREATURE CHOICE ////////////////////////////////// -->
                      
                      
@@ -1684,9 +1808,15 @@ $('#moon_modal').modal('show');
                 </div>
                 </div>
                      
+                     <?php
+                    // </editor-fold>
+                    ?>
                      
                      
-                     
+                     <?php
+        // <editor-fold defaultstate="collapsed" desc="Flora Modal Choice">
+  
+  ?>
                                  <!--/////////////////////////////////// FLORA CHOICE ////////////////////////////////// -->
                      
                      
@@ -1774,9 +1904,11 @@ $('#moon_modal').modal('show');
                 </div>
                 </div>
                 </div>
-                     
-   
+                                 
+                                 <?php
+                    // </editor-fold>
+                    ?>
+                                 
                     </body>
-
 
                     </html>
