@@ -19,6 +19,12 @@
   if (isset($_GET['id'])) {
   $link_id = $_GET['id'];}
   
+  if (isset($_GET['edit_table'])) {
+  $edit_table = $_GET['edit_table'];}
+  
+  if (isset($_GET['edit_id'])) {
+  $edit_id = $_GET['edit_id'];}
+  
   if (isset($_GET['edit_var1'])) {
   $edit_var1 = $_GET['edit_var1'];}
   
@@ -30,6 +36,12 @@
   
   if (isset($_GET['edit_var4'])) {
   $edit_var4 = $_GET['edit_var4'];}
+  
+  if (isset($_GET['edit_var5'])) {
+  $edit_var5 = $_GET['edit_var5'];}
+  
+  if (isset($_GET['edit_var6'])) {
+  $edit_var6 = $_GET['edit_var6'];}
   
   
   
@@ -199,6 +211,15 @@
 {
     $('#ship_edit_modal').modal('show');
 });
+          </script>";}
+              
+              if($link_id == 5){
+              echo "
+                  <script type='text/javascript'>
+    $(window).load(function()
+{
+    $('#flora_edit_modal').modal('show');
+});
 </script>";
           }?>
         <?php
@@ -308,7 +329,7 @@
         <?php
                     // </editor-fold>
                     
-        
+        ////////////////////////////// EDIT MODALS /////////////////////////////////--> 
         // <editor-fold defaultstate="collapsed" desc="Ship edit modal">
   
   ?>
@@ -320,8 +341,8 @@
                     <h1 id="title_id"> Edit Ship </h1>
      
                     <div id="formDiv">
-                    <form method="post" action="item.php?database_type=ships&item_id=<?= $edit_var4; ?>">
-                        <input style="display: none;"  name="edit_object_id" value="<?= $edit_var4;?>">
+                    <form method="post" action="item.php?database_type=<?= $edit_table; ?>&item_id=<?= $edit_id; ?>">
+                        <input style="display: none;"  name="edit_object_id" value="<?= $edit_id;?>">
                         <input style="display: none;"  name="edit_original_image" value="<?= $edit_var3;?>">
                             <input id="ship_input" class="form-control" type="text" name="edit_ship_name" value="<?= $edit_var1;?>" placeholder="name">
                             <br><br>
@@ -383,9 +404,122 @@
                 </div>
                 </div>
                 </div>
+        
                 
                   <?php
                     // </editor-fold>
+                    
+        
+        // <editor-fold defaultstate="collapsed" desc="Flora edit modal">
+  
+  ?>
+                  
+                  <div class="modal fade" id="flora_edit_modal" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel5" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <h1 id="title_id"> Edit Flora </h1>
+     
+                    <div id="formDiv">
+                    <form method="post" action="item.php?database_type=<?= $edit_table; ?>&item_id=<?= $edit_id; ?>">
+                        <input style="display: none;"  name="edit_flora_object_id" value="<?= $edit_id;?>">
+                        <input style="display: none;"  name="edit_flora_original_image" value="<?= $edit_var5;?>">
+                        <h4> Name: </h4>
+                            <input id="flora_input" class="form-control" type="text" name="edit_flora_name" value="<?= $edit_var1;?>" placeholder="name">
+                            <br>
+                                        <h4> Diet: </h4>
+                                    <!-- ENTER DIET INFORMATION -->
+                                        <select name="edit_flora_diet" class="form-control" id="dropdownMenu1">
+                                        <option value="<?= $edit_var2?>">Current: <?= $edit_var2?></option>    
+                                        <option value="Herbivore">Herbivore</option>
+                                        <option value="Carnivore">Carnivore</option>
+                                        <option value="Omnivore">Omnivore</option>
+                                    </select>
+                                    <br>
+                                    
+                                    <!--//// SIZE -->
+                            
+                            <h4> Size: </h4>
+                                    <!-- ENTER SIZE INFORMATION -->
+                                        <select name="edit_flora_size" class="form-control" id="dropdownMenu1">
+                                        <option value="<?= $edit_var3?>">Current: <?= $edit_var3?></option>
+                                        <option value="Tiny">Tiny</option>
+                                        <option value="Small">Small</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Large">Large</option>
+                                        <option value="Huge">Huge</option>
+                                    </select>
+                                <br>
+                                
+                                <h4> Rating: </h4>
+                                    <!-- ENTER RATING INFORMATION -->
+                                    <select name="edit_flora_rating" class="form-control" id="dropdownMenu1">
+                                        <option value="<?= $edit_var4?>">Current: <?= $edit_var4?></option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    <br>
+                                    <h4> Select image to upload: </h4>
+                                <input class="btn btn-primary form-control" type="file" name="edit_flora_main_image" id="fileToUpload">
+                                    
+                                    
+                                    
+                                    
+                                    
+                            </div>
+                        
+                    <br>
+                        <?php
+                          if (isset($_POST['edit_flora_submit'])) {
+                              
+                              //save what is entered
+                              $edit_var1 = $_POST['edit_flora_name'];
+                              $edit_var2 = $_POST['edit_flora_diet'];
+                              $edit_var3 = $_POST['edit_flora_size'];
+                              $edit_var4 = $_POST['edit_flora_rating'];
+                              $edit_var5 = $_POST['edit_flora_main_image'];
+                              $edit_var6 = $_POST['edit_flora_object_id'];
+                              $original_image = $_POST['edit_flora_original_image'];
+                              
+                              if($edit_var5 == NULL){
+                                  $edit_var5 = $original_image;
+                              }
+                              
+                              edit_flora($edit_var1, $edit_var2, $edit_var3, $edit_var4, $edit_var5, $edit_var6);
+                              
+//                              $sql = $conn->prepare("UPDATE `test2` SET `name` = '$edit_var4' WHERE `planet_id` = '3'");
+//              $sql->execute();
+//              
+//              $sql = $conn->prepare("UPDATE `test2` SET `enviroment` = '$edit_var2' WHERE `planet_id` = '3'");
+//              $sql->execute();
+              
+              
+                          
+          }
+                              ?>
+                          
+                    
+                    
+                    
+                    <input class="btn btn-success" id="submit_button" type="submit" name="edit_flora_submit" value="Confirm">
+                    
+                    
+                    
+                </div>
+                </div>
+                </div>
+                
+                  <?php
+                    // </editor-fold>
+                    
                     ?>
         
         
@@ -393,9 +527,7 @@
         
         
         
-        
-        
-        
+        <!-- ////////////////////////////// ADDING MODALS /////////////////////////////////--> 
         <?php
         // <editor-fold defaultstate="collapsed" desc="Galaxy Modal">
   
@@ -1509,13 +1641,7 @@
                 <?php
                     // </editor-fold>
                     ?>
-                    
-
-
-
-                
-                
-                
+                   
                 <?php
         // <editor-fold defaultstate="collapsed" desc="Ship Modal">
   

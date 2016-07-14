@@ -635,8 +635,8 @@ function add_flora($flora_name , $flora_planet , $flora_size , $flora_diet
                   //Update star limit
                   $new_limit = $flora_limit + 1;
               //insert the record into the galaxy table
-                $sql = "INSERT INTO flora (id, name, diet, size, rating, parent_planet, main_image)
-                        VALUES ('$new_limit', '$flora_name', '$flora_diet', '$flora_size', '$flora_rating', '$flora_planet', '$flora_main_image')";
+                $sql = "INSERT INTO flora (id, name, diet, size, rating, parent_planet, parent_type, main_image)
+                        VALUES ('$new_limit', '$flora_name', '$flora_diet', '$flora_size', '$flora_rating', '$flora_planet', '$parent_type', '$flora_main_image')";
     
                 $conn->exec($sql);
                 
@@ -817,6 +817,19 @@ function sort_table($table , $limit , $id_column , $order_column , $direction){
         
     }
     
+    
     // </editor-fold>
+    
+    function debug_to_console( $data ) {
+
+    if ( is_array( $data ) )
+        $output = "<script>alert( 'Debug Objects: " . implode( ',', $data) . "' );</script>";
+    else
+        $output = "<script>alert( 'Debug Objects: " . $data . "' );</script>";
+
+    echo $output;
+}
+
+// debug_to_console( "Variable is: $variable" );
     
     
