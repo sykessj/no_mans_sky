@@ -766,6 +766,7 @@ $current_page = "index";
       case "creatures":
           
           if ($result != false){
+              $object_id = $result->id;
                   $name = $result->name;
                   $life_type = $result->life_type;
                   $size = $result->size;
@@ -802,8 +803,8 @@ $current_page = "index";
                   ?>
                 
                   <h1 style="text-align: center; font-family: noMansFont; font-size: 60pt; color: white" > <?= $name ?></h1>
-                  <button class="btn btn-lg btn-success" style="background: url('images/background3.jpg'); float: right; margin-left: 10px; margin-right: 10px;">Delete Record</button>
-                  <button class="btn btn-lg btn-success" style="background: url('images/background3.jpg'); float: right;">Edit Record</button>
+                  <a data-toggle="modal" data-target="#delete_modal" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Delete</a>
+                  <a href="item.php?database_type=<?= $table; ?>&item_id=<?= $object_id; ?>&id=6&edit_var1=<?= $name ?>&edit_var2=<?= $life_type ?>&edit_var3=<?= $size ?>&edit_var4=<?= $rating; ?>&edit_var5=<?= $diet; ?>&edit_var6=<?=$image ?>&edit_id=<?= $object_id; ?>&edit_table=<?= $table; ?>" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Edit</a>
                   <br>
                   <br>
                   <div style="margin-top: 50px;" class="container">
@@ -835,6 +836,16 @@ $current_page = "index";
                   
                   
                   <?php
+                    
+                    if($delete == "true"){
+      //Check which database type it is
+      //take all possible info
+      //send through the relevant method.
+      delete_creature($table , $name);
+      
+      
+      
+  }
               }else{echo "Sorry, Could not find this item";}
           break;
           
