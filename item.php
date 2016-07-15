@@ -538,6 +538,7 @@ $current_page = "index";
       case "moons":
           
           if ($result != false){
+              $object_id = $result->id;
                   $name = $result->name;
                   $star_system = $result->star_system;
                   $enviroment = $result->enviroment;
@@ -666,8 +667,8 @@ $current_page = "index";
                   ?>
                 
                   <h1 style="text-align: center; font-family: noMansFont; font-size: 60pt; color: white" > <?= $name ?></h1>
-                  <button class="btn btn-lg btn-success" style="background: url('images/background3.jpg'); float: right; margin-left: 10px; margin-right: 10px;">Delete Record</button>
-                  <button class="btn btn-lg btn-success" style="background: url('images/background3.jpg'); float: right;">Edit Record</button>
+                  <a data-toggle="modal" data-target="#delete_modal" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Delete</a>
+                  <a href="item.php?database_type=<?= $table; ?>&item_id=<?= $object_id; ?>&id=7&edit_var1=<?= $name ?>&edit_var2=<?= $enviroment ?>&edit_var3=<?= $climate ?>&edit_var4=<?= $life_type; ?>&edit_var5=<?= $size; ?>&edit_var6=<?=$sentinals ?>&edit_var7=<?=$minerals ?>&edit_var8=<?=$rating ?>&edit_var9=<?=$image ?>&edit_var10=<?=$extra_image ?>&edit_var11=<?=$extra_image2 ?>&edit_id=<?= $object_id; ?>&edit_table=<?= $table; ?>" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Edit</a>
                   <br>
                   <br>
                   <div style="margin-top: 50px;" class="container">
@@ -757,6 +758,12 @@ $current_page = "index";
                   
                   
                   <?php
+                    
+                    if($delete == "true"){
+      //Check which database type it is
+      //take all possible info
+      //send through the relevant method.
+      delete_moon($table , $name);}
               }else{echo "Sorry, Could not find this item";}
           break;
           
@@ -841,11 +848,7 @@ $current_page = "index";
       //Check which database type it is
       //take all possible info
       //send through the relevant method.
-      delete_creature($table , $name);
-      
-      
-      
-  }
+      delete_creature($table , $name);}
               }else{echo "Sorry, Could not find this item";}
           break;
           
