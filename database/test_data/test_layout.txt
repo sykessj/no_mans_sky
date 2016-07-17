@@ -1,0 +1,110 @@
+Galaxies:
+
+Appleseed Galaxy
+
+Star Systems: 1
+Planets: 2
+Moons: 3
+Creatures: 5
+Flora: 4
+
+Aspyke Star
+
+Planets: 2
+Moons: 3
+Creatures: 5
+Flora: 4
+
+
+
+
+
+Aenope Planet:
+
+Moons: 1
+Creatures: 2
+Flora: 1
+
+Creatures:
+Brugenov 
+Beskoaphus 
+
+Flora:
+Caolea 
+
+
+
+
+Agloa Moon
+
+Creatures: 1
+Flora: 1
+
+Creatures:
+Asmeon 
+
+Flora:
+Cefloria
+
+
+
+Askuik Planet
+
+Moons: 2
+Creatures: 1
+Flora: 1
+
+Creatures:
+Asnaibos
+
+Flora:
+Euros 
+
+
+
+Abloytania Moon
+
+Creatures: 1
+Flora: 0
+
+Creatures:
+Auturn
+
+Flora:
+
+
+
+Blugunus Moon
+
+Creatures: 0
+Flora: 1
+
+Creatures:
+
+Flora:
+Asliutov Flora
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

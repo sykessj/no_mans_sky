@@ -417,7 +417,7 @@ $current_page = "index";
                   ?>
                 
                   <h1 style="text-align: center; font-family: noMansFont; font-size: 60pt; color: white" > <?= $name ?></h1>
-                  <button class="btn btn-lg btn-success" style="background: url('images/background3.jpg'); float: right; margin-left: 10px; margin-right: 10px;">Delete Record</button>
+                  <a data-toggle="modal" data-target="#delete_modal" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Delete</a>
                   <button class="btn btn-lg btn-success" style="background: url('images/background3.jpg'); float: right;">Edit Record</button>
                   <br>
                   <br>
@@ -529,6 +529,13 @@ $current_page = "index";
                   
                   
                   <?php
+                    
+                    if($delete == "true"){
+      //Check which database type it is
+      //take all possible info
+      //send through the relevant method.
+      delete_planet($table , $name);}
+                    
               }else{echo "Sorry, Could not find this item";}
           break;
           

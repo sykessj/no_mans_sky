@@ -88,6 +88,7 @@
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        
     </head>
 
     
@@ -569,9 +570,9 @@
                                     <!-- ENTER LIFE TYPE INFORMATION -->
                                         <select name="edit_creature_life_type" class="form-control" id="dropdownMenu1">
                                         <option value="<?= $edit_var2?>">Current: <?= $edit_var2?></option>    
-                                        <option value="Herbivore">Land</option>
-                                        <option value="Carnivore">Air</option>
-                                        <option value="Omnivore">Sea</option>
+                                        <option value="Land">Land</option>
+                                        <option value="Air">Air</option>
+                                        <option value="Sea">Sea</option>
                                     </select>
                                     
                                     <br>
@@ -616,7 +617,7 @@
                                     </select>
                                     <br>
                                     <h4> Select image to upload: </h4>
-                                <input class="btn btn-primary form-control" type="file" name="edit_creature_main_image" id="fileToUpload">
+                                <input class="btn btn-primary form-control" type="file"  name="edit_creature_main_image" id="fileToUpload">
                                     
                                     
                                     
@@ -629,6 +630,7 @@
                           if (isset($_POST['edit_creature_submit'])) {
                               
                               //save what is entered
+                              
                               $edit_var1 = $_POST['edit_creature_name'];
                               $edit_var2 = $_POST['edit_creature_life_type'];
                               $edit_var5 = $_POST['edit_creature_diet'];
@@ -637,6 +639,8 @@
                               $edit_var6 = $_POST['edit_creature_main_image'];
                               $object_id = $_POST['edit_creature_object_id'];
                               $original_image = $_POST['edit_creature_original_image'];
+                              
+                              
                               
                               if($edit_var6 == NULL){
                                   $edit_var6 = $original_image;
@@ -1435,10 +1439,11 @@
                         
                         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">  
                             <input class="form-control" type="text" name="moon_name" value="" placeholder="name">
-                            <br>
+                            
+                            
                             
                            
-                                    <br>
+                                    
                             
                             <br>
                             <h4> Parent Planet: </h4>
