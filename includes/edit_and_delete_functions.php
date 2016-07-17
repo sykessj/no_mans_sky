@@ -204,6 +204,116 @@
   }
    // </editor-fold>
   
+  // <editor-fold defaultstate="collapsed" desc="Edit Planet">
+  function edit_planet($name, $enviroment, $climate, $life, $size, $sentinals, $minerals, $rating, $image, $extra_image, $extra_image2, $object_id){
+      global $conn;
+      global $moon_limit;
+      global $creature_limit;
+      global $flora_limit;
+      
+      debug_to_console("Edit Planet Activated");
+      
+      debug_to_console( "Name: $name, Enviroment: $enviroment, Climate: $climate, Life: $life, Size: $size, Sentinals: $sentinals, Minerals: $minerals,"
+              . " Rating: $rating, Image: $image, Extra_image: $extra_image, Extra_image2: $extra_image2, ID: $object_id " );
+      
+      $sql = $conn->prepare("SELECT * FROM `planets` WHERE `id` = :id");
+              $sql->bindParam('id', $object_id, PDO::PARAM_INT);
+              $sql->execute();
+
+              $result = $sql->fetchObject();
+              //check the result is real
+              if($result != false){
+                  $old_name = $result->name;
+                  
+                  
+                  
+              }
+      
+      $sql = $conn->prepare("UPDATE `planets` SET `name` = '$name', `enviroment` = '$enviroment', `climate` = '$climate', `life_type` = '$life', `size` = '$size', `rating` = '$rating', `minerals` = '$minerals', `main_image` = '$image', `extra_image` = '$extra_image', `extra_image2` = '$extra_image2' WHERE `id` = '$object_id'");
+              $sql->execute();
+              
+              if($name != $old_name){
+//                  debug_to_console("You have changed the name!");
+                  //The name has been changed
+                  
+                  //Change the name of the folder containing images
+                  rename("C:/xampp/htdocs/no_mans_sky/images/planets/$old_name", 
+              "C:/xampp/htdocs/no_mans_sky/images/planets/$name");
+                  
+                  //Change Creatures parent planet
+                  //Update Creatures
+                  $creature_id = 0;
+                  while($creature_id <= $creature_limit){
+              $sql = $conn->prepare("SELECT * FROM `creatures` WHERE `parent_planet` = :id");
+              $sql->bindParam('id', $old_name, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              
+              if($result != false){
+                  debug_to_console( "Found a creature" );
+                  
+                  //get the current id for the item
+                  $creature_name = $result->name;
+                  debug_to_console( "Creature is: $creature_name" );
+              
+              
+              $sql = $conn->prepare("UPDATE `creatures` SET `parent_planet` = '$name' WHERE `name` = '$creature_name'");
+              $sql->execute();
+              } $creature_id++;
+  }
+  //Update Flora
+  $flora_id = 0;
+          while ($flora_id <= $flora_limit) {
+              $sql = $conn->prepare("SELECT * FROM `flora` WHERE `parent_planet` = :id");
+              $sql->bindParam('id', $old_name, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+
+              if ($result != false) {
+                  debug_to_console("Found a flora");
+
+                  //get the current id for the item
+                  $flora_name = $result->name;
+                  debug_to_console("flora is: $flora_name");
+
+
+                  $sql = $conn->prepare("UPDATE `flora` SET `parent_planet` = '$name' WHERE `name` = '$flora_name'");
+                  $sql->execute();
+              } $flora_id++;
+          }
+          
+          //Update Moons
+          $moon_id = 0;
+          while ($moon_id <= $moon_limit) {
+              $sql = $conn->prepare("SELECT * FROM `moons` WHERE `parent_planet` = :id");
+              $sql->bindParam('id', $old_name, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+
+              if ($result != false) {
+                  debug_to_console("Found a moon");
+
+                  //get the current id for the item
+                  $moon_name = $result->name;
+                  debug_to_console("moon is: $moon_name");
+
+
+                  $sql = $conn->prepare("UPDATE `moons` SET `parent_planet` = '$name' WHERE `name` = '$moon_name'");
+                  $sql->execute();
+              } $moon_id++;
+          }
+      }
+              
+              
+              //If name has been changed:
+              //Change folder name to new name
+              //change creatures parent planet
+              //chang flora parent planet
+      
+      
+  }
+  // </editor-fold>
+  
   
   
   // <editor-fold defaultstate="collapsed" desc="Edit Moon">

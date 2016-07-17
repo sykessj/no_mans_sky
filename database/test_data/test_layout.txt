@@ -1,4 +1,8 @@
-Galaxies:
+Current: Deleting: Aenope
+Planets: 1
+Moons: 1
+Creatures: 3
+Flora: 2
 
 Appleseed Galaxy
 

@@ -183,6 +183,8 @@
                font-weight: bold;
                background: url("images/background3.jpg");
            }
+           
+          
 /*style="color: white; font-family: noMansFont; font-size: 14pt;*/
 
 
@@ -255,6 +257,16 @@
     $(window).load(function()
 {
     $('#moon_edit_modal').modal('show');
+});
+</script>";
+          }
+          
+          if($link_id == 8){
+              echo "
+                  <script type='text/javascript'>
+    $(window).load(function()
+{
+    $('#planet_edit_modal').modal('show');
 });
 </script>";
           }
@@ -368,6 +380,183 @@
                     
         ////////////////////////////// EDIT MODALS /////////////////////////////////--> 
         
+          // <editor-fold defaultstate="collapsed" desc="Planet edit modal">
+  
+  ?>
+                  
+                  <div class="modal fade" id="planet_edit_modal" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel5" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <h1 id="title_id"> Edit Planet </h1>
+     
+                    <div id="formDiv">
+                    <form method="post" action="item.php?database_type=<?= $edit_table; ?>&item_id=<?= $edit_id; ?>">
+                        <input style="display: none;"  name="edit_planet_object_id" value="<?= $edit_id;?>">
+                        <input style="display: none;"  name="edit_planet_original_image" value="<?= $edit_var9;?>">
+                        <input style="display: none;"  name="edit_planet_original_extra_image" value="<?= $edit_var10;?>">
+                        <input style="display: none;"  name="edit_planet_original_extra_image1" value="<?= $edit_var11;?>">
+                        <h4> Name: </h4>
+                            <input id="flora_input" class="form-control" type="text" name="edit_planet_name" value="<?= $edit_var1;?>" placeholder="name">
+                            <br>
+                            
+                            <h4> Enviroment: </h4>
+                                    <!-- ENTER ENVIROMENT INFORMATION -->
+                                    <select name="edit_planet_enviroment" class="form-control" id="dropdownMenu1">
+                                        <option value="<?= $edit_var2;?>">Current: <?= $edit_var2;?></option>
+                                        <option value="Normal">Normal</option>
+                                        <option value="Extreme Heat">Extreme Heat</option>
+                                        <option value="Extreme Cold">Extreme Cold</option>
+                                        <option value="Toxic">Toxic</option>
+                                    </select>
+                                    <br>
+                                    <h4> Climate: </h4>
+                                    <!-- ENTER CLIMATE INFORMATION -->
+                                    <select name="edit_planet_climate" class="form-control" id="dropdownMenu1">
+                                        <option value="<?= $edit_var3;?>">Current: <?= $edit_var3;?></option>
+                                        <option value="Tropical">Tropical</option>
+                                        <option value="Savannah">Savannah</option>
+                                        <option value="Dessert">Dessert</option>
+                                        <option value="Mediterranean">Mediterranean</option>
+                                        <option value="Humid Subtropical">Humid Subtropical</option>
+                                        <option value="Temperate">Temperate</option>
+                                        <option value="Highland">Highland</option>
+                                        <option value="Sub Arctic">Sub Arctic</option>
+                                        <option value="Sub Zero">Sub Zero</option>
+                                    </select>
+                                    <br>
+                                    <h4> Life: </h4>
+                                    <!-- ENTER LIFE INFORMATION -->
+                                    <select name="edit_planet_life" class="form-control" id="dropdownMenu1">
+                                        <option value="<?= $edit_var4;?>">Current: <?= $edit_var4;?></option>
+                                        <option value="None">None</option>
+                                        <option value="Bacterial">Bacterial</option>
+                                        <option value="Basic">Basic</option>
+                                        <option value="Complex">Complex</option>
+                                    </select>
+                                    <br>
+                                    <h4> Size: </h4>
+                                    <!-- ENTER SIZE INFORMATION -->
+                                    <select name="edit_planet_size" class="form-control" id="dropdownMenu1">
+                                        <option value="<?= $edit_var5;?>">Current: <?= $edit_var5;?></option>
+                                        <option value="Tiny">Tiny</option>
+                                        <option value="Small">Small</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Large">Large</option>
+                                        <option value="Huge">Huge</option>
+                                    </select>
+                                    <br>
+                                    <h4> Sentinals: </h4>
+                                    <!-- ENTER SENTINAL INFORMATION -->
+                                        <select name="edit_planet_sentinals" class="form-control" id="dropdownMenu1">
+                                            <option value="<?= $edit_var6;?>">Current: <?= $edit_var6;?></option>
+                                        <option value="None">None</option>
+                                        <option value="Small Waves">Small Waves</option>
+                                        <option value="Medium Waves">Medium Waves</option>
+                                        <option value="Large Waves">Large Waves</option>
+                                        <option value="Huge Waves">Huge Waves</option>
+                                    </select>
+                                    <br>
+                                    <h4> Minerals: </h4>
+                                    <!-- ENTER MINERAL INFORMATION -->
+                                    <input class="form-control" type="text" name="edit_planet_minerals" value="<?= $edit_var7;?>" placeholder="Planet Minerals">
+                                    <br>
+                                    <h4> Rating: </h4>
+                                    <!-- ENTER RATING INFORMATION -->
+                                    <select name="edit_planet_rating" class="form-control" id="dropdownMenu1">
+                                        <option value="<?= $edit_var8;?>">Current: <?= $edit_var8;?></option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    <br>
+                                    
+                                    <h4> Select main image to upload: </h4>
+                                <input class="btn btn-primary form-control" type="file" name="edit_planet_main_image" id="fileToUpload">
+                                <br>
+                                
+                                <h4> Select extra image to upload: </h4>
+                                <input class="btn btn-primary form-control" type="file" name="edit_planet_extra_image" id="fileToUpload">
+                                <br>
+                                
+                                <h4> Select extra image to upload: </h4>
+                                <input class="btn btn-primary form-control" type="file" name="edit_planet_extra_image1" id="fileToUpload">
+                                <br><br>
+                            
+                            
+                                    
+                                    
+                                    
+                                    
+                                    
+                            </div>
+                        
+                    <br>
+                        <?php
+                          if (isset($_POST['edit_planet_submit'])) {
+                              
+                              //save what is entered
+                              $edit_var1 = $_POST['edit_planet_name'];
+                              $edit_var2 = $_POST['edit_planet_enviroment'];
+                              $edit_var3 = $_POST['edit_planet_climate'];
+                              $edit_var4 = $_POST['edit_planet_life'];
+                              $edit_var5 = $_POST['edit_planet_size'];
+                              $edit_var6 = $_POST['edit_planet_sentinals'];
+                              $edit_var7 = $_POST['edit_planet_minerals'];
+                              $edit_var8 = $_POST['edit_planet_rating'];
+                              $edit_var9 = $_POST['edit_planet_main_image'];
+                              $edit_var10 = $_POST['edit_planet_extra_image'];
+                              $edit_var11 = $_POST['edit_planet_extra_image1'];
+                              $object_id = $_POST['edit_planet_object_id'];
+                              $original_image = $_POST['edit_planet_original_image'];
+                              $original_extra_image = $_POST['edit_planet_original_extra_image'];
+                              $original_extra_image1 = $_POST['edit_planet_original_extra_image1'];
+                              
+                              if($edit_var9 == NULL){
+                                  $edit_var9 = $original_image;
+                              }
+                              
+                              if($edit_var10 == NULL){
+                                  $edit_var10 = $original_extra_image;
+                              }
+                              
+                              if($edit_var11 == NULL){
+                                  $edit_var11 = $original_extra_image1;
+                              }
+                              
+                              edit_planet($edit_var1, $edit_var2, $edit_var3, $edit_var4, $edit_var5, $edit_var6, $edit_var7, $edit_var8, $edit_var9, $edit_var10, $edit_var11, $object_id);
+                              
+//                              $sql = $conn->prepare("UPDATE `test2` SET `name` = '$edit_var4' WHERE `planet_id` = '3'");
+//              $sql->execute();
+//              
+//              $sql = $conn->prepare("UPDATE `test2` SET `enviroment` = '$edit_var2' WHERE `planet_id` = '3'");
+//              $sql->execute();
+              
+              
+                          
+          }
+                              ?>
+                          
+                    
+                    
+                    
+                    <input class="btn btn-success" id="submit_button" type="submit" name="edit_planet_submit" value="Confirm">
+                    
+                    
+                    
+                </div>
+                </div>
+                </div>
+                
+                  <?php
+                    // </editor-fold>
           
         // <editor-fold defaultstate="collapsed" desc="Moon edit modal">
   

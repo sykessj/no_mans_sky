@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/xampp/htdocs/no_mans_sky/includes/db_checking.php</file>
             <file>file:/C:/xampp/htdocs/no_mans_sky/table.php</file>
+            <file>file:/C:/xampp/htdocs/no_mans_sky/includes/db.php</file>
             <file>file:/C:/xampp/htdocs/no_mans_sky/includes/bootstrap.php</file>
             <file>file:/C:/xampp/htdocs/no_mans_sky/item.php</file>
             <file>file:/C:/xampp/htdocs/no_mans_sky/includes/edit_and_delete_functions.php</file>
