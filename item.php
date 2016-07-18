@@ -92,6 +92,7 @@ $current_page = "index";
           
               if ($result != false){
                   
+                  $object_id = $result->Id;
                   $name = $result->name;
                   $no_star_systems = $result->no_star_systems;
                   $no_planets = $result->no_planets;
@@ -102,6 +103,9 @@ $current_page = "index";
                   ?>
 
                 <h1 style="color:white; text-align: center; font-family: noMansFont; font-size: 60pt" > <?= $name ?> Galaxy</h1>
+                <a data-toggle="modal" data-target="#delete_modal" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Delete</a>
+                <a href="item.php?database_type=<?= $table; ?>&item_id=<?= $object_id; ?>&id=10&edit_var1=<?= $name ?>&edit_id=<?= $object_id; ?>&edit_table=<?= $table; ?>" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Edit</a>
+                
                 <br>
 
                 <div style="margin-left: auto; margin-right:auto; width: 265px;">    
@@ -116,6 +120,11 @@ $current_page = "index";
                 </div>
 
 <?php
+  if($delete == "true"){
+      //Check which database type it is
+      //take all possible info
+      //send through the relevant method.
+      delete_galaxy($table , $name);}
                   
               }else{echo "Sorry, Could not find this item";}
               

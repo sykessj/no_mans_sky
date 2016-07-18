@@ -281,6 +281,16 @@
 </script>";
           }
           
+          if($link_id == 10){
+              echo "
+                  <script type='text/javascript'>
+    $(window).load(function()
+{
+    $('#galaxy_edit_modal').modal('show');
+});
+</script>";
+          }
+          
           
 // <editor-fold defaultstate="collapsed" desc="Nav Bar">?>
         
@@ -389,7 +399,60 @@
                     // </editor-fold>
                     
         ////////////////////////////// EDIT MODALS /////////////////////////////////--> 
+        // <editor-fold defaultstate="collapsed" desc="Galaxy edit modal">
+  
+  ?>
+                  
+                  <div class="modal fade" id="galaxy_edit_modal" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel5" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <h1 id="title_id"> Edit Galaxy </h1>
+     
+                    <div id="formDiv">
+                    <form method="post" action="item.php?database_type=<?= $edit_table; ?>&item_id=<?= $edit_id; ?>">
+                        <input style="display: none;"  name="edit_object_id" value="<?= $edit_id;?>">
+                            <input id="ship_input" class="form-control" type="text" name="edit_galaxy_name" value="<?= $edit_var1;?>" placeholder="name">
+                            <br><br>   
+                            </div>
+                        
+                   
+                        <?php
+                          if (isset($_POST['edit_galaxy_submit'])) {
+                              
+                              //save what is entered
+                              $edit_var1 = $_POST['edit_galaxy_name'];
+                              
+                              $object_id = $_POST['edit_object_id'];
+                              
+                              edit_galaxy($edit_var1, $object_id);
+                              
+//                              $sql = $conn->prepare("UPDATE `test2` SET `name` = '$edit_var4' WHERE `planet_id` = '3'");
+//              $sql->execute();
+//              
+//              $sql = $conn->prepare("UPDATE `test2` SET `enviroment` = '$edit_var2' WHERE `planet_id` = '3'");
+//              $sql->execute();
+              
+              
+                          
+                          }
+                              ?>
+                          
+                    
+                    
+                    
+                    <input class="btn btn-success" id="submit_button" type="submit" name="edit_galaxy_submit" value="Confirm">
+                    
+                    
+                    
+                </div>
+                </div>
+                </div>
         
+                
+                  <?php
+                    // </editor-fold>
+          
           // <editor-fold defaultstate="collapsed" desc="Star System edit modal">
   
   ?>

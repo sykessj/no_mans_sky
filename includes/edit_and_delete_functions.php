@@ -4,16 +4,197 @@
   require_once('C:\xampp\htdocs\no_mans_sky\includes\db.php');
   require_once('C:\xampp\htdocs\no_mans_sky\includes\db_checking.php');
   
+  // <editor-fold defaultstate="collapsed" desc="Delete Galaxy">
+  function delete_galaxy($database , $name){
+      global $conn;
+      global $galaxy_limit;
+      global $star_system_limit;
+      
+      
+      
+      
+      
+      $id_type = "Id";
+      $name_column = "name";
+      
+//      rename("C:/xampp/htdocs/no_mans_sky/images/creatures/test", 
+//              "C:/xampp/htdocs/no_mans_sky/images/creatures/this_has_worked");
+      
+                  //Get the info of the star system
+      $sql = $conn->prepare("SELECT * FROM `$database` WHERE `$name_column` = :id");
+              $sql->bindParam('id', $name, PDO::PARAM_INT);
+              $sql->execute();
+
+              $result = $sql->fetchObject();
+              //check the result is real
+              if($result != false){
+                  
+              //get the id of the item
+              $id = $result->Id;
+              }
+              
+             
+              ///////////////////////////////////////////////////////////////////////////////////////////////
+              //Delete each Star system that is included in the galaxy
+              //Deleting star systems will also delete all assosiated items
+              $star_system_id = 0;
+             
+              while($star_system_id <= $star_system_limit){
+              $sql = $conn->prepare("SELECT * FROM `star_systems` WHERE `galaxy` = :id");
+              $sql->bindParam('id', $name, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              
+              if($result != false){
+                  
+                  
+                  
+                  
+                  //get the current id for the item
+                  $star_system_name = $result->name;
+                  
+                  $star_system_database = "star_systems";
+                  
+                  
+                  delete_star($star_system_database, $star_system_name);
+              } $star_system_id++;
+                      
+  }
+
+              
+              //Galaxy
+              
+              
+  //Deleting the galaxy
+  
+  $sql = $conn->prepare("DELETE FROM `$database` WHERE `$name_column` = '$name'");
+              $sql->execute();
+              //add 1 to the id to get the next item
+              
+              $id = $id + 1;
+              
+              //While loop that to take 1 from the id until it reaches the current limit
+              while($id <= $galaxy_limit){
+                  //Get the item info
+                  $sql = $conn->prepare("SELECT * FROM `$database` WHERE `$id_type` = :id");
+              $sql->bindParam('id', $id, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              //check the result is real
+              if($result != false){
+                  
+                  //get the current id for the item
+                  $current_id = $result->Id;
+                  
+                  
+                  
+                  //Make the new id to be 1 less than the previous id
+                  $new_id = $current_id - 1;
+                  
+                  //uodate the database: set the id to be the new id where the id is the current id
+                  $sql = $conn->prepare("UPDATE `$database` SET `$id_type` = '$new_id' WHERE `$id_type` = '$current_id'");
+              $sql->execute();
+                  
+              }
+              //Add 1 to the id and repeat the process
+              $id++;
+              
+              }
+              
+               // Create the new limit for the database
+              $new_limit = $galaxy_limit - 1;
+              //Update the limit 
+              $sql = $conn->prepare("UPDATE `limits` SET `$database` = '$new_limit' WHERE `id` = '1'");
+              $sql->execute();
+              
+              
+              //Refresh to the index page
+              echo "<meta http-equiv='refresh' content='0; index.php'>";
+  }
+   // </editor-fold>
+  
+    // <editor-fold defaultstate="collapsed" desc="Edit Galaxy">
+  function edit_galaxy($name, $object_id){
+      global $conn;
+      global $star_system_limit;
+      
+      
+      
+      
+      
+      $sql = $conn->prepare("SELECT * FROM `galaxy` WHERE `id` = :id");
+              $sql->bindParam('id', $object_id, PDO::PARAM_INT);
+              $sql->execute();
+
+              $result = $sql->fetchObject();
+              //check the result is real
+              if($result != false){
+                  
+                  $old_name = $result->name;
+                  
+                  
+                  
+                  
+              }
+      
+      $sql = $conn->prepare("UPDATE `galaxy` SET `name` = '$name' WHERE `Id` = '$object_id'");
+              $sql->execute();
+              
+              if($name != $old_name){
+//                  
+                  //The name has been changed
+                  
+                  //Change Planets parent system
+                  //Update Planets
+                  $star_system_id = 0;
+                  while($star_system_id <= $star_system_limit){
+              $sql = $conn->prepare("SELECT * FROM `star_systems` WHERE `galaxy` = :id");
+              $sql->bindParam('id', $old_name, PDO::PARAM_INT);
+              $sql->execute();
+              $result = $sql->fetchObject();
+              
+              if($result != false){
+                  
+                  
+                  //get the current id for the item
+                  $star_system_name = $result->name;
+                  
+              
+              
+              $sql = $conn->prepare("UPDATE `star_systems` SET `galaxy` = '$name' WHERE `name` = '$star_system_name'");
+              $sql->execute();
+              } $star_system_id++;
+  }
+  
+  
+      
+
+      
+  }}
+  // </editor-fold>
+  
+  
   // <editor-fold defaultstate="collapsed" desc="Delete Star System">
   function delete_star($database , $name){
       
-      global $planet_limit;
-      global $star_system_limit;
       
       global $conn;
+      $limit_id = 1;
+      $sql = $conn->prepare("SELECT * FROM `limits` WHERE `id` = :id");
+              $sql->bindParam('id', $limit_id, PDO::PARAM_INT);
+              $sql->execute();
+
+              $result = $sql->fetchObject();
+              
+              if($result != false){
+              
+              $planet_limit = $result->planets;
+              $star_system_limit = $result->star_systems;
+              
+              }
       
-      debug_to_console( "Delete Star System Activated" );
-      debug_to_console( "Name: $name" );
+      
+      
       
       $id_type = "ID";
       $name_column = "name";
@@ -58,7 +239,7 @@
                   
                   //get the current id for the item
                   $planet_name = $result->name;
-                  debug_to_console( "Found Planet: $planet_name" );
+                  
                   $planet_database = "planets";
                   
                   
@@ -94,7 +275,7 @@
       
       
   //Deleting the star system
-  debug_to_console("Deleting Star System");
+  
   $sql = $conn->prepare("DELETE FROM `$database` WHERE `$name_column` = '$name'");
               $sql->execute();
               //add 1 to the id to get the next item
@@ -141,7 +322,7 @@
   }
    // </editor-fold>
   
-  // <editor-fold defaultstate="collapsed" desc="Edit Ship">
+  // <editor-fold defaultstate="collapsed" desc="Edit Star System">
   function edit_star_system($name, $type, $colour, $image, $object_id){
       global $conn;
       global $planet_limit;
@@ -165,7 +346,7 @@
               $sql->execute();
               
               if($name != $old_name){
-//                  debug_to_console("You have changed the name!");
+//                  
                   //The name has been changed
                   
                   //Change Planets parent system
@@ -235,8 +416,7 @@
               $creature_limit = $result->creatures;
               }
       
-      debug_to_console( "Delete Planet Activated" );
-      debug_to_console( "Searching for moons..." );
+      
       
       
       $id_type = "id";
@@ -281,7 +461,7 @@
                   
                   //get the current id for the item
                   $moon_name = $result->name;
-                  debug_to_console( "Found Moon: $moon_name" );
+                  
                   $moon_database = "moons";
                   
                   
@@ -356,7 +536,7 @@
                   
                   //get the current id for the item
                   $creature_name = $result->name;
-                  debug_to_console( "Found Creature: $creature_name" );
+                  
               
               
               delete_creature("creatures", $creature_name);
@@ -377,7 +557,7 @@
                   
                   //get the current id for the item
                   $flora_name = $result->name;
-                  debug_to_console( "Found Flora: $flora_name" );
+                  
               
               
               delete_flora("flora", $flora_name);
@@ -416,14 +596,14 @@
               }
               
               // Create the new limit for the database
-              debug_to_console( "Current Planet Limit: $planet_limit" );
+              
               $new_limit = $planet_limit - 1;
-              debug_to_console( "New Planet Limit: $new_limit" );
+              
               //Update the limit 
               $sql = $conn->prepare("UPDATE `limits` SET `$database` = '$new_limit' WHERE `id` = '1'");
               $sql->execute();
               
-              debug_to_console( "Planet Deleted" );
+              
               
               
               //Refresh to the index page
@@ -438,10 +618,6 @@
       global $creature_limit;
       global $flora_limit;
       
-//      debug_to_console("Edit Planet Activated");
-//      
-//      debug_to_console( "Name: $name, Enviroment: $enviroment, Climate: $climate, Life: $life, Size: $size, Sentinals: $sentinals, Minerals: $minerals,"
-//              . " Rating: $rating, Image: $image, Extra_image: $extra_image, Extra_image2: $extra_image2, ID: $object_id " );
       
       $sql = $conn->prepare("SELECT * FROM `planets` WHERE `id` = :id");
               $sql->bindParam('id', $object_id, PDO::PARAM_INT);
@@ -460,7 +636,7 @@
               $sql->execute();
               
               if($name != $old_name){
-//                  debug_to_console("You have changed the name!");
+//                 
                   //The name has been changed
                   
                   //Change the name of the folder containing images
@@ -477,11 +653,11 @@
               $result = $sql->fetchObject();
               
               if($result != false){
-                  debug_to_console( "Found a creature" );
+                  
                   
                   //get the current id for the item
                   $creature_name = $result->name;
-                  debug_to_console( "Creature is: $creature_name" );
+                  
               
               
               $sql = $conn->prepare("UPDATE `creatures` SET `parent_planet` = '$name' WHERE `name` = '$creature_name'");
@@ -497,11 +673,11 @@
               $result = $sql->fetchObject();
 
               if ($result != false) {
-                  debug_to_console("Found a flora");
+                  
 
                   //get the current id for the item
                   $flora_name = $result->name;
-                  debug_to_console("flora is: $flora_name");
+                  
 
 
                   $sql = $conn->prepare("UPDATE `flora` SET `parent_planet` = '$name' WHERE `name` = '$flora_name'");
@@ -518,11 +694,11 @@
               $result = $sql->fetchObject();
 
               if ($result != false) {
-                  debug_to_console("Found a moon");
+                  
 
                   //get the current id for the item
                   $moon_name = $result->name;
-                  debug_to_console("moon is: $moon_name");
+                  
 
 
                   $sql = $conn->prepare("UPDATE `moons` SET `parent_planet` = '$name' WHERE `name` = '$moon_name'");
@@ -586,11 +762,11 @@
               $result = $sql->fetchObject();
               
               if($result != false){
-                  debug_to_console( "Found a creature" );
+                  
                   
                   //get the current id for the item
                   $creature_name = $result->name;
-                  debug_to_console( "Creature is: $creature_name" );
+                  
               
               
               $sql = $conn->prepare("UPDATE `creatures` SET `parent_planet` = '$name' WHERE `name` = '$creature_name'");
@@ -606,11 +782,11 @@
               $result = $sql->fetchObject();
 
               if ($result != false) {
-                  debug_to_console("Found a flora");
+                  
 
                   //get the current id for the item
                   $flora_name = $result->name;
-                  debug_to_console("flora is: $flora_name");
+                  
 
 
                   $sql = $conn->prepare("UPDATE `flora` SET `parent_planet` = '$name' WHERE `name` = '$flora_name'");
@@ -647,7 +823,7 @@
               $creature_limit = $result->creatures;
               }
       
-      debug_to_console( "Delete moon activated" );
+      
       
       $id_type = "id";
       $name_column = "name";
@@ -768,7 +944,7 @@
                   
                   //get the current id for the item
                   $creature_name = $result->name;
-                  debug_to_console( "Found Creature on $name: $creature_name" );
+                  
               
               
               
@@ -791,7 +967,7 @@
                   
                   //get the current id for the item
                   $flora_name = $result->name;
-                  debug_to_console( "Found Flora on $name: $flora_name" );
+                  
               
               
               delete_flora("flora", $flora_name);
@@ -830,9 +1006,9 @@
               }
               
               // Create the new limit for the database
-              debug_to_console( "Current Moon Limit: $moon_limit" );
+              
               $new_limit = $moon_limit - 1;
-              debug_to_console( "New Moon Limit: $new_limit" );
+              
               //Update the limit 
               $sql = $conn->prepare("UPDATE `limits` SET `$database` = '$new_limit' WHERE `id` = '1'");
               $sql->execute();
@@ -861,7 +1037,7 @@
               }
       
       
-      debug_to_console("Deleting $name");
+      
       
       
       $id_type = "id";
@@ -1041,7 +1217,7 @@
   
   // <editor-fold defaultstate="collapsed" desc="Delete Flora">
   function delete_flora($database , $name){
-      debug_to_console("Deleting $name");
+      
       global $conn;
       $limit_id = 1;
       $sql = $conn->prepare("SELECT * FROM `limits` WHERE `id` = :id");
