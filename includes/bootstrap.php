@@ -271,6 +271,16 @@
 </script>";
           }
           
+          if($link_id == 9){
+              echo "
+                  <script type='text/javascript'>
+    $(window).load(function()
+{
+    $('#star_system_edit_modal').modal('show');
+});
+</script>";
+          }
+          
           
 // <editor-fold defaultstate="collapsed" desc="Nav Bar">?>
         
@@ -380,6 +390,103 @@
                     
         ////////////////////////////// EDIT MODALS /////////////////////////////////--> 
         
+          // <editor-fold defaultstate="collapsed" desc="Star System edit modal">
+  
+  ?>
+                  
+                  <div class="modal fade" id="star_system_edit_modal" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel5" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <h1 id="title_id"> Edit Star System </h1>
+     
+                    <div id="formDiv">
+                    <form method="post" action="item.php?database_type=<?= $edit_table; ?>&item_id=<?= $edit_id; ?>">
+                        <input style="display: none;"  name="edit_object_id" value="<?= $edit_id;?>">
+                        <input style="display: none;"  name="edit_star_original_image" value="<?= $edit_var4;?>">
+                            <input id="ship_input" class="form-control" type="text" name="edit_star_system_name" value="<?= $edit_var1;?>" placeholder="name">
+                            <br><br>
+                            
+                            <h4> Star Type: </h4>
+                                <select name="edit_star_system_type" class="form-control"id="dropdownMenu1">
+                                    <option value="<?= $edit_var2;?>">Current <?= $edit_var2;?></option>
+                                    <option value="Binary">Binary</option>
+                                    <option value="Dwarf">Dwarf</option>
+                                    <option value="Giant">Giant</option>
+                                    <option value="Neutron">Neutron</option>
+                                    <option value="Pulsar">Pulsar</option>
+                                    <option value="Supergiant">Supergiant</option>
+                                </select>
+                                <br>
+                                <h4> Star Colour: </h4>
+                                <select name="edit_star_system_colour" class="form-control"id="dropdownMenu1">
+                                    <option value="<?= $edit_var3;?>">Current <?= $edit_var3;?></option>
+                                    <option value="Red">Red</option>
+                                    <option value="Orange">Orange</option>
+                                    <option value="Yellow">Yellow</option>
+                                    <option value="White">White</option>
+                                    <option value="Blue">Blue</option>
+                                </select>
+                                <br>
+                            
+                            
+                            
+                                    <br><br>
+                                    <h4> Select image to upload: </h4>
+                                <input class="btn btn-primary form-control" type="file" name="edit_star_system_main_image" id="fileToUpload">
+                                <br>
+                                    
+                                    
+                                    
+                                    
+                                    
+                            </div>
+                        
+                    <br>
+                        <?php
+                          if (isset($_POST['edit_star_system_submit'])) {
+                              
+                              //save what is entered
+                              $edit_var1 = $_POST['edit_star_system_name'];
+                              $edit_var2 = $_POST['edit_star_system_type'];
+                              $edit_var3 = $_POST['edit_star_system_colour'];
+                              $edit_var4 = $_POST['edit_star_system_main_image'];
+                              $edit_var5 = $_POST['edit_object_id'];
+                              $original_image = $_POST['edit_star_original_image'];
+                              
+                              if($edit_var4 == NULL){
+                                  $edit_var4 = $original_image;
+                              }
+                              
+                              
+                              edit_star_system($edit_var1, $edit_var2, $edit_var3, $edit_var4, $edit_var5);
+                              
+//                              $sql = $conn->prepare("UPDATE `test2` SET `name` = '$edit_var4' WHERE `planet_id` = '3'");
+//              $sql->execute();
+//              
+//              $sql = $conn->prepare("UPDATE `test2` SET `enviroment` = '$edit_var2' WHERE `planet_id` = '3'");
+//              $sql->execute();
+              
+              
+                          
+                          }
+                              ?>
+                          
+                    
+                    
+                    
+                    <input class="btn btn-success" id="submit_button" type="submit" name="edit_star_system_submit" value="Confirm">
+                    
+                    
+                    
+                </div>
+                </div>
+                </div>
+        
+                
+                  <?php
+                    // </editor-fold>
+          
           // <editor-fold defaultstate="collapsed" desc="Planet edit modal">
   
   ?>
