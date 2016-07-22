@@ -36,11 +36,12 @@
 
 <?php
 
-$current_page = "index";
+
   require_once('C:\xampp\htdocs\no_mans_sky\includes\db.php');
   require_once('C:\xampp\htdocs\no_mans_sky\includes\db_checking.php');
   require_once('C:\xampp\htdocs\no_mans_sky\includes\edit_and_delete_functions.php');
   require_once('C:\xampp\htdocs\no_mans_sky\includes\bootstrap.php');
+  $current_url = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
   global $planet_limit;
   global $moon_limit;
   global $creature_limit;

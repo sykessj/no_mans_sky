@@ -7,7 +7,10 @@
   global $star_system_limit;
   global $planet_limit;
   global $moon_limit;
+  
   $moon_star = "this is not really working";
+  $current_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+//  debug_to_console("Current URL: $current_url");
   
   $link_id = 0;
   $edit_name = "none";
@@ -184,6 +187,25 @@
                background: url("images/background3.jpg");
            }
            
+           /* STATISTICS MODAL */
+           
+           #stat_text{
+               margin-top: 10px;
+               margin-bottom: 10px;
+               font-family: noMansFont;
+               font-weight: bold;
+               font-size: 25pt;
+           }
+           
+           #progress_low::-webkit-progress-value {
+    background: linear-gradient(to right, #ff0000, #ff3333);}
+           #progress_medium::-webkit-progress-value {
+    background: linear-gradient(to right, #ffa600, #ffc966);;}
+           #progress_high::-webkit-progress-value {
+    background: linear-gradient(to right, #00e600, #4dff4d);}
+           #progress_complete::-webkit-progress-value {
+    background: linear-gradient(to right, #00e6e6, #4dffff);}
+           
           
 /*style="color: white; font-family: noMansFont; font-size: 14pt;*/
 
@@ -299,8 +321,9 @@
             <div class="container-fluid">
                 <ul id="nav" class="nav navbar-nav">
                     <li><a id="nav_links" href="index.php">Home</a></li>
-                    <li><a id="nav_links" href="#">Statistics</a></li>
-                    <li><a id="nav_links" href="#">Media</a></li>
+                    <li><a id="nav_links" href="" data-toggle="modal" data-target="#stats_modal">Statistics</a></li>
+                    <li><a id="nav_links" href="" data-toggle="modal" data-target="#goals_modal">Goals</a></li>
+                    <li><a id="nav_links" href="display_media.php?media_type=links">Media</a></li>
                     <li class="dropdown">
                         <a id="nav_links" href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">View <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -388,6 +411,7 @@
                                   }
                                 ?>
                             </li>
+                            <li><a href="" data-toggle="modal" data-target="#media_modal">Media</a></li>
                             
                         </ul>
                     </li>
@@ -2416,6 +2440,77 @@
                 
                 <?php
                     // </editor-fold>
+                  
+                  // <editor-fold defaultstate="collapsed" desc="Ship Modal">
+  
+  ?>
+                
+                
+                <!--//////////////////////////////////////// MEDIA MODAL  ////////////////////////////////////////////// -->
+                
+                <div class="modal fade" id="media_modal" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel5" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <h1 id="title_id"> Add Media </h1>
+
+                    <?php
+                      debug_to_console("Current URl 1 : $current_url");
+                      $media_name = "";
+                      $media_type = "";
+                      $media_file = "";
+
+
+                      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                          debug_to_console("Current URl 2 : $current_url");
+                         if (empty($_POST["media_name"])) {
+                              $media_name = "";
+                          } else {$media_name = test_input($_POST["media_name"]);}
+                          
+                          if (empty($_POST["media_type"])) {
+                              $media_type = "";
+                          } else {$media_type = test_input($_POST["media_type"]);}
+                          
+                          if (empty($_POST["media_file"])) {
+                              $media_file = "";
+                          } else {$media_file = test_input($_POST["media_file"]);}
+                          
+                          
+                          add_media($media_name , $media_type , $media_file, $current_url);
+                      }
+                    ?>
+                    <div id="formDiv">     
+                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">  
+                            <input id="ship_input" class="form-control" type="text" name="media_name" value="" placeholder="name">
+                            <br><br>
+                            <h4> Ship Type: </h4>
+                                    <!-- ENTER SHIP INFORMATION -->
+                                        <select name="media_type" class="form-control" id="dropdownMenu1">
+                                        <option value="image">Image</option>
+                                        <option value="video">Video</option>
+                                        
+                                    </select>
+                                    <br><br>
+                                    <h4> Select file to upload: </h4>
+                                <input class="btn btn-primary form-control" type="file" name="media_file" id="fileToUpload">
+                                <br>
+                                    
+                                    
+                                    
+                                    
+                                    
+                            </div>
+
+                            <input class="btn btn-success" id="submit_button1" type="submit" name="submit5" value="Submit" >  
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+                
+                <?php
+                    // </editor-fold>
                     ?>
                 
                 
@@ -2735,6 +2830,162 @@ $('#moon_modal').modal('show');
                     
                     <input class="btn btn-success" id="submit_button" type="submit" name="submit_flora" value="Continue">
                     </form>
+                    
+                    
+                </div>
+                </div>
+                </div>
+                                 
+                                 <?php
+                    // </editor-fold>
+                    ?>
+                                 
+                                 
+                                 <!--////////////////////////////// STATISTICS MODAL ////////////////////////////////////////// -->
+                                 
+                                 <?php
+        // <editor-fold defaultstate="collapsed" desc="STATISTICS MODAL">
+                                   
+  
+  ?>
+                                 <!--/////////////////////////////////// STATS ////////////////////////////////// -->
+                     
+                     
+                     
+                     <div  style="width: 1930px;" class="modal fade" id="stats_modal" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel5" aria-hidden="true">
+            <div style=" margin-left:auto; margin-right: 1000px;  width: 455px;" class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <h1 style="font-family:noMansFont; font-size: 40pt; font-weight: bold;" id="title_id"> S T A T S </h1>
+     
+                    <div  class="container">
+                        
+                        <?php
+                          
+                          
+                          $stat_count = 10;
+                          $stat_number = 1;
+                          
+                          while($stat_number <= $stat_count){
+                          
+                          $stat_array = get_stat($stat_number);
+                          $stat_name = $stat_array[0];
+                          $stat_value = $stat_array[1];
+                          ?>
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 id="stat_text"><?= $stat_name; ?></h3>
+                            </div>
+                            <div >
+                            <h3 id="stat_text"><?= $stat_value; ?></h3>
+                            </div>
+                        </div>
+                          <?php 
+                            $stat_number++;
+                          }
+                          ?>
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                    
+                </div>
+                </div>
+                </div>
+                                 
+                                 <?php
+                    // </editor-fold>
+                    
+                                 
+                                 
+                                 
+        // <editor-fold defaultstate="collapsed" desc="Goals MODAL">
+                                   
+  
+  ?>
+                                 <!--/////////////////////////////////// Goals ////////////////////////////////// -->
+                     
+                     
+                     
+                     <div   class="modal fade" id="goals_modal" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel5" aria-hidden="true">
+            <div  class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                        <h1 style="font-family:noMansFont; font-size: 40pt; font-weight: bold; margin-bottom: 40px;" id="title_id"> G O A L S </h1>
+     
+                    <div  class="container">
+                        
+                        <?php
+                          
+                          $progress_number = 1;
+                          $progress_count = 31;
+                          while($progress_number <= $progress_count){
+                          $progress_data = get_progress($progress_number);
+                          $goal_title = $progress_data[0];
+                          $current_amount = $progress_data[1];
+                          $goal_amount = $progress_data[2];
+                          $percentage = ($current_amount / $goal_amount) * 100;
+                          if($current_amount > $goal_amount){
+                              $current_amount = $goal_amount;
+                          }
+                          $display_amount = "$current_amount / $goal_amount";
+                          
+                          $display = "";
+                          
+                          if($goal_title == "break"){
+                              $display = "display: none;";
+                              $goal_title = " ";
+                              $display_amount = " ";
+                              
+                          }
+                          
+                          else if($percentage <= 25){
+                          $progress_id = "progress_low";
+                          }
+                          else if($percentage <= 75){
+                              $progress_id = "progress_medium";
+                          }
+                          else if($percentage <= 99){
+                              $progress_id = "progress_high";
+                          }
+                          else if($percentage >= 100){
+                              $progress_id = "progress_complete";
+                          }
+                          
+                          
+                          
+                          ?>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3 style="text-align: center; margin-bottom: 0px;" id="stat_text"><?= $goal_title; ?></h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                                <p3 style="text-align: center; margin-left: 10px; margin-top: 0px;" id="stat_text"><?= $display_amount; ?></p3>
+                        </div>
+                        <div class="row">
+                                <progress id="<?= $progress_id; ?>" style="<?= $display; ?> width: 50%; margin-left: 7px;" class="progress progress-danger" value="<?= $current_amount; ?>" max="<?= $goal_amount; ?>">75%</progress>
+                        </div>
+                        
+                        <?php
+                          $progress_number++;
+                          
+                          }?>
+                        
+                        
+                        
+                        
+                        </div>
+                          
+                        
+                        
+                        
+                        
+                    </div>
                     
                     
                 </div>

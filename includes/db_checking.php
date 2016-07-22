@@ -748,6 +748,76 @@ function add_ship($ship_name, $ship_type, $ship_main_image){
 }}
 
 // </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="Add Media">
+        
+/////////////////////////////  ADD Media /////////////////////////////////////////////////////
+
+function add_media($media_name, $media_type, $media_file,  $current_url){
+    
+    global $conn;
+    global $media_limit;
+    
+    
+    
+    
+    
+    if($media_name != NULL){
+    
+    $sql = $conn->prepare("SELECT * FROM `media` WHERE `id` = :id");
+              $sql->bindParam('id', $media_limit, PDO::PARAM_INT);
+              $sql->execute();
+
+              $result = $sql->fetchObject();
+              //check the result is real
+              if($result != false){
+              
+              $last_name = $result->name;
+              
+              if ($last_name != $media_name){
+                  //Add to database
+                  //Update star limit
+                  
+              //insert the record into the galaxy table
+                  
+                  $new_limit = $media_limit + 1;
+                $sql = "INSERT INTO media (name, type, file)
+                        VALUES ('$media_name', '$media_type', '$media_file')";
+    
+                $conn->exec($sql);
+                
+                $sql = $conn->prepare("UPDATE `limits` SET `media` = '$new_limit' WHERE `id` = '1'");
+              $sql->execute();
+
+              
+              
+              }
+              else{ //Dont add to database)
+                  }
+              }
+              
+              if($result == false){
+                  //add to database
+                  
+                  //Update star limit
+                  $new_limit = $media_limit + 1;
+              //insert the record into the galaxy table
+                $sql = "INSERT INTO media (name, type, file)
+                        VALUES ('$media_name', '$media_type', '$media_file')";
+    
+                $conn->exec($sql);
+                
+                $sql = $conn->prepare("UPDATE `limits` SET `media` = '$new_limit' WHERE `id` = '1'");
+              $sql->execute();
+              
+              
+              
+              
+                  
+              }
+}}
+
+// </editor-fold>
     
 // <editor-fold defaultstate="collapsed" desc="Sort Table">
 /////////////////////// SORTING ALGORITHMS ////////////////////////////////////
@@ -829,6 +899,115 @@ function sort_table($table , $limit , $id_column , $order_column , $direction){
 
     echo $output;
 }
+
+function get_stat($stat_number){
+    global $conn;
+    global $galaxy_limit;
+    global $star_system_limit;
+    global $planet_limit;
+    global $moon_limit;
+    global $creature_limit;
+    global $flora_limit;
+    global $ship_limit;
+    
+    $total_discoveries = $galaxy_limit + $star_system_limit + $planet_limit + $moon_limit + $creature_limit + $flora_limit + $ship_limit;
+    
+    $stat_array = array();
+    $stat_name = "nothing found";
+    $stat_value = "nothing found";
+    switch($stat_number){
+        
+        case "1": $stat_name = "Total Discoveries"; $stat_value = $total_discoveries; break;
+        case "2": $stat_name = " "; $stat_value = " "; break;
+        case "3": $stat_name = "Galaxies"; $stat_value = $galaxy_limit; break;
+        case "4": $stat_name = "Star Systems"; $stat_value = $star_system_limit; break;
+        case "5": $stat_name = "Celestial Bodies"; $stat_value = $planet_limit + $moon_limit; break;
+        case "6": $stat_name = "Planets"; $stat_value = $planet_limit; break;
+        case "7": $stat_name = "Moons"; $stat_value = $moon_limit; break;
+        case "8": $stat_name = "Creatures"; $stat_value = $creature_limit; break;
+        case "9": $stat_name = "Flora"; $stat_value = $flora_limit; break;
+        case "10": $stat_name = "Ships"; $stat_value = $ship_limit; break;
+        
+        
+        
+        default:
+            echo "Stat not found";
+    }
+    
+    array_push($stat_array, $stat_name, $stat_value);
+    
+    return $stat_array;
+}
+
+function get_progress($stat_number){
+    global $conn;
+    global $galaxy_limit;
+    global $star_system_limit;
+    global $planet_limit;
+    global $moon_limit;
+    global $creature_limit;
+    global $flora_limit;
+    global $ship_limit;
+    
+    $total_worlds = $planet_limit + $moon_limit;
+    
+    global $planet_info_array;
+    
+    
+    $total_discoveries = $galaxy_limit + $star_system_limit + $planet_limit + $moon_limit + $creature_limit + $flora_limit + $ship_limit;
+    
+    $stat_array = array();
+    $stat_name = "nothing found";
+    $stat_value = 0;
+    $stat_goal = 0;
+    switch($stat_number){
+        
+        case "1": $stat_name = "Discover 50 Worlds"; $stat_value = $total_worlds; $stat_goal = 50; break;
+        case "2": $stat_name = "Discover 500 Worlds"; $stat_value = $total_worlds; $stat_goal = 500; break;
+        case "3": $stat_name = "Discover 1000 Worlds"; $stat_value = $total_worlds; $stat_goal = 1000; break;
+        case "4": $stat_name = "break"; $stat_value = 10; $stat_goal = 100; break;
+        case "5": $stat_name = "break"; $stat_value = 10; $stat_goal = 100; break;
+        case "6": $stat_name = "Discover 30 Creatures"; $stat_value = $creature_limit; $stat_goal = 30; break;
+        case "7": $stat_name = "Discover 300 Creatures"; $stat_value = $creature_limit; $stat_goal = 300; break;
+        case "8": $stat_name = "Discover 1000 Creatures"; $stat_value = $creature_limit; $stat_goal = 1000; break;
+        case "9": $stat_name = "break"; $stat_value = 10; $stat_goal = 100; break;
+        case "10": $stat_name = "break"; $stat_value = 10; $stat_goal = 100; break;
+        case "11": $stat_name = "Discover 20 Flora"; $stat_value = $flora_limit; $stat_goal = 20; break;
+        case "12": $stat_name = "Discover 200 Flora"; $stat_value = $flora_limit; $stat_goal = 200; break;
+        case "13": $stat_name = "Discover 1000 Flora"; $stat_value = $flora_limit; $stat_goal = 1000; break;
+        case "14": $stat_name = "break"; $stat_value = 10; $stat_goal = 100; break;
+        case "15": $stat_name = "break"; $stat_value = 10; $stat_goal = 100; break;
+        case "16": $stat_name = "Discover 2 Galaxies"; $stat_value = $galaxy_limit; $stat_goal = 2; break;
+        case "17": $stat_name = "Discover 20 Star Systems"; $stat_value = $star_system_limit; $stat_goal = 20; break;
+        case "18": $stat_name = "Issue 10 Ships"; $stat_value = $ship_limit; $stat_goal = 10; break;
+        case "19": $stat_name = "break"; $stat_value = 10; $stat_goal = 100; break;
+        case "20": $stat_name = "break"; $stat_value = 10; $stat_goal = 100; break;
+        case "21": $stat_name = "Discover 20 Baron Worlds"; $stat_value = $planet_info_array[4]; $stat_goal = 20; break;
+        case "22": $stat_name = "Discover 20 Worlds with Complex Life"; $stat_value = $planet_info_array[3]; $stat_goal = 20; break;
+        case "23": $stat_name = "break"; $stat_value = 10; $stat_goal = 100; break;
+        case "23": $stat_name = "break"; $stat_value = 10; $stat_goal = 100; break;
+        case "24": $stat_name = "Discover 20 Toxic Atmospheres"; $stat_value = $planet_info_array[0]; $stat_goal = 20; break;
+        case "25": $stat_name = "Discover 20 Extreme Heat Atmospheres"; $stat_value = $planet_info_array[1]; $stat_goal = 20; break;
+        case "26": $stat_name = "Discover 20 Extreme Cold Atmospheres"; $stat_value = $planet_info_array[2]; $stat_goal = 20; break;
+        case "27": $stat_name = "break"; $stat_value = 10; $stat_goal = 100; break;
+        case "28": $stat_name = "break"; $stat_value = 10; $stat_goal = 100; break;
+        case "29": $stat_name = "Discover 20 Huge Worlds"; $stat_value = $planet_info_array[5]; $stat_goal = 20; break;
+        case "30": $stat_name = "Discover 20 Tiny Worlds"; $stat_value = $planet_info_array[6]; $stat_goal = 20; break;
+        case "31": $stat_name = "Discover 5 Worlds Rated 10/10"; $stat_value = $planet_info_array[7]; $stat_goal = 5; break;
+        
+        
+        
+        default:
+            echo "Stat not found";
+    }
+    
+    array_push($stat_array, $stat_name, $stat_value, $stat_goal);
+    
+    return $stat_array;
+}
+
+
+
 
 // debug_to_console( "Variable is: $variable" );
     
