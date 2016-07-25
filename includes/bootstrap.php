@@ -1,5 +1,23 @@
 <!DOCTYPE html>
 <?php
+  
+                          if (isset($_POST['search_submit'])) {
+                              
+                              //save what is entered
+                              $search_string = $_POST['search_string'];
+                              
+                              
+                              
+//                             echo "<meta http-equiv='refresh' content='0; search_results.php?search_string=$search_string'>";
+                              $search_location = "search_results.php?search_string=$search_string";
+                             header('Location: '.$search_location);
+                              
+                       
+              
+              
+                          
+                          }
+                              
   require_once('C:\xampp\htdocs\no_mans_sky\includes\db.php');
   require_once('C:\xampp\htdocs\no_mans_sky\includes\db_checking.php');
   require_once('C:\xampp\htdocs\no_mans_sky\includes\edit_and_delete_functions.php');
@@ -9,7 +27,7 @@
   global $moon_limit;
   
   $moon_star = "this is not really working";
-  $current_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+  
 //  debug_to_console("Current URL: $current_url");
   
   $link_id = 0;
@@ -323,7 +341,7 @@
                     <li><a id="nav_links" href="index.php">Home</a></li>
                     <li><a id="nav_links" href="" data-toggle="modal" data-target="#stats_modal">Statistics</a></li>
                     <li><a id="nav_links" href="" data-toggle="modal" data-target="#goals_modal">Goals</a></li>
-                    <li><a id="nav_links" href="display_media.php?media_type=links">Media</a></li>
+                    <li><a id="nav_links" href="display_media_links.php">Media</a></li>
                     <li class="dropdown">
                         <a id="nav_links" href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">View <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -341,11 +359,14 @@
 
                 </ul>
                 <ul id="nav2" class="nav navbar-nav navbar-right">
-                    <form class="navbar-form navbar-left" role="search">
+                    <form class="navbar-form navbar-left" method="post" >
+                        
+                         
+                        
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
+                            <input style="font-family: noMansFont; font-size: 14pt" type="text" name="search_string" class="form-control" placeholder="Search">
                         </div>
-                        <button   type="submit" class="btn btn-default">Search</button>
+                        <input style="color: black; background: white; font-family: noMansFont; font-size: 12pt; font-weight: bold;" class="btn" type="submit" name="search_submit" value="Search">
                     </form>
 
                     <li class="dropdown">
@@ -437,6 +458,7 @@
                     <form method="post" action="item.php?database_type=<?= $edit_table; ?>&item_id=<?= $edit_id; ?>">
                         <input style="display: none;"  name="edit_object_id" value="<?= $edit_id;?>">
                             <input id="ship_input" class="form-control" type="text" name="edit_galaxy_name" value="<?= $edit_var1;?>" placeholder="name">
+                    
                             <br><br>   
                             </div>
                         
@@ -466,7 +488,7 @@
                     
                     
                     <input class="btn btn-success" id="submit_button" type="submit" name="edit_galaxy_submit" value="Confirm">
-                    
+           </form>
                     
                     
                 </div>
@@ -1196,12 +1218,14 @@
                                     <br>
                                     <h4> Select image to upload: </h4>
                                 <input class="btn btn-primary form-control" type="file" name="edit_flora_main_image" id="fileToUpload">
+                    </form>
                                     
                                     
                                     
                                     
                                     
                             </div>
+                    
                         
                     <br>
                         <?php
@@ -1292,7 +1316,9 @@
                     <div id="formDiv">     
                         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">  
                             <input id="galaxy_input" class="form-control" type="text" name="galaxy_name" value="" placeholder="name">
+                        
                             <br><br>
+                       
                             </div>
 
                             <input href="index.php?id=1" class="btn btn-success" id="submit_button" type="submit" name="submit" value="Submit" >  
@@ -2441,7 +2467,7 @@
                 <?php
                     // </editor-fold>
                   
-                  // <editor-fold defaultstate="collapsed" desc="Ship Modal">
+                  // <editor-fold defaultstate="collapsed" desc="Media Modal">
   
   ?>
                 
@@ -2455,14 +2481,15 @@
                     <h1 id="title_id"> Add Media </h1>
 
                     <?php
-                      debug_to_console("Current URl 1 : $current_url");
+                      
+                      
                       $media_name = "";
                       $media_type = "";
                       $media_file = "";
 
 
                       if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                          debug_to_console("Current URl 2 : $current_url");
+                          
                          if (empty($_POST["media_name"])) {
                               $media_name = "";
                           } else {$media_name = test_input($_POST["media_name"]);}
@@ -2476,7 +2503,7 @@
                           } else {$media_file = test_input($_POST["media_file"]);}
                           
                           
-                          add_media($media_name , $media_type , $media_file, $current_url);
+                          add_media($media_name , $media_type , $media_file);
                       }
                     ?>
                     <div id="formDiv">     

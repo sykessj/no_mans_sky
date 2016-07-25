@@ -58,8 +58,8 @@ VALUES ('$new_limit', '$name')";
 
           $sql = $conn->prepare("UPDATE `limits` SET `galaxy` = '$new_limit' WHERE `id` = '1'");
           $sql->execute();
-          echo "<meta http-equiv='refresh' content='0'>";
-      }
+          echo "<meta http-equiv='refresh' content='0; index.php'>";
+      }   
       
 }
 // </editor-fold>
@@ -144,7 +144,7 @@ function add_star($star_name, $star_type, $star_colour, $galaxy ,  $image){
               
               echo "<meta http-equiv='refresh' content='0'>";
                   
-              }
+              } echo "<meta http-equiv='refresh' content='0; index.php'>"; 
     }
     
     
@@ -256,7 +256,7 @@ function add_planet($planet_name , $planet_star , $planet_enviroment , $planet_c
               
               echo "<meta http-equiv='refresh' content='0'>";
                   
-              }
+              } echo "<meta http-equiv='refresh' content='0; index.php'>"; 
     }
     
 }
@@ -385,7 +385,7 @@ function add_moon($moon_name , $moon_star, $moon_parent , $moon_enviroment , $mo
               
               echo "<meta http-equiv='refresh' content='0'>";
                   
-              }
+              } echo "<meta http-equiv='refresh' content='0; index.php'>"; 
     }
     
     
@@ -537,7 +537,7 @@ function add_creature($creature_name , $creature_planet , $creature_life_type , 
               
               echo "<meta http-equiv='refresh' content='0'>";
                   
-    }
+    } echo "<meta http-equiv='refresh' content='0; index.php'>"; 
         }}
         // </editor-fold>
 
@@ -676,9 +676,9 @@ function add_flora($flora_name , $flora_planet , $flora_size , $flora_diet
               $sql->execute();
               
               
-              echo "<meta http-equiv='refresh' content='0'>";
+              
                   
-    }
+    } echo "<meta http-equiv='refresh' content='0; index.php'>"; 
         }}
         // </editor-fold>
            
@@ -742,9 +742,9 @@ function add_ship($ship_name, $ship_type, $ship_main_image){
               
               
               
-              echo "<meta http-equiv='refresh' content='0'>";
+              
                   
-              }
+              } echo "<meta http-equiv='refresh' content='0; index.php'>"; 
 }}
 
 // </editor-fold>
@@ -753,10 +753,11 @@ function add_ship($ship_name, $ship_type, $ship_main_image){
         
 /////////////////////////////  ADD Media /////////////////////////////////////////////////////
 
-function add_media($media_name, $media_type, $media_file,  $current_url){
+function add_media($media_name, $media_type, $media_file){
     
     global $conn;
     global $media_limit;
+    
     
     
     
@@ -813,9 +814,15 @@ function add_media($media_name, $media_type, $media_file,  $current_url){
               
               
               
+              
+              
                   
               }
-}}
+
+           echo "<meta http-equiv='refresh' content='0; index.php'>";   
+              }
+              
+              }
 
 // </editor-fold>
     
