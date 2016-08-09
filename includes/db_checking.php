@@ -897,6 +897,7 @@ function sort_table($table , $limit , $id_column , $order_column , $direction){
     
     // </editor-fold>
     
+// <editor-fold defaultstate="collapsed" desc="Debug to console">
     function debug_to_console( $data ) {
 
     if ( is_array( $data ) )
@@ -907,6 +908,9 @@ function sort_table($table , $limit , $id_column , $order_column , $direction){
     echo $output;
 }
 
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="Get Stat">
 function get_stat($stat_number){
     global $conn;
     global $galaxy_limit;
@@ -935,6 +939,9 @@ function get_stat($stat_number){
         case "9": $stat_name = "Flora"; $stat_value = $flora_limit; break;
         case "10": $stat_name = "Ships"; $stat_value = $ship_limit; break;
         
+    
+        
+        
         
         
         default:
@@ -946,6 +953,9 @@ function get_stat($stat_number){
     return $stat_array;
 }
 
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="Get Progress">
 function get_progress($stat_number){
     global $conn;
     global $galaxy_limit;
@@ -1012,6 +1022,164 @@ function get_progress($stat_number){
     
     return $stat_array;
 }
+
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="Get Fact">
+function get_fact($fact_number){
+    global $conn;
+    global $galaxy_limit;
+    global $star_system_limit;
+    global $planet_limit;
+    global $moon_limit;
+    global $creature_limit;
+    global $flora_limit;
+    global $ship_limit;
+    
+    $total_worlds = $planet_limit + $moon_limit;
+    
+    global $planet_info_array;
+    
+    
+    $total_discoveries = $galaxy_limit + $star_system_limit + $planet_limit + $moon_limit + $creature_limit + $flora_limit + $ship_limit;
+    
+    $fact_name = "Error! Fact Not Found";
+    switch($fact_number){
+        
+        case "1": $fact_name = "You Have Logged $total_discoveries Items."; break;
+        case "2": $fact_name = "You Have Travelled Through $galaxy_limit Galaxies"; break;
+        case "3": $fact_name = "You Have Come Across $star_system_limit Star Systems"; break;
+        case "4": $fact_name = "You Have Touched Down on $moon_limit Moons"; break;
+        case "5": $fact_name = "You Have Discovered $planet_limit Planets"; break;
+        case "6": $fact_name = "You Have Found $total_worlds Worlds"; break;
+        case "7": $fact_name = "You Have Seen $creature_limit Creatures"; break;
+        case "8": $fact_name = "You Have Analysed $flora_limit Flora."; break;
+        case "9": $fact_name = "You Have Issued $ship_limit Ships."; break;
+        case "10": $fact_name = "You Have Survived $planet_info_array[0] Toxic Enviroments."; break;
+        case "11": $fact_name = "You Have Sweltered in Extreme Heat $planet_info_array[1] Times."; break;
+        case "12": $fact_name = "You Have Frozen in $planet_info_array[2] Extremely Cold Enviroments."; break;
+        case "13": $fact_name = "You Have Set Down on $planet_info_array[3] Worlds With Complex Life."; break;
+        case "14": $fact_name = "You Have Enjoyed Some Peace on $planet_info_array[4] Baron Worlds."; break;
+        case "15": $fact_name = "You Have Been Overwhelmed By $planet_info_array[5] Huge Worlds."; break;
+        case "16": $fact_name = "You Have Been Whelmed By $planet_info_array[6] Tiny Worlds."; break;
+        case "17": $fact_name = "You Have Been Amazed By $planet_info_array[7] Perfect Worlds."; break;
+        
+        
+        
+        
+        default:
+            
+    }
+    
+    return $fact_name;
+}
+
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="Random Discovery">
+function random_discovery($discovery_number){
+    global $conn;
+    global $galaxy_limit;
+    global $star_system_limit;
+    global $planet_limit;
+    global $moon_limit;
+    global $creature_limit;
+    global $flora_limit;
+    global $ship_limit;
+    $table = " ";
+    
+    if($flora_limit != 0){
+    
+    $item_array = array();
+    switch($discovery_number){
+        
+        case "1": $table = "galaxy"; $id = mt_rand(1,$galaxy_limit); break;
+        case "2": $table = "star_systems"; $id = mt_rand(1,$star_system_limit); break;
+        case "3": $table = "planets"; $id = mt_rand(1,$planet_limit); break;
+        case "4": $table = "moons"; $id = mt_rand(1,$moon_limit); break;
+        case "5": $table = "creatures"; $id = mt_rand(1,$creature_limit); break;
+        case "6": $table = "flora"; $id = mt_rand(1,$flora_limit); break;
+        case "7": $table = "ships"; $id = mt_rand(1,$ship_limit); break;
+            
+            break;
+        
+        
+        
+        
+        
+        default:
+            
+    }
+    
+    array_push($item_array, $table, $id);
+    
+    return $item_array;
+}
+}
+
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="Random Discovery">
+
+function backup_tables($host,$user,$pass,$name,$tables = '*')
+{
+	
+    global $conn;
+	$link = $conn;
+	mysql_select_db($name,$link);
+	
+	//get all of the tables
+	if($tables == '*')
+	{
+		$tables = array();
+		$result = mysql_query('SHOW TABLES');
+		while($row = mysql_fetch_row($result))
+		{
+			$tables[] = $row[0];
+		}
+	}
+	else
+	{
+		$tables = is_array($tables) ? $tables : explode(',',$tables);
+	}
+	
+	//cycle through
+	foreach($tables as $table)
+	{
+		$result = mysql_query('SELECT * FROM '.$table);
+		$num_fields = mysql_num_fields($result);
+		
+		$return.= 'DROP TABLE '.$table.';';
+		$row2 = mysql_fetch_row(mysql_query('SHOW CREATE TABLE '.$table));
+		$return.= "\n\n".$row2[1].";\n\n";
+		
+		for ($i = 0; $i < $num_fields; $i++) 
+		{
+			while($row = mysql_fetch_row($result))
+			{
+				$return.= 'INSERT INTO '.$table.' VALUES(';
+				for($j=0; $j < $num_fields; $j++) 
+				{
+					$row[$j] = addslashes($row[$j]);
+					$row[$j] = ereg_replace("\n","\\n",$row[$j]);
+					if (isset($row[$j])) { $return.= '"'.$row[$j].'"' ; } else { $return.= '""'; }
+					if ($j < ($num_fields-1)) { $return.= ','; }
+				}
+				$return.= ");\n";
+			}
+		}
+		$return.="\n\n\n";
+	}
+	
+	//save file
+	$handle = fopen('db-backup-'.time().'-'.(md5(implode(',',$tables))).'.sql','w+');
+	fwrite($handle,$return);
+	fclose($handle);
+}
+
+// </editor-fold>
+
+
 
 
 

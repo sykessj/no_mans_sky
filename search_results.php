@@ -361,7 +361,7 @@ while($id <= $limit){
 arsort($entry_array);
 $no_results = count($entry_array);
 ?>
-    <h1 id="outline" style="margin-bottom: 30px; font-family: noMansFont; font-size: 30pt; font-weight: bold; color: white; " > <?= $no_results; ?> Results For <?= $original_search; ?>:</h1>
+    <h1 id="outline" style="margin-bottom: 30px; font-family: noMansFont; font-size: 30pt; font-weight: bold; color: white; " > <?= $no_results; ?> Results Found For '<?= $original_search; ?>'</h1>
     <?php
 //For each item in the array - Do This
 foreach ($entry_array as $key => $val){
@@ -427,10 +427,19 @@ $sql = $conn->prepare("SELECT * FROM `$type` WHERE `$id_text` = :id");
 
 $image_location = "images/$type/$image";
 
+if($type == "galaxy"){
+    $image_location = "images/galaxy.jpg";
+}
+
 if($type == "planets" OR $type == "moons"){
     $folder = $name;
     $image_location = "images/$type/$folder/$image";
 }
+
+if($image == NULL){
+    $image_location = "images/image_not_found.jpg";
+}
+
 ?>
     
     
@@ -443,7 +452,7 @@ if($type == "planets" OR $type == "moons"){
     
     </div>
     <div class="col-md-6" style="margin-left: 40px;">
-        <a href="item.php?database_type=<?= $type; ?>&item_id=<?= $id; ?>" ><h1 style="font-family: noMansFont;font-size: 40pt; color: white;" ><?= $name; ?></h1></a>
+        <a href="item.php?database_type=<?= $type; ?>&item_id=<?= $id; ?>" style="color: white;" ><h1 style="font-family: noMansFont;font-size: 40pt; color: white;" ><?= $name; ?></h1></a>
     <h2 style="font-family: noMansFont;font-size: 15pt; color: white;" ><?= $type_display; ?></h2>
     <h2 style="font-family: noMansFont;font-size: 10pt; color: white;" ><?= $percent; ?>% Match</h2>
     

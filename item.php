@@ -435,7 +435,8 @@
                   $find_image2 = "images/$table/$name/$extra_image2";
                   ?>
                 
-                  <h1 style="text-align: center; font-family: noMansFont; font-size: 60pt; color: white" > <?= $name ?></h1>
+                  <h1 style="text-align: center; font-family: noMansFont; font-size: 60pt; color: white" ><?= $name ?></h1>
+                  <h2 style="text-align: center; font-family: noMansFont; font-size: 20pt; color: white; margin-top: 0px;" >Planet</h2>
                   <a data-toggle="modal" data-target="#delete_modal" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Delete</a>
                   <a href="item.php?database_type=<?= $table; ?>&item_id=<?= $object_id; ?>&id=8&edit_var1=<?= $name ?>&edit_var2=<?= $enviroment ?>&edit_var3=<?= $climate ?>&edit_var4=<?= $life_type; ?>&edit_var5=<?= $size; ?>&edit_var6=<?=$sentinals ?>&edit_var7=<?=$minerals ?>&edit_var8=<?=$rating ?>&edit_var9=<?=$image ?>&edit_var10=<?=$extra_image ?>&edit_var11=<?=$extra_image2 ?>&edit_id=<?= $object_id; ?>&edit_table=<?= $table; ?>" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Edit</a>
                   <br>
@@ -692,7 +693,8 @@
                   $find_image2 = "images/$table/$name/$extra_image2";
                   ?>
                 
-                  <h1 style="text-align: center; font-family: noMansFont; font-size: 60pt; color: white" > <?= $name ?></h1>
+                  <h1 style="text-align: center; font-family: noMansFont; font-size: 60pt; color: white;" > <?= $name ?></h1>
+                  <h2 style="text-align: center; font-family: noMansFont; font-size: 20pt; color: white; margin-top: 0px;" > Moon</h2>
                   <a data-toggle="modal" data-target="#delete_modal" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Delete</a>
                   <a href="item.php?database_type=<?= $table; ?>&item_id=<?= $object_id; ?>&id=7&edit_var1=<?= $name ?>&edit_var2=<?= $enviroment ?>&edit_var3=<?= $climate ?>&edit_var4=<?= $life_type; ?>&edit_var5=<?= $size; ?>&edit_var6=<?=$sentinals ?>&edit_var7=<?=$minerals ?>&edit_var8=<?=$rating ?>&edit_var9=<?=$image ?>&edit_var10=<?=$extra_image ?>&edit_var11=<?=$extra_image2 ?>&edit_id=<?= $object_id; ?>&edit_table=<?= $table; ?>" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Edit</a>
                   <br>
@@ -835,7 +837,8 @@
                   $find_image = "images/$table/$image";
                   ?>
                 
-                  <h1 style="text-align: center; font-family: noMansFont; font-size: 60pt; color: white" > <?= $name ?></h1>
+                  <h1 style="text-align: center; font-family: noMansFont; font-size: 60pt; color: white; margin-bottom: 0px;" > <?= $name ?></h1>
+                  <h2 style="text-align: center; font-family: noMansFont; font-size: 20pt; color: white; margin-top: 0px;" > Creature</h2>
                   <a data-toggle="modal" data-target="#delete_modal" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Delete</a>
                   <a href="item.php?database_type=<?= $table; ?>&item_id=<?= $object_id; ?>&id=6&edit_var1=<?= $name ?>&edit_var2=<?= $life_type ?>&edit_var3=<?= $size ?>&edit_var4=<?= $rating; ?>&edit_var5=<?= $diet; ?>&edit_var6=<?=$image ?>&edit_id=<?= $object_id; ?>&edit_table=<?= $table; ?>" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Edit</a>
                   <br>
@@ -920,6 +923,7 @@
                   ?>
                 
                   <h1 style="text-align: center; font-family: noMansFont; font-size: 60pt; color: white" > <?= $name ?></h1>
+                  <h2 style="text-align: center; font-family: noMansFont; font-size: 20pt; color: white; margin-top: 0px;" >Flora</h2>
                   <a data-toggle="modal" data-target="#delete_modal" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Delete</a>
                   <a href="item.php?database_type=<?= $table; ?>&item_id=<?= $object_id; ?>&id=5&edit_var1=<?= $name ?>&edit_var2=<?= $diet ?>&edit_var3=<?= $size ?>&edit_var4=<?= $rating; ?>&edit_var5=<?= $image; ?>&edit_id=<?= $object_id; ?>&edit_table=<?= $table; ?>" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Edit</a>
                   <br>
@@ -972,6 +976,10 @@
                   $name = $result->name;
                   $type = $result->type;
                   $image = $result->main_image;
+                  $date_logged = $result->date_logged;
+                  $timestamp = strtotime($date_logged);
+                        $date_logged = date("H:ia  d/M/Y", $timestamp);
+                  
 //                  $date_logged = $result->date_logged;
 //                  $timestamp = strtotime($date_logged);
 //                        $date_logged = date("H:ia  d/M/Y", $timestamp);
@@ -987,6 +995,7 @@
                   ?>
                 
                   <h1 style="text-align: center; font-family: noMansFont; font-size: 60pt; color: white" > <?= $name ?></h1>
+                  <h2 style="text-align: center; font-family: noMansFont; font-size: 20pt; color: white; margin-top: 0px;" >Ship</h2>
                   <a data-toggle="modal" data-target="#delete_modal" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Delete</a>
                   <a href="item.php?database_type=<?= $table; ?>&item_id=<?= $object_id; ?>&id=4&edit_var1=<?= $name ?>&edit_var2=<?= $type ?>&edit_var3=<?= $image ?>&edit_id=<?= $object_id; ?>&edit_table=<?= $table; ?>" id="button1" class="btn btn-lg btn-success" style="background: url('images/pw_maze_black_2X.png'); float: right; margin-left: 10px; margin-right: 10px;">Edit</a>
                   <br>
@@ -999,7 +1008,7 @@
                          <div class="col-md-3">
                              <h1 id="stat"> Name: <?= $name ?></h1>
                       <h1 id="stat"> Type: <?= $type ?> </h1>
-                      <h1 id="stat"> Date Issued: Coming Soon</h1>
+                      <h1 id="stat"> Date Issued: <?= $date_logged ?> </h1>
                       
                   </div>
                       </div>
