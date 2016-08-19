@@ -6,8 +6,37 @@
 <style>
     
     
-    
-    
+    #captions{
+    font-family: noMansFont;
+     
+    text-shadow:
+                    /* Outline */
+                    -1px -1px 0 #000000,
+                    1px -1px 0 #000000,
+                    -1px 1px 0 #000000,
+                    1px 1px 0 #000000,  
+                    -2px 0 0 #000000,
+                    2px 0 0 #000000,
+                    0 2px 0 #000000,
+                    0 -2px 0 #000000;
+}
+#galaxy_dates{
+        text-align: center;
+        font-family: noMansFont;
+        color: white;
+        font-size: 28pt;
+       
+        text-shadow:
+                    /* Outline */
+                    -1px -1px 0 #000000,
+                    1px -1px 0 #000000,
+                    -1px 1px 0 #000000,
+                    1px 1px 0 #000000,  
+                    -2px 0 0 #000000,
+                    2px 0 0 #000000,
+                    0 2px 0 #000000,
+                    0 -2px 0 #000000;
+}
 
 #center_aligned{
         text-align: right;
@@ -15,17 +44,36 @@
         font-family: noMansFont;
         color: white;
         font-size: 35pt;
+        
+         text-shadow:
+                    /* Outline */
+                    -1px -1px 0 #000000,
+                    1px -1px 0 #000000,
+                    -1px 1px 0 #000000,
+                    1px 1px 0 #000000,  
+                    -2px 0 0 #000000,
+                    2px 0 0 #000000,
+                    0 2px 0 #000000,
+                    0 -2px 0 #000000;
     }
     
     #stat {
         font-family: noMansFont;
         font-size: 25pt;
         color: white !important;
+        
+         text-shadow:
+                    /* Outline */
+                    -1px -1px 0 #000000,
+                    1px -1px 0 #000000,
+                    -1px 1px 0 #000000,
+                    1px 1px 0 #000000,  
+                    -2px 0 0 #000000,
+                    2px 0 0 #000000,
+                    0 2px 0 #000000,
+                    0 -2px 0 #000000;
     }
     
-    body{
-        background-image: url("images/background3.jpg");
-    }
     
     #button1{
         background-image: url("images/background3.jpg");
@@ -65,6 +113,28 @@
   
   if (isset($_GET['delete'])) {
   $delete = $_GET['delete'];}
+  ?>
+    <style>
+  
+  <?php
+      if($table != "galaxy"){
+          ?>
+    body{
+        background-image: url("images/background3.jpg");
+    }
+    <?php
+      }
+      else{
+          ?>
+          body{
+        background: url(images/background3.jpg) no-repeat fixed ;
+    background-size: 245% 210%;
+    }<?php
+      }
+      ?>
+    </style>
+    <?php
+      
   
   
   
@@ -101,6 +171,122 @@
                   $no_moons = $result->no_moons;
                   $no_creatures = $result->no_creatures;
                   $no_flora = $result->no_flora;
+                  $date_logged = $result->date_logged;
+                  $timestamp = strtotime($date_logged);
+                        $date_logged = date("H:ia  d/M/Y", $timestamp);
+                        
+                        $time = time() - $timestamp;
+                        
+                     // <editor-fold defaultstate="collapsed" desc="Time in Galaxy method">  
+                        $time_array = array();
+                        //Starts with the time in seconds
+//                        $time = 147896348;
+                        $seconds = $time;
+                        
+                        //Work the way down
+                        //First get the years
+                        
+    /////////////////////////////////////// YEARS //////////////////////////////////////////////////
+                        
+                        $years = floor($seconds / 60 / 60 / 24 / 7 / 4 / 12);
+                        $remainder = (((((($years * 12) * 4) * 7) * 24) * 60) * 60);
+                        $remaining_seconds = $seconds - $remainder;
+                        
+                        if($years != 0){
+                            if($years == 1){$text = "$years Year";}
+                            else{$text = "$years Years";}
+                            array_push($time_array, $text);}
+    
+    /////////////////////////////////////// MONTHS //////////////////////////////////////////////////                        
+                        //Next get the months
+                        $months = floor($remaining_seconds / 60 / 60 / 24 / 7 / 4);
+                           $month_seconds = $months * 4 * 7 * 24 * 60 * 60;   
+                           $remaining_seconds = $remaining_seconds - $month_seconds;
+                          
+                           
+                           $time_left = $months;
+                               $time_singular = "Month";
+                               $time_plural = $time_singular."s";
+                           if($time_left != 0){
+                            if($time_left == 1){$text = "$time_left $time_singular";}
+                            else{$text = "$time_left $time_plural";}
+                            array_push($time_array, $text);}
+                          
+    /////////////////////////////////////// WEEKS //////////////////////////////////////////////////                        
+                            
+                           $weeks = floor($remaining_seconds / 60 / 60 / 24 / 7 );
+                           $week_seconds = $weeks * 7 * 24 * 60 * 60;   
+                           $remaining_seconds = $remaining_seconds - $week_seconds;
+                           
+                           $time_left = $weeks;
+                               $time_singular = "Week";
+                               $time_plural = $time_singular."s";
+                           if($time_left != 0){
+                            if($time_left == 1){$text = "$time_left $time_singular";}
+                            else{$text = "$time_left $time_plural";}
+                            array_push($time_array, $text);}
+                           
+    /////////////////////////////////////// DAYS //////////////////////////////////////////////////                        
+                            
+                           $days = floor($remaining_seconds / 60 / 60 / 24 );
+                           $day_seconds = $days * 24 * 60 * 60;   
+                           $remaining_seconds = $remaining_seconds - $day_seconds;
+                           
+                           $time_left = $days;
+                               $time_singular = "Day";
+                               $time_plural = $time_singular."s";
+                           if($time_left != 0){
+                            if($time_left == 1){$text = "$time_left $time_singular";}
+                            else{$text = "$time_left $time_plural";}
+                            array_push($time_array, $text);}
+                           
+    /////////////////////////////////////// HOURS //////////////////////////////////////////////////                        
+                            
+                            
+                           $hours = floor($remaining_seconds / 60 / 60);
+                           $hour_seconds = $hours * 60 * 60;   
+                           $remaining_seconds = $remaining_seconds - $hour_seconds;
+                           
+                           $time_left = $hours;
+                               $time_singular = "Hour";
+                               $time_plural = $time_singular."s";
+                           if($time_left != 0){
+                            if($time_left == 1){$text = "$time_left $time_singular";}
+                            else{$text = "$time_left $time_plural";}
+                            array_push($time_array, $text);}
+                     
+    /////////////////////////////////////// MINUTES //////////////////////////////////////////////////                        
+                            
+                           $minutes = floor($remaining_seconds / 60);
+                           $minute_seconds = $minutes * 60;   
+                           $remaining_seconds = $remaining_seconds - $minute_seconds;
+                           
+                           $time_left = $minutes;
+                               $time_singular = "Minute";
+                               $time_plural = $time_singular."s";
+                           if($time_left != 0){
+                            if($time_left == 1){$text = "$time_left $time_singular";}
+                            else{$text = "$time_left $time_plural";}
+                            array_push($time_array, $text);}
+                           
+                           $seconds = floor($remaining_seconds);
+      
+    /////////////////////////////////////// SECONDS //////////////////////////////////////////////////                       
+                           
+                           $time_left = $seconds;
+                               $time_singular = "Second";
+                               $time_plural = $time_singular."s";
+                           if($time_left != 0){
+                            if($time_left == 1){$text = "$time_left $time_singular";}
+                            else{$text = "$time_left $time_plural";}
+                            array_push($time_array, $text);}
+                           
+                           
+                           
+                        
+                        
+                        // </editor-fold>
+                        
                   
                   ?>
 
@@ -117,9 +303,43 @@
                 <h3 id="center_aligned"> Creatures: <?= $no_creatures ?></h3>
                 <h3 id="center_aligned"> Flora: <?= $no_flora ?></h3>
                 
-             
+                </div>
+                
+                <div class="row" style="width: 100%; margin-bottom: 30px;">
+                    <div class="col-md-6">
+                <h3 id="galaxy_dates"> Date Discovered:</h3>
+                <h3 id="galaxy_dates"><?= $date_logged ?></h3>
+                    </div>
+                    <div class="col-md-6" >
+                <h3 id="galaxy_dates"> Time Spent in Galaxy:</h3>
+<!--                <h3 id="galaxy_dates"> <?= $years ?> Years <br> <?= $months ?> Months<br><?= $weeks ?> Weeks<br><?= $days ?> Days<br><?= $hours ?> Hours<br><?= $minutes ?> Minutes</h3>-->
+                <?php
+                  $time_count = count($time_array);
+                  $iteration = 0;
+                  while($iteration < $time_count){
+                      
+                  if($iteration == 0){
+                      ?>
+                  
+                    <h3 id="galaxy_dates" style="margin-bottom: 0px; margin-top: 0px;" > <?= $time_array[$iteration] ?></h3>
+                    <?php
+                    
+                    }else{
+                        ?>
+                    
+                    <h3 id="galaxy_dates" style="margin-top: 0px; padding-top: 0px; margin-bottom: 0px;"><?= $time_array[$iteration] ?></h3>
+                    <?php
+                  }
+                  $iteration++;
+                    }
+                    ?>
+                    </div>
                 
                 </div>
+                
+             
+                
+                
 
 <?php
   if($delete == "true"){
@@ -522,13 +742,19 @@
                           <div class="col-md-7" style="text-align: center; margin-top: 30px;">
                               <h1 style="text-align: center; font-family: noMansFont; font-size: 60pt; color: white" > Bio</h1>
                               <h1 id="stat"> Star System: <a style='color: white;' href='item.php?database_type=star_systems&item_id=<?= $planet_star_id; ?>'><?= $star_system ?></a> </h1>
-                      <h1 id="stat"> Enviroment: <?= $enviroment ?> </h1>
-                      <h1 id="stat"> Climate: <?= $climate ?> </h1>
+                      <h1 id="stat"> Atmosphere: <?= $enviroment ?> </h1>
+                      <h1 id="stat"> Enviroment: <?= $climate ?> </h1>
                       <h1 id="stat"> Life: <?= $life_type ?> </h1>
                       <h1 id="stat"> Size: <?= $size ?> </h1>
                       <h1 id="stat"> Rating: <?= $rating ?> </h1>
                       <h1 id="stat"> Sentinals: <?= $sentinals ?> </h1>
-                      <h1 id="stat" style='color: black !important'> Minerals: <?= $minerals ?> </h1>
+                      <?php
+                        if($minerals != NULL){
+                            ?>
+                        
+                      <h1 id="stat"> Minerals: <?= $minerals ?> </h1>
+                        <?php }
+                        ?>
                       </div>
                       </div>
                       
@@ -759,13 +985,19 @@
                               <h1 style="text-align: center; font-family: noMansFont; font-size: 60pt; color: white" > Bio</h1>
                               <h1 id="stat"> Star System: <a style='color: white;' href='item.php?database_type=star_systems&item_id=<?= $planet_star_id; ?>'><?= $star_system ?></a> </h1>
                               <h1 id="stat"> Parent Planet: <a style='color: white;' href='item.php?database_type=planets&item_id=<?= $parent_planet_id; ?>'><?= $parent_planet ?></a> </h1>
-                      <h1 id="stat"> Enviroment: <?= $enviroment ?> </h1>
-                      <h1 id="stat"> Climate: <?= $climate ?> </h1>
+                      <h1 id="stat"> Atmosphere: <?= $enviroment ?> </h1>
+                      <h1 id="stat"> Enviroment: <?= $climate ?> </h1>
                       <h1 id="stat"> Life: <?= $life_type ?> </h1>
                       <h1 id="stat"> Size: <?= $size ?> </h1>
                       <h1 id="stat"> Rating: <?= $rating ?> </h1>
                       <h1 id="stat"> Sentinals: <?= $sentinals ?> </h1>
-                      <h1 id="stat" style='color: black !important'> Minerals: <?= $minerals ?> </h1>
+                      <?php
+                        if($minerals != NULL){
+                            ?>
+                        
+                      <h1 id="stat"> Minerals: <?= $minerals ?> </h1>
+                        <?php }
+                        ?>
                       </div>
                       </div>
                       

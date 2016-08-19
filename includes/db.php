@@ -47,6 +47,7 @@
     $huge = 0;
     $tiny = 0;
     $perfect_rating = 0;
+    $radioactive = 0;
     
     $id = 0;
     global $planet_limit;
@@ -95,7 +96,11 @@
                   if($enviroment == "Extreme Cold"){
                       $extreme_cold++;
                   }
-                  if($life_type == "Complex"){
+                  
+                  if($enviroment == "Radioactive"){
+                      $radioactive++;
+                  }
+                  if($life_type == "Abundant"){
                       $complex++;
                   }
                   if($life_type == "None"){
@@ -118,7 +123,7 @@
     
 }
 
-array_push($planet_info_array, $toxic, $extreme_heat, $extreme_cold, $complex, $baron, $huge, $tiny, $perfect_rating);
+array_push($planet_info_array, $toxic, $extreme_heat, $extreme_cold, $complex, $baron, $huge, $tiny, $perfect_rating, $radioactive);
 
 
 

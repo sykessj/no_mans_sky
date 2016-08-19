@@ -14,17 +14,16 @@
 //  backup_tables('localhost','root','','no_man_sky');
   
   //Get the fact 
-  $fact_number = mt_rand(1,17);
+  $fact_number = mt_rand(1,18);
   $fact = get_fact($fact_number);
   
   //Get the randomly Discovered Item
   
-  $item_number = mt_rand(1,7);
-  $item_array = random_discovery($item_number);
+  
   
   //Get the latest discovered world.
   //Check the planet limit is above 0
-  if($planet_limit + $moon_limit >= 6){
+  if($planet_limit >= 6){
       
       $limit = $planet_limit - 2;
       $world_array = array();
@@ -113,7 +112,7 @@
           $type = "Moon";
           $type_table = "moons";
       }
-      $key_length = strlen($current_key[$id]);
+      $key_length = strlen($current_key);
       
       $id_length = $current_key[$key_length - 1];
       
@@ -138,9 +137,25 @@
               $result = $sql->fetchObject();
               //check the result is real
               if($result != false){
+                  $image_number = mt_rand(1,3);
+                  
+                  if($image_number == 1){
+                      $image = $result->main_image;
+                  }
+                  else if($image_number == 2){
+                      $image = $result->extra_image2;
+                  }
+                  else if($image_number == 3){
+                      if($type_table == "planets"){
+                          $image = $result->extra_image;
+                      }
+                      else{
+                          $image = $result->extra_image1;
+                      }
+                  }
                   
                   $name = $result->name;
-                  $image = $result->main_image;
+                  
                   $star_system = $result->star_system;
               }
               $image = "images/$type_table/$name/$image";
@@ -305,7 +320,7 @@
         <div class="col-md-10">
             
             <?php
-              if($planet_limit <= 6){
+              if($planet_limit < 6){
                   
                   //Do the welcome bit
               ?>
@@ -379,9 +394,9 @@
         
         <div class="col-md-2 card card-inverse" style="background-color: #333; border-color: #333;">
   <div class="card-block">
-    <h3 style="color: white; text-align: center;" class="card-title">Save Your Progress</h3>
-    <p style="color: white; text-align: center;" class="card-text">Back up everything that has been logged so far.</p>
-    <a style="margin-bottom: 20px; margin-left: auto; margin-right: auto; display: block;" href="#" class="btn btn-success">Save</a>
+    <h3 style="color: white; text-align: center;" class="card-title">Periodic Table</h3>
+    <p style="color: white; text-align: center;" class="card-text">View all of the elements in the no mans sky database and their galactic value.</p>
+    <a style="margin-bottom: 20px; margin-left: auto; margin-right: auto; display: block;" href="periodic_table.php" class="btn btn-success">View Table</a>
   </div>
 </div>
         

@@ -82,7 +82,7 @@ $current_page = "index";
   // <editor-fold defaultstate="collapsed" desc="Variables and Get from URL Functions">
   global $galaxy_limit;
   global $star_system_limit;
-  $items_per_page = 10;
+  $items_per_page = 50;
   $offical_items_per_page = $items_per_page;
   
   $id = 0;
@@ -478,12 +478,13 @@ $current_page = "index";
             <h4> Star Type:
                             <select name="star_type_filter" class="form-control" id="form_css">
                             <option value="none">No Filter</option> 
-                            <option value="Binary">Binary</option>
-                            <option value="Dwarf">Dwarf</option>
-                            <option value="Giant">Giant</option>
-                            <option value="Neutron">Neutron</option>
-                            <option value="Pulsar">Pulsar</option>
-                            <option value="Supergiant">Supergiant</option>
+                            <option value="G">G</option>
+                                    <option value="K">K</option>
+                                    <option value="E">E</option>
+                                    <option value="B">B</option>
+                                    <option value="M">M</option>
+                                    <option value="F">F</option>
+                                    <option value="O">O</option>
                                     
                             </select>
                 </div>
@@ -493,11 +494,13 @@ $current_page = "index";
             <h4> Star Colour:
                             <select name="star_colour_filter" class="form-control" id="form_css">
                             <option value="none">No Filter</option>    
-                            <option value="Red">Red</option>
-                            <option value="Orange">Orange</option>
                             <option value="Yellow">Yellow</option>
-                            <option value="White">White</option>
-                            <option value="Blue">Blue</option>
+                                    <option value="Yellow White">Yellow White</option>
+                                    <option value="Orange">Orange</option>
+                                    <option value="Green">Green</option>
+                                    <option value="Blue">Blue</option>
+                                    <option value="Blue White">Blue White</option>
+                                    <option value="Red">Red</option>
                                     
                             </select>
                 
@@ -554,7 +557,7 @@ $current_page = "index";
           <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=name&order=<?= $column1; ?>&order_id=<?= "column1_" . $column1; ?>"> Name </a></th>
           <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=star_system&order=<?= $column2; ?>&order_id=<?= "column2_" . $column2; ?>">Star System</a></th>
           <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=enviroment&order=<?= $column4; ?>&order_id=<?= "column4_" . $column4; ?>">Atmosphere</a></th>
-          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=climate&order=<?= $column5; ?>&order_id=<?= "column5_" . $column5; ?>">Climate</a></th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=climate&order=<?= $column5; ?>&order_id=<?= "column5_" . $column5; ?>">Enviroment</a></th>
           <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=life_type&order=<?= $column6; ?>&order_id=<?= "column6_" . $column6; ?>">Life</a></th>
           <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=size&order=<?= $column7; ?>&order_id=<?= "column7_" . $column7; ?>">Size</a></th>
           <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=sentinals&order=<?= $column8; ?>&order_id=<?= "column8_" . $column8; ?>">Sentinals</a></th>
@@ -729,9 +732,14 @@ $current_page = "index";
                             <select name="planet_enviroment_filter" class="form-control" id="form_css">
                             <option value="none">No Filter</option> 
                             <option value="Normal">Normal</option>
-                            <option value="Extreme Heat">Extreme Heat</option>
-                            <option value="Extreme Cold">Extreme Cold</option>
-                            <option value="Toxic">Toxic</option>
+                            <option value="Hot">Hot</option>
+                                        <option value="Extreme Heat">Extreme Heat</option>
+                                        <option value="Cold">Cold</option>
+                                        <option value="Extreme Cold">Extreme Cold</option>
+                                        <option value="Ligth Radioactivity">Light Radioactivity</option>
+                                        <option value="Radioactive">Radioactive</option>
+                                        <option value="Ligth Toxicity">Light Toxicity</option>
+                                        <option value="Toxic">Toxic</option>
                             
                                     
                             </select>
@@ -739,18 +747,19 @@ $current_page = "index";
               
             <div class="col-md-2">
               
-            <h4> Climate:
+            <h4> Enviroment:
                             <select name="planet_climate_filter" class="form-control" id="form_css">
                             <option value="none">No Filter</option>    
-                            <option value="Tropical">Tropical</option>
-                            <option value="Savannah">Savannah</option>
-                            <option value="Dessert">Dessert</option>
-                            <option value="Mediterranean">Mediterranean</option>
-                            <option value="Humid Subtropical">Humid Subtropical</option>
-                            <option value="Temperate">Temperate</option>
-                            <option value="Highland">Highland</option>
-                            <option value="Sub Arctic">Sub Arctic</option>
-                            <option value="Sub Zero">Sub Zero</option>
+                            <option value="Lush">Lush</option>
+                                        <option value="Savannah">Savannah</option>
+                                        <option value="Dessert">Dessert</option>
+                                        <option value="Mediterranean">Mediterranean</option>
+                                        <option value="Jungle">Jungle</option>
+                                        <option value="Forest">Forest</option>
+                                        <option value="Highland">Highland</option>
+                                        <option value="Highland Swamp">Highland Swamp</option>
+                                        <option value="Sub Arctic">Sub Arctic</option>
+                                        <option value="Sub Zero">Sub Zero</option>
                                     
                             </select>
                 
@@ -762,9 +771,10 @@ $current_page = "index";
                             <select name="planet_life_type_filter" class="form-control" id="form_css">
                             <option value="none">No Filter</option>    
                             <option value="None">None</option>
-                            <option value="Bacterial">Bacterial</option>
-                            <option value="Basic">Basic</option>
-                            <option value="Complex">Complex</option>
+                                        <option value="Scarce">Scarce</option>
+                                        <option value="Fair">Fair</option>
+                                        <option value="Common">Common</option>
+                                        <option value="Abundant">Abundant</option>
                                     
                             </select>
                 
@@ -791,10 +801,10 @@ $current_page = "index";
                             <select name="planet_sentinals_filter" class="form-control" id="form_css">
                             <option value="none">No Filter</option>    
                             <option value="None">None</option>
-                            <option value="Small Waves">Small Waves</option>
-                            <option value="Medium Waves">Medium Waves</option>
-                            <option value="Large Waves">Large Waves</option>
-                            <option value="Huge Waves">Huge Waves</option>
+                                        <option value="Relaxed">Relaxed</option>
+                                        <option value="Standard">Standard</option>
+                                        <option value="High Security">High Security</option>
+                                        <option value="Frenzied">Frenzied</option>
                                     
                             </select>
                 
@@ -852,7 +862,7 @@ $current_page = "index";
           <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=name&order=<?= $column1; ?>&order_id=<?= "column1_" . $column1; ?>"> Name </a></th>
           <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=star_system&order=<?= $column2; ?>&order_id=<?= "column2_" . $column2; ?>">Star System</a></th>
           <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=enviroment&order=<?= $column4; ?>&order_id=<?= "column4_" . $column4; ?>">Atmosphere</a></th>
-          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=climate&order=<?= $column5; ?>&order_id=<?= "column5_" . $column5; ?>">Climate</a></th>
+          <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=climate&order=<?= $column5; ?>&order_id=<?= "column5_" . $column5; ?>">Enviroment</a></th>
           <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=life_type&order=<?= $column6; ?>&order_id=<?= "column6_" . $column6; ?>">Life</a></th>
           <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=size&order=<?= $column7; ?>&order_id=<?= "column7_" . $column7; ?>">Size</a></th>
           <th id="column_name"><a href="table.php?table_type=<?= $table; ?>&column=sentinals&order=<?= $column8; ?>&order_id=<?= "column8_" . $column8; ?>">Sentinals</a></th>
@@ -1027,9 +1037,14 @@ $current_page = "index";
                             <select name="planet_enviroment_filter" class="form-control" id="form_css">
                             <option value="none">No Filter</option> 
                             <option value="Normal">Normal</option>
-                            <option value="Extreme Heat">Extreme Heat</option>
-                            <option value="Extreme Cold">Extreme Cold</option>
-                            <option value="Toxic">Toxic</option>
+                            <option value="Hot">Hot</option>
+                                        <option value="Extreme Heat">Extreme Heat</option>
+                                        <option value="Cold">Cold</option>
+                                        <option value="Extreme Cold">Extreme Cold</option>
+                                        <option value="Ligth Radioactivity">Light Radioactivity</option>
+                                        <option value="Radioactive">Radioactive</option>
+                                        <option value="Ligth Toxicity">Light Toxicity</option>
+                                        <option value="Toxic">Toxic</option>
                             
                                     
                             </select>
@@ -1037,18 +1052,19 @@ $current_page = "index";
               
             <div class="col-md-2">
               
-            <h4> Climate:
+            <h4> Enviroment:
                             <select name="planet_climate_filter" class="form-control" id="form_css">
                             <option value="none">No Filter</option>    
-                            <option value="Tropical">Tropical</option>
-                            <option value="Savannah">Savannah</option>
-                            <option value="Dessert">Dessert</option>
-                            <option value="Mediterranean">Mediterranean</option>
-                            <option value="Humid Subtropical">Humid Subtropical</option>
-                            <option value="Temperate">Temperate</option>
-                            <option value="Highland">Highland</option>
-                            <option value="Sub Arctic">Sub Arctic</option>
-                            <option value="Sub Zero">Sub Zero</option>
+                            <option value="Lush">Lush</option>
+                                        <option value="Savannah">Savannah</option>
+                                        <option value="Dessert">Dessert</option>
+                                        <option value="Mediterranean">Mediterranean</option>
+                                        <option value="Jungle">Jungle</option>
+                                        <option value="Forest">Forest</option>
+                                        <option value="Highland">Highland</option>
+                                        <option value="Highland Swamp">Highland Swamp</option>
+                                        <option value="Sub Arctic">Sub Arctic</option>
+                                        <option value="Sub Zero">Sub Zero</option>
                                     
                             </select>
                 
@@ -1060,9 +1076,10 @@ $current_page = "index";
                             <select name="planet_life_type_filter" class="form-control" id="form_css">
                             <option value="none">No Filter</option>    
                             <option value="None">None</option>
-                            <option value="Bacterial">Bacterial</option>
-                            <option value="Basic">Basic</option>
-                            <option value="Complex">Complex</option>
+                                        <option value="Scarce">Scarce</option>
+                                        <option value="Fair">Fair</option>
+                                        <option value="Common">Common</option>
+                                        <option value="Abundant">Abundant</option>
                                     
                             </select>
                 
@@ -1089,10 +1106,10 @@ $current_page = "index";
                             <select name="planet_sentinals_filter" class="form-control" id="form_css">
                             <option value="none">No Filter</option>    
                             <option value="None">None</option>
-                            <option value="Small Waves">Small Waves</option>
-                            <option value="Medium Waves">Medium Waves</option>
-                            <option value="Large Waves">Large Waves</option>
-                            <option value="Huge Waves">Huge Waves</option>
+                                        <option value="Relaxed">Relaxed</option>
+                                        <option value="Standard">Standard</option>
+                                        <option value="High Security">High Security</option>
+                                        <option value="Frenzied">Frenzied</option>
                                     
                             </select>
                 

@@ -585,7 +585,7 @@
           $old_name = $result->name;
       }
 
-      $sql = $conn->prepare("UPDATE `planets` SET `name` = '$name', `enviroment` = '$enviroment', `climate` = '$climate', `life_type` = '$life', `size` = '$size', `rating` = '$rating', `minerals` = '$minerals', `main_image` = '$image', `extra_image` = '$extra_image', `extra_image2` = '$extra_image2' WHERE `id` = '$object_id'");
+      $sql = $conn->prepare("UPDATE `planets` SET `name` = '$name', `enviroment` = '$enviroment', `climate` = '$climate', `life_type` = '$life', `size` = '$size', `sentinals` = '$sentinals', `rating` = '$rating', `minerals` = '$minerals', `main_image` = '$image', `extra_image` = '$extra_image', `extra_image2` = '$extra_image2' WHERE `id` = '$object_id'");
       $sql->execute();
 
       if ($name != $old_name) {
@@ -685,7 +685,7 @@
           $old_name = $result->name;
       }
 
-      $sql = $conn->prepare("UPDATE `moons` SET `name` = '$name', `enviroment` = '$enviroment', `climate` = '$climate', `life_type` = '$life', `size` = '$size', `rating` = '$rating', `minerals` = '$minerals', `main_image` = '$image', `extra_image1` = '$extra_image', `extra_image2` = '$extra_image2' WHERE `id` = '$object_id'");
+      $sql = $conn->prepare("UPDATE `moons` SET `name` = '$name', `enviroment` = '$enviroment', `climate` = '$climate', `life_type` = '$life', `size` = '$size', `sentinals` = '$sentinals', `rating` = '$rating', `minerals` = '$minerals', `main_image` = '$image', `extra_image1` = '$extra_image', `extra_image2` = '$extra_image2' WHERE `id` = '$object_id'");
       $sql->execute();
 
       if ($name != $old_name) {

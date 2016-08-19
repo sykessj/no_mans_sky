@@ -26,6 +26,11 @@
   global $planet_limit;
   global $moon_limit;
   
+//  rewrite_data();
+  
+  $item_number = mt_rand(1,7);
+  $item_array = random_discovery($item_number);
+  
   $moon_star = "this is not really working";
   
 //  debug_to_console("Current URL: $current_url");
@@ -354,6 +359,7 @@
                             <li><a href="table.php?table_type=ships&column=name&order=ASC">Ships</a></li>
                         </ul>
                     </li>
+                    <li><a id="nav_links" href="item.php?database_type=<?= $item_array[0]; ?>&item_id=<?= $item_array[1]; ?>">?</a></li>
                     
                     
 
@@ -519,22 +525,29 @@
                             <h4> Star Type: </h4>
                                 <select name="edit_star_system_type" class="form-control"id="dropdownMenu1">
                                     <option value="<?= $edit_var2;?>">Current <?= $edit_var2;?></option>
-                                    <option value="Binary">Binary</option>
-                                    <option value="Dwarf">Dwarf</option>
-                                    <option value="Giant">Giant</option>
-                                    <option value="Neutron">Neutron</option>
-                                    <option value="Pulsar">Pulsar</option>
-                                    <option value="Supergiant">Supergiant</option>
+                                    <option value="G">G</option>
+                                    <option value="K">K</option>
+                                    <option value="E">E</option>
+                                    <option value="B">B</option>
+                                    <option value="M">M</option>
+                                    <option value="F">F</option>
+                                    <option value="O">O</option>
+                                    
                                 </select>
                                 <br>
                                 <h4> Star Colour: </h4>
                                 <select name="edit_star_system_colour" class="form-control"id="dropdownMenu1">
                                     <option value="<?= $edit_var3;?>">Current <?= $edit_var3;?></option>
-                                    <option value="Red">Red</option>
-                                    <option value="Orange">Orange</option>
                                     <option value="Yellow">Yellow</option>
-                                    <option value="White">White</option>
+                                    <option value="Yellow White">Yellow White</option>
+                                    <option value="Orange">Orange</option>
+                                    <option value="Green">Green</option>
                                     <option value="Blue">Blue</option>
+                                    <option value="Blue White">Blue White</option>
+                                    <option value="Red">Red</option>
+                                    
+                                    
+                                    
                                 </select>
                                 <br>
                             
@@ -616,27 +629,34 @@
                             <input id="flora_input" class="form-control" type="text" name="edit_planet_name" value="<?= $edit_var1;?>" placeholder="name">
                             <br>
                             
-                            <h4> Enviroment: </h4>
+                            <h4> Atmosphere: </h4>
                                     <!-- ENTER ENVIROMENT INFORMATION -->
                                     <select name="edit_planet_enviroment" class="form-control" id="dropdownMenu1">
                                         <option value="<?= $edit_var2;?>">Current: <?= $edit_var2;?></option>
                                         <option value="Normal">Normal</option>
+                                        <option value="Hot">Hot</option>
                                         <option value="Extreme Heat">Extreme Heat</option>
+                                        <option value="Cold">Cold</option>
                                         <option value="Extreme Cold">Extreme Cold</option>
+                                        <option value="Light Radioactivity">Light Radioactivity</option>
+                                        <option value="Radioactive">Radioactive</option>
+                                        <option value="Light Toxicity">Light Toxicity</option>
                                         <option value="Toxic">Toxic</option>
+                                        
                                     </select>
                                     <br>
-                                    <h4> Climate: </h4>
+                                    <h4> Enviroment: </h4>
                                     <!-- ENTER CLIMATE INFORMATION -->
                                     <select name="edit_planet_climate" class="form-control" id="dropdownMenu1">
                                         <option value="<?= $edit_var3;?>">Current: <?= $edit_var3;?></option>
-                                        <option value="Tropical">Tropical</option>
+                                        <option value="Lush">Lush</option>
                                         <option value="Savannah">Savannah</option>
                                         <option value="Dessert">Dessert</option>
                                         <option value="Mediterranean">Mediterranean</option>
-                                        <option value="Humid Subtropical">Humid Subtropical</option>
-                                        <option value="Temperate">Temperate</option>
+                                        <option value="Jungle">Jungle</option>
+                                        <option value="Forest">Forest</option>
                                         <option value="Highland">Highland</option>
+                                        <option value="Highland Swamp">Highland Swamp</option>
                                         <option value="Sub Arctic">Sub Arctic</option>
                                         <option value="Sub Zero">Sub Zero</option>
                                     </select>
@@ -646,9 +666,10 @@
                                     <select name="edit_planet_life" class="form-control" id="dropdownMenu1">
                                         <option value="<?= $edit_var4;?>">Current: <?= $edit_var4;?></option>
                                         <option value="None">None</option>
-                                        <option value="Bacterial">Bacterial</option>
-                                        <option value="Basic">Basic</option>
-                                        <option value="Complex">Complex</option>
+                                        <option value="Scarce">Scarce</option>
+                                        <option value="Fair">Fair</option>
+                                        <option value="Common">Common</option>
+                                        <option value="Abundant">Abundant</option>
                                     </select>
                                     <br>
                                     <h4> Size: </h4>
@@ -667,10 +688,10 @@
                                         <select name="edit_planet_sentinals" class="form-control" id="dropdownMenu1">
                                             <option value="<?= $edit_var6;?>">Current: <?= $edit_var6;?></option>
                                         <option value="None">None</option>
-                                        <option value="Small Waves">Small Waves</option>
-                                        <option value="Medium Waves">Medium Waves</option>
-                                        <option value="Large Waves">Large Waves</option>
-                                        <option value="Huge Waves">Huge Waves</option>
+                                        <option value="Relaxed">Relaxed</option>
+                                        <option value="Standard">Standard</option>
+                                        <option value="High Security">High Security</option>
+                                        <option value="Frenzied">Frenzied</option>
                                     </select>
                                     <br>
                                     <h4> Minerals: </h4>
@@ -794,27 +815,33 @@
                             <input id="flora_input" class="form-control" type="text" name="edit_moon_name" value="<?= $edit_var1;?>" placeholder="name">
                             <br>
                             
-                            <h4> Enviroment: </h4>
+                            <h4> Atmosphere: </h4>
                                     <!-- ENTER ENVIROMENT INFORMATION -->
                                     <select name="edit_moon_enviroment" class="form-control" id="dropdownMenu1">
                                         <option value="<?= $edit_var2;?>">Current: <?= $edit_var2;?></option>
                                         <option value="Normal">Normal</option>
+                                        <option value="Hot">Hot</option>
                                         <option value="Extreme Heat">Extreme Heat</option>
+                                        <option value="Cold">Cold</option>
                                         <option value="Extreme Cold">Extreme Cold</option>
+                                        <option value="Light Radioactivity">Light Radioactivity</option>
+                                        <option value="Radioactive">Radioactive</option>
+                                        <option value="Light Toxicity">Light Toxicity</option>
                                         <option value="Toxic">Toxic</option>
                                     </select>
                                     <br>
-                                    <h4> Climate: </h4>
+                                    <h4> Enviroment: </h4>
                                     <!-- ENTER CLIMATE INFORMATION -->
                                     <select name="edit_moon_climate" class="form-control" id="dropdownMenu1">
                                         <option value="<?= $edit_var3;?>">Current: <?= $edit_var3;?></option>
-                                        <option value="Tropical">Tropical</option>
+                                        <option value="Lush">Lush</option>
                                         <option value="Savannah">Savannah</option>
                                         <option value="Dessert">Dessert</option>
                                         <option value="Mediterranean">Mediterranean</option>
-                                        <option value="Humid Subtropical">Humid Subtropical</option>
-                                        <option value="Temperate">Temperate</option>
+                                        <option value="Jungle">Jungle</option>
+                                        <option value="Forest">Forest</option>
                                         <option value="Highland">Highland</option>
+                                        <option value="Highland Swamp">Highland Swamp</option>
                                         <option value="Sub Arctic">Sub Arctic</option>
                                         <option value="Sub Zero">Sub Zero</option>
                                     </select>
@@ -824,9 +851,10 @@
                                     <select name="edit_moon_life" class="form-control" id="dropdownMenu1">
                                         <option value="<?= $edit_var4;?>">Current: <?= $edit_var4;?></option>
                                         <option value="None">None</option>
-                                        <option value="Bacterial">Bacterial</option>
-                                        <option value="Basic">Basic</option>
-                                        <option value="Complex">Complex</option>
+                                        <option value="Scarce">Scarce</option>
+                                        <option value="Fair">Fair</option>
+                                        <option value="Common">Common</option>
+                                        <option value="Abundant">Abundant</option>
                                     </select>
                                     <br>
                                     <h4> Size: </h4>
@@ -845,10 +873,10 @@
                                         <select name="edit_moon_sentinals" class="form-control" id="dropdownMenu1">
                                             <option value="<?= $edit_var6;?>">Current: <?= $edit_var6;?></option>
                                         <option value="None">None</option>
-                                        <option value="Small Waves">Small Waves</option>
-                                        <option value="Medium Waves">Medium Waves</option>
-                                        <option value="Large Waves">Large Waves</option>
-                                        <option value="Huge Waves">Huge Waves</option>
+                                        <option value="Relaxed">Relaxed</option>
+                                        <option value="Standard">Standard</option>
+                                        <option value="High Security">High Security</option>
+                                        <option value="Frenzied">Frenzied</option>
                                     </select>
                                     <br>
                                     <h4> Minerals: </h4>
@@ -1445,21 +1473,24 @@
                                 <br>
                                 <h4> Star Type: </h4>
                                 <select name="star_type" class="form-control" id="dropdownMenu1">
-                                    <option value="Binary">Binary</option>
-                                    <option value="Dwarf">Dwarf</option>
-                                    <option value="Giant">Giant</option>
-                                    <option value="Neutron">Neutron</option>
-                                    <option value="Pulsar">Pulsar</option>
-                                    <option value="Supergiant">Supergiant</option>
+                                    <option value="G">G</option>
+                                    <option value="K">K</option>
+                                    <option value="E">E</option>
+                                    <option value="B">B</option>
+                                    <option value="M">M</option>
+                                    <option value="F">F</option>
+                                    <option value="O">O</option>
                                 </select>
                                 <br>
                                 <h4> Star Colour: </h4>
                                 <select name="star_colour" class="form-control" id="dropdownMenu1">
-                                    <option value="Red">Red</option>
-                                    <option value="Orange">Orange</option>
                                     <option value="Yellow">Yellow</option>
-                                    <option value="White">White</option>
+                                    <option value="Yellow White">Yellow White</option>
+                                    <option value="Orange">Orange</option>
+                                    <option value="Green">Green</option>
                                     <option value="Blue">Blue</option>
+                                    <option value="Blue White">Blue White</option>
+                                    <option value="Red">Red</option>
                                 </select>
                                 <br>
                                 <h4> Select main image to upload: </h4>
@@ -1615,7 +1646,7 @@
                                       $id = 0;
                                       global $star_system_limit;
                                       
-                                      $data_array = sort_table("star_systems" , $star_system_limit , "ID" , "name" , "ASC" );
+                                      $data_array = sort_table("star_systems" , $star_system_limit , "ID" , "date_logged" , "DESC" );
                                       $array_count = count($data_array);
                                       
                                       
@@ -1647,25 +1678,31 @@
                                      
                                     </select>
                                     <br>
-                                    <h4> Enviroment: </h4>
+                                    <h4> Atmosphere: </h4>
                                     <!-- ENTER ENVIROMENT INFORMATION -->
                                     <select name="planet_enviroment" class="form-control" id="dropdownMenu1">
                                         <option value="Normal">Normal</option>
+                                        <option value="Hot">Hot</option>
                                         <option value="Extreme Heat">Extreme Heat</option>
+                                        <option value="Cold">Cold</option>
                                         <option value="Extreme Cold">Extreme Cold</option>
+                                        <option value="Ligth Radioactivity">Light Radioactivity</option>
+                                        <option value="Radioactive">Radioactive</option>
+                                        <option value="Ligth Toxicity">Light Toxicity</option>
                                         <option value="Toxic">Toxic</option>
                                     </select>
                                     <br>
-                                    <h4> Climate: </h4>
+                                    <h4> Enviroment: </h4>
                                     <!-- ENTER CLIMATE INFORMATION -->
                                     <select name="planet_climate" class="form-control" id="dropdownMenu1">
-                                        <option value="Tropical">Tropical</option>
+                                        <option value="Lush">Lush</option>
                                         <option value="Savannah">Savannah</option>
                                         <option value="Dessert">Dessert</option>
                                         <option value="Mediterranean">Mediterranean</option>
-                                        <option value="Humid Subtropical">Humid Subtropical</option>
-                                        <option value="Temperate">Temperate</option>
+                                        <option value="Jungle">Jungle</option>
+                                        <option value="Forest">Forest</option>
                                         <option value="Highland">Highland</option>
+                                        <option value="Highland Swamp">Highland Swamp</option>
                                         <option value="Sub Arctic">Sub Arctic</option>
                                         <option value="Sub Zero">Sub Zero</option>
                                     </select>
@@ -1674,9 +1711,10 @@
                                     <!-- ENTER LIFE INFORMATION -->
                                     <select name="planet_life" class="form-control" id="dropdownMenu1">
                                         <option value="None">None</option>
-                                        <option value="Bacterial">Bacterial</option>
-                                        <option value="Basic">Basic</option>
-                                        <option value="Complex">Complex</option>
+                                        <option value="Scarce">Scarce</option>
+                                        <option value="Fair">Fair</option>
+                                        <option value="Common">Common</option>
+                                        <option value="Abundant">Abundant</option>
                                     </select>
                                     <br>
                                     <h4> Size: </h4>
@@ -1693,10 +1731,10 @@
                                     <!-- ENTER SENTINAL INFORMATION -->
                                         <select name="planet_sentinals" class="form-control" id="dropdownMenu1">
                                         <option value="None">None</option>
-                                        <option value="Small Waves">Small Waves</option>
-                                        <option value="Medium Waves">Medium Waves</option>
-                                        <option value="Large Waves">Large Waves</option>
-                                        <option value="Huge Waves">Huge Waves</option>
+                                        <option value="Relaxed">Relaxed</option>
+                                        <option value="Standard">Standard</option>
+                                        <option value="High Security">High Security</option>
+                                        <option value="Frenzied">Frenzied</option>
                                     </select>
                                     <br>
                                     <h4> Minerals: </h4>
@@ -1896,24 +1934,29 @@
                                     ?>
                                     </select>
                             <br>
-                                    <h4> Enviroment: </h4>
+                                    <h4> Atmosphere: </h4>
                                     <!-- ENTER ENVIROMENT INFORMATION -->
                                     <select name="moon_enviroment" class="form-control" id="dropdownMenu1">
                                         <option value="Normal">Normal</option>
+                                        <option value="Hot">Hot</option>
                                         <option value="Extreme Heat">Extreme Heat</option>
+                                        <option value="Cold">Cold</option>
                                         <option value="Extreme Cold">Extreme Cold</option>
+                                        <option value="Ligth Radioactivity">Light Radioactivity</option>
+                                        <option value="Radioactive">Radioactive</option>
+                                        <option value="Ligth Toxicity">Light Toxicity</option>
                                         <option value="Toxic">Toxic</option>
                                     </select>
                                     <br>
-                                    <h4> Climate: </h4>
+                                    <h4> Enviroment: </h4>
                                     <!-- ENTER CLIMATE INFORMATION -->
                                     <select name="moon_climate" class="form-control" id="dropdownMenu1">
-                                        <option value="Tropical">Tropical</option>
+                                        <option value="Lush">Lush</option>
                                         <option value="Savannah">Savannah</option>
                                         <option value="Dessert">Dessert</option>
                                         <option value="Mediterranean">Mediterranean</option>
-                                        <option value="Humid Subtropical">Humid Subtropical</option>
-                                        <option value="Temperate">Temperate</option>
+                                        <option value="Jungle">Jungle</option>
+                                        <option value="Forest">Forest</option>
                                         <option value="Highland">Highland</option>
                                         <option value="Sub Arctic">Sub Arctic</option>
                                         <option value="Sub Zero">Sub Zero</option>
@@ -1923,9 +1966,10 @@
                                     <!-- ENTER LIFE INFORMATION -->
                                     <select name="moon_life" class="form-control" id="dropdownMenu1">
                                         <option value="None">None</option>
-                                        <option value="Bacterial">Bacterial</option>
-                                        <option value="Basic">Basic</option>
-                                        <option value="Complex">Complex</option>
+                                        <option value="Scarce">Scarce</option>
+                                        <option value="Fair">Fair</option>
+                                        <option value="Common">Common</option>
+                                        <option value="Abundant">Abundant</option>
                                     </select>
                                     <br>
                                     <h4> Size: </h4>
@@ -1942,10 +1986,10 @@
                                     <!-- ENTER SENTINAL INFORMATION -->
                                         <select name="moon_sentinals" class="form-control" id="dropdownMenu1">
                                         <option value="None">None</option>
-                                        <option value="Small Waves">Small Waves</option>
-                                        <option value="Medium Waves">Medium Waves</option>
-                                        <option value="Large Waves">Large Waves</option>
-                                        <option value="Huge Waves">Huge Waves</option>
+                                        <option value="Relaxed">Relaxed</option>
+                                        <option value="Standard">Standard</option>
+                                        <option value="High Security">High Security</option>
+                                        <option value="Frenzied">Frenzied</option>
                                     </select>
                                     <br>
                                     <h4> Minerals: </h4>
@@ -2612,7 +2656,7 @@ $('#moon_modal').modal('show');
                                       $id = 0;
                                       global $star_system_limit;
                                       
-                                      $data_array = sort_table("star_systems" , $star_system_limit , "ID" , "name" , "ASC" );
+                                      $data_array = sort_table("star_systems" , $star_system_limit , "ID" , "date_logged" , "DESC" );
                                       $array_count = count($data_array);
                                       
                                       
@@ -2706,7 +2750,7 @@ $('#moon_modal').modal('show');
                                       $id = 0;
                                       global $star_system_limit;
                                       
-                                      $data_array = sort_table("star_systems" , $star_system_limit , "ID" , "name" , "ASC" );
+                                      $data_array = sort_table("star_systems" , $star_system_limit , "ID" , "date_logged" , "DESC" );
                                       $array_count = count($data_array);
                                       
                                       
@@ -2803,7 +2847,7 @@ $('#moon_modal').modal('show');
                                       $id = 0;
                                       global $star_system_limit;
                                       
-                                      $data_array = sort_table("star_systems" , $star_system_limit , "ID" , "name" , "ASC" );
+                                      $data_array = sort_table("star_systems" , $star_system_limit , "ID" , "date_logged" , "DESC" );
                                       $array_count = count($data_array);
                                       
                                       

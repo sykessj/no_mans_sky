@@ -932,7 +932,7 @@ function get_stat($stat_number){
         case "2": $stat_name = " "; $stat_value = " "; break;
         case "3": $stat_name = "Galaxies"; $stat_value = $galaxy_limit; break;
         case "4": $stat_name = "Star Systems"; $stat_value = $star_system_limit; break;
-        case "5": $stat_name = "Celestial Bodies"; $stat_value = $planet_limit + $moon_limit; break;
+        case "5": $stat_name = "Total Worlds"; $stat_value = $planet_limit + $moon_limit; break;
         case "6": $stat_name = "Planets"; $stat_value = $planet_limit; break;
         case "7": $stat_name = "Moons"; $stat_value = $moon_limit; break;
         case "8": $stat_name = "Creatures"; $stat_value = $creature_limit; break;
@@ -999,8 +999,8 @@ function get_progress($stat_number){
         case "18": $stat_name = "Issue 10 Ships"; $stat_value = $ship_limit; $stat_goal = 10; break;
         case "19": $stat_name = "break"; $stat_value = 10; $stat_goal = 100; break;
         case "20": $stat_name = "break"; $stat_value = 10; $stat_goal = 100; break;
-        case "21": $stat_name = "Discover 20 Baron Worlds"; $stat_value = $planet_info_array[4]; $stat_goal = 20; break;
-        case "22": $stat_name = "Discover 20 Worlds with Complex Life"; $stat_value = $planet_info_array[3]; $stat_goal = 20; break;
+        case "21": $stat_name = "Discover 20 Barren Worlds"; $stat_value = $planet_info_array[4]; $stat_goal = 20; break;
+        case "22": $stat_name = "Discover 20 Worlds with Abundant Life"; $stat_value = $planet_info_array[3]; $stat_goal = 20; break;
         case "23": $stat_name = "break"; $stat_value = 10; $stat_goal = 100; break;
         case "23": $stat_name = "break"; $stat_value = 10; $stat_goal = 100; break;
         case "24": $stat_name = "Discover 20 Toxic Atmospheres"; $stat_value = $planet_info_array[0]; $stat_goal = 20; break;
@@ -1055,14 +1055,15 @@ function get_fact($fact_number){
         case "7": $fact_name = "You Have Seen $creature_limit Creatures"; break;
         case "8": $fact_name = "You Have Analysed $flora_limit Flora."; break;
         case "9": $fact_name = "You Have Issued $ship_limit Ships."; break;
-        case "10": $fact_name = "You Have Survived $planet_info_array[0] Toxic Enviroments."; break;
+        case "10": $fact_name = "You Have Survived $planet_info_array[0] Heavily Toxic Enviroments."; break;
         case "11": $fact_name = "You Have Sweltered in Extreme Heat $planet_info_array[1] Times."; break;
         case "12": $fact_name = "You Have Frozen in $planet_info_array[2] Extremely Cold Enviroments."; break;
-        case "13": $fact_name = "You Have Set Down on $planet_info_array[3] Worlds With Complex Life."; break;
-        case "14": $fact_name = "You Have Enjoyed Some Peace on $planet_info_array[4] Baron Worlds."; break;
+        case "13": $fact_name = "You Have Set Down on $planet_info_array[3] Worlds With Abundant Life."; break;
+        case "14": $fact_name = "You Have Enjoyed Some Peace on $planet_info_array[4] Barren Worlds."; break;
         case "15": $fact_name = "You Have Been Overwhelmed By $planet_info_array[5] Huge Worlds."; break;
         case "16": $fact_name = "You Have Been Whelmed By $planet_info_array[6] Tiny Worlds."; break;
         case "17": $fact_name = "You Have Been Amazed By $planet_info_array[7] Perfect Worlds."; break;
+        case "18": $fact_name = "You Have Survived $planet_info_array[8] Heavily Radioactive Worlds."; break;
         
         
         
@@ -1119,7 +1120,7 @@ function random_discovery($discovery_number){
 
 // </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="Random Discovery">
+// <editor-fold defaultstate="collapsed" desc="Backup Tables">
 
 function backup_tables($host,$user,$pass,$name,$tables = '*')
 {
@@ -1175,6 +1176,61 @@ function backup_tables($host,$user,$pass,$name,$tables = '*')
 	$handle = fopen('db-backup-'.time().'-'.(md5(implode(',',$tables))).'.sql','w+');
 	fwrite($handle,$return);
 	fclose($handle);
+}
+
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="Rewrite Data">
+function rewrite_data(){
+    global $conn;
+    $old_data = $new_data = array();
+    
+    
+    $table = "planets";
+    $column_name = "sentinals";
+    $n = 1;
+    $no_of_data = 4;
+    
+    //Old data
+    
+    $old_data[$n] = "Small Waves";
+    $old_data[$n + 1] = "Medium Waves";
+    $old_data[$n + 2] = "Large Waves";
+    $old_data[$n + 3] = "Huge Waves";
+    $old_data[$n + 4] = "none";
+    $old_data[$n + 5] = "none";
+    $old_data[$n + 6] = "none";
+    $old_data[$n + 7] = "none";
+    $old_data[$n + 8] = "none";
+    $old_data[$n + 9] = "none";
+    $old_data[$n + 10] = "none";
+    
+    //New Data
+    
+    $new_data[$n] = "Relaxed";
+    $new_data[$n + 1] = "Standard";
+    $new_data[$n + 2] = "High Security";
+    $new_data[$n + 3] = "Frenzied";
+    $new_data[$n + 4] = "none";
+    $new_data[$n + 5] = "none";
+    $new_data[$n + 6] = "none";
+    $new_data[$n + 7] = "none";
+    $new_data[$n + 8] = "none";
+    $new_data[$n + 9] = "none";
+    $new_data[$n + 10] = "none";
+    
+    while($n <= $no_of_data){
+        
+        $sql = $conn->prepare("UPDATE `$table` SET `$column_name` = '$new_data[$n]' WHERE `$column_name` = '$old_data[$n]'");
+      $sql->execute();
+        
+        $n++;
+    }
+    
+    
+    
+    
+    
 }
 
 // </editor-fold>
