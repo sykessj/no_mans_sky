@@ -209,6 +209,12 @@ function add_planet($planet_name , $planet_star , $planet_enviroment , $planet_c
               $sql = $conn->prepare("UPDATE `galaxy` SET `no_planets` = '$number_of_planets' WHERE `name` = '$planet_galaxy'");
               $sql->execute();
               
+              if(is_dir("images/planets/$planet_name") === true){
+  }
+  else{
+      mkdir("images/planets/$planet_name");
+  }
+              
               
               echo "<meta http-equiv='refresh' content='0'>";
               
@@ -253,7 +259,12 @@ function add_planet($planet_name , $planet_star , $planet_enviroment , $planet_c
               $sql = $conn->prepare("UPDATE `galaxy` SET `no_planets` = '$number_of_planets' WHERE `name` = '$planet_galaxy'");
               $sql->execute();
               
-              
+              if(is_dir("images/planets/$planet_name") === true){
+  }
+  else{
+      mkdir("images/planets/$planet_name");
+  }
+  
               echo "<meta http-equiv='refresh' content='0'>";
                   
               } echo "<meta http-equiv='refresh' content='0; index.php'>"; 
@@ -328,6 +339,11 @@ function add_moon($moon_name , $moon_star, $moon_parent , $moon_enviroment , $mo
               $sql = $conn->prepare("UPDATE `galaxy` SET `no_moons` = '$number_of_moons' WHERE `name` = '$moon_galaxy'");
               $sql->execute();
               
+              if(is_dir("images/moons/$moon_name") === true){
+  }
+  else{
+      mkdir("images/moons/$moon_name");
+  }
               
               echo "<meta http-equiv='refresh' content='0'>";
               
@@ -381,6 +397,12 @@ function add_moon($moon_name , $moon_star, $moon_parent , $moon_enviroment , $mo
               
               $sql = $conn->prepare("UPDATE `galaxy` SET `no_moons` = '$number_of_moons' WHERE `name` = '$moon_galaxy'");
               $sql->execute();
+              
+              if(is_dir("images/moons/$moon_name") === true){
+  }
+  else{
+      mkdir("images/moons/$moon_name");
+  }
               
               
               echo "<meta http-equiv='refresh' content='0'>";
@@ -901,9 +923,9 @@ function sort_table($table , $limit , $id_column , $order_column , $direction){
     function debug_to_console( $data ) {
 
     if ( is_array( $data ) )
-        $output = "<script>alert( 'Debug Objects: " . implode( ',', $data) . "' );</script>";
+        $output = "<script>alert( '" . implode( ',', $data) . "' );</script>";
     else
-        $output = "<script>alert( 'Debug Objects: " . $data . "' );</script>";
+        $output = "<script>alert( '" . $data . "' );</script>";
 
     echo $output;
 }
@@ -1230,6 +1252,515 @@ function rewrite_data(){
     
     
     
+    
+}
+
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="Image Check">
+
+function image_check(){
+    global $conn;
+    global $star_system_limit;
+    global $planet_limit;
+    global $moon_limit;
+    global $creature_limit;
+    global $flora_limit;
+    global $ship_limit;
+    $image_statement = "Objects With Missing Images: \\n";
+    
+    
+    $iteration = 0;
+    $main_limit = 5;
+    $sub_limit = "not set";
+    $image_array = array();
+    
+    while($iteration <= $main_limit){
+        
+        switch($iteration){
+            // <editor-fold defaultstate="collapsed" desc="Star Systems Case">
+            case 1:
+                $iteration_2 = 0;
+                $table = "star_systems";
+                $display_table = "Star System";
+               $sub_limit = $star_system_limit;
+               $id_type = "ID";
+               $no_of_images = 1;
+               $image_array[0] = "image";
+               $image_array[1] = "not set";
+               $image_array[2] = "not set";
+               
+               
+               
+               while($iteration_2 <= $star_system_limit){
+                   
+                   $sql = $conn->prepare("SELECT * FROM `$table` WHERE `$id_type` = :id");
+              $sql->bindParam('id', $iteration_2, PDO::PARAM_INT);
+              $sql->execute();
+
+              $result = $sql->fetchObject();
+              //check the result is real
+              if($result != false){
+                  
+                  $image2 = $image_array[1];
+                  $image3 = $image_array[2];
+                  
+                  $name = $result->name;
+                  $image = $image_array[0];
+                  $image = $result->$image;
+                  
+                  if($image_array[1] != "not set"){
+                      
+                      $image2 = $result->$image2;
+                  }
+                  
+                  if($image_array[2] != "not set"){
+                      
+                      $image3 = $result->$image3;
+                  }
+              
+                   
+                   
+               $missing_image_number = 0;
+               
+                   if($image == NULL){
+                       
+                       $image_attachment = "Main Image";
+                       $missing_image_number++;
+                       
+                    }
+                    if($image2 == NULL){
+                        $image_attachment = $image_attachment." Image 1";
+                        $missing_image_number++;
+                    }
+                    
+                    if($image3 == NULL){
+                        $image_attachment = $image_attachment." Image 2";
+                        $missing_image_number++;
+                    }
+                    
+                    if($missing_image_number != 0){
+                    $image_statement = $image_statement."\\n".$display_table." // ".$name." // ".$image_attachment;
+                    }
+               
+               }
+               $iteration_2++;}
+               
+              
+               
+               
+               
+               
+               
+                break;
+               
+                // </editor-fold>
+                
+            // <editor-fold defaultstate="collapsed" desc="Planets Case">
+            case 2:
+                $iteration_2 = 0;
+                $table = "planets";
+                $display_table = "Planet";
+               $sub_limit = $planet_limit;
+               $id_type = "id";
+               $no_of_images = 3;
+               $image_array[0] = "main_image";
+               $image_array[1] = "extra_image";
+               $image_array[2] = "extra_image2";
+               
+               
+               
+               while($iteration_2 <= $sub_limit){
+                   
+                   $sql = $conn->prepare("SELECT * FROM `$table` WHERE `$id_type` = :id");
+              $sql->bindParam('id', $iteration_2, PDO::PARAM_INT);
+              $sql->execute();
+
+              $result = $sql->fetchObject();
+              //check the result is real
+              if($result != false){
+                  
+                  $image2 = $image_array[1];
+                  $image3 = $image_array[2];
+                  
+                  $name = $result->name;
+                  $image = $image_array[0];
+                  $image = $result->$image;
+                  
+                  if($image_array[1] != "not set"){
+                      
+                      $image2 = $result->$image2;
+                  }
+                  
+                  if($image_array[2] != "not set"){
+                      
+                      $image3 = $result->$image3;
+                  }
+              
+                   
+                   
+               $missing_image_number = 0;
+               
+                   if($image == NULL){
+                       
+                       $image_attachment = "Main Image";
+                       $missing_image_number++;
+                       
+                    }
+                    if($image2 == NULL){
+                        $image_attachment = $image_attachment." Image 1";
+                        $missing_image_number++;
+                    }
+                    
+                    if($image3 == NULL){
+                        $image_attachment = $image_attachment." Image 2";
+                        $missing_image_number++;
+                    }
+                    
+                    if($missing_image_number != 0){
+                    $image_statement = $image_statement."\\n".$display_table." // ".$name." // ".$image_attachment;
+                    }
+               
+               }
+               $iteration_2++;}
+               
+              
+               
+               
+               
+               
+               
+                break;
+               
+                // </editor-fold>
+                
+            // <editor-fold defaultstate="collapsed" desc="Moons Case">
+            case 3:
+                $iteration_2 = 0;
+                $table = "moons";
+                $display_table = "Moon";
+               $sub_limit = $moon_limit;
+               $id_type = "id";
+               $no_of_images = 3;
+               $image_array[0] = "main_image";
+               $image_array[1] = "extra_image1";
+               $image_array[2] = "extra_image2";
+               
+               
+               
+               while($iteration_2 <= $sub_limit){
+                   
+                   $sql = $conn->prepare("SELECT * FROM `$table` WHERE `$id_type` = :id");
+              $sql->bindParam('id', $iteration_2, PDO::PARAM_INT);
+              $sql->execute();
+
+              $result = $sql->fetchObject();
+              //check the result is real
+              if($result != false){
+                  
+                  $image2 = $image_array[1];
+                  $image3 = $image_array[2];
+                  
+                  $name = $result->name;
+                  $image = $image_array[0];
+                  $image = $result->$image;
+                  
+                  if($image_array[1] != "not set"){
+                      
+                      $image2 = $result->$image2;
+                  }
+                  
+                  if($image_array[2] != "not set"){
+                      
+                      $image3 = $result->$image3;
+                  }
+              
+                   
+                   
+               $missing_image_number = 0;
+               
+                   if($image == NULL){
+                       
+                       $image_attachment = "Main Image";
+                       $missing_image_number++;
+                       
+                    }
+                    if($image2 == NULL){
+                        $image_attachment = $image_attachment." Image 1";
+                        $missing_image_number++;
+                    }
+                    
+                    if($image3 == NULL){
+                        $image_attachment = $image_attachment." Image 2";
+                        $missing_image_number++;
+                    }
+                    
+                    if($missing_image_number != 0){
+                    $image_statement = $image_statement."\\n".$display_table." // ".$name." // ".$image_attachment;
+                    }
+               
+               }
+               $iteration_2++;}
+               
+              
+               
+               
+               
+               
+               
+                break;
+               
+                // </editor-fold>
+                
+            // <editor-fold defaultstate="collapsed" desc="Creatures Case">
+            case 4:
+                $iteration_2 = 0;
+                $table = "creatures";
+                $display_table = "Creature";
+               $sub_limit = $creature_limit;
+               $id_type = "id";
+               $no_of_images = 1;
+               $image_array[0] = "main_image";
+               $image_array[1] = "not set";
+               $image_array[2] = "not set";
+               
+               
+               
+               while($iteration_2 <= $sub_limit){
+                   
+                   $sql = $conn->prepare("SELECT * FROM `$table` WHERE `$id_type` = :id");
+              $sql->bindParam('id', $iteration_2, PDO::PARAM_INT);
+              $sql->execute();
+
+              $result = $sql->fetchObject();
+              //check the result is real
+              if($result != false){
+                  
+                  $image2 = $image_array[1];
+                  $image3 = $image_array[2];
+                  
+                  $name = $result->name;
+                  $image = $image_array[0];
+                  $image = $result->$image;
+                  
+                  if($image_array[1] != "not set"){
+                      
+                      $image2 = $result->$image2;
+                  }
+                  
+                  if($image_array[2] != "not set"){
+                      
+                      $image3 = $result->$image3;
+                  }
+              
+                   
+                   
+               $missing_image_number = 0;
+               
+                   if($image == NULL){
+                       
+                       $image_attachment = "Main Image";
+                       $missing_image_number++;
+                       
+                    }
+                    if($image2 == NULL){
+                        $image_attachment = $image_attachment." Image 1";
+                        $missing_image_number++;
+                    }
+                    
+                    if($image3 == NULL){
+                        $image_attachment = $image_attachment." Image 2";
+                        $missing_image_number++;
+                    }
+                    
+                    if($missing_image_number != 0){
+                    $image_statement = $image_statement."\\n".$display_table." // ".$name." // ".$image_attachment;
+                    }
+               
+               }
+               $iteration_2++;}
+               
+              
+               
+               
+               
+               
+               
+                break;
+               
+                // </editor-fold>
+                
+            // <editor-fold defaultstate="collapsed" desc="Flora Case">
+            case 5:
+                $iteration_2 = 0;
+                $table = "flora";
+                $display_table = "Flora";
+               $sub_limit = $flora_limit;
+               $id_type = "id";
+               $no_of_images = 1;
+               $image_array[0] = "main_image";
+               $image_array[1] = "not set";
+               $image_array[2] = "not set";
+               
+               
+               
+               while($iteration_2 <= $sub_limit){
+                   
+                   $sql = $conn->prepare("SELECT * FROM `$table` WHERE `$id_type` = :id");
+              $sql->bindParam('id', $iteration_2, PDO::PARAM_INT);
+              $sql->execute();
+
+              $result = $sql->fetchObject();
+              //check the result is real
+              if($result != false){
+                  
+                  $image2 = $image_array[1];
+                  $image3 = $image_array[2];
+                  
+                  $name = $result->name;
+                  $image = $image_array[0];
+                  $image = $result->$image;
+                  
+                  if($image_array[1] != "not set"){
+                      
+                      $image2 = $result->$image2;
+                  }
+                  
+                  if($image_array[2] != "not set"){
+                      
+                      $image3 = $result->$image3;
+                  }
+              
+                   
+                   
+               $missing_image_number = 0;
+               
+                   if($image == NULL){
+                       
+                       $image_attachment = "Main Image";
+                       $missing_image_number++;
+                       
+                    }
+                    if($image2 == NULL){
+                        $image_attachment = $image_attachment." Image 1";
+                        $missing_image_number++;
+                    }
+                    
+                    if($image3 == NULL){
+                        $image_attachment = $image_attachment." Image 2";
+                        $missing_image_number++;
+                    }
+                    
+                    if($missing_image_number != 0){
+                    $image_statement = $image_statement."\\n".$display_table." // ".$name." // ".$image_attachment;
+                    }
+               
+               }
+               $iteration_2++;}
+               
+              
+               
+               
+               
+               
+               
+                break;
+               
+                // </editor-fold>
+                
+           // <editor-fold defaultstate="collapsed" desc="Ships Case">
+            case 2:
+                $iteration_2 = 0;
+                $table = "ships";
+                $display_table = "Ships";
+               $sub_limit = $ship_limit;
+               $id_type = "id";
+               $no_of_images = 1;
+               $image_array[0] = "main_image";
+               $image_array[1] = "not set";
+               $image_array[2] = "not set";
+               
+               
+               
+               while($iteration_2 <= $sub_limit){
+                   
+                   $sql = $conn->prepare("SELECT * FROM `$table` WHERE `$id_type` = :id");
+              $sql->bindParam('id', $iteration_2, PDO::PARAM_INT);
+              $sql->execute();
+
+              $result = $sql->fetchObject();
+              //check the result is real
+              if($result != false){
+                  
+                  $image2 = $image_array[1];
+                  $image3 = $image_array[2];
+                  
+                  $name = $result->name;
+                  $image = $image_array[0];
+                  $image = $result->$image;
+                  
+                  if($image_array[1] != "not set"){
+                      
+                      $image2 = $result->$image2;
+                  }
+                  
+                  if($image_array[2] != "not set"){
+                      
+                      $image3 = $result->$image3;
+                  }
+              
+                   
+                   
+               $missing_image_number = 0;
+               
+                   if($image == NULL){
+                       
+                       $image_attachment = "Main Image";
+                       $missing_image_number++;
+                       
+                    }
+                    if($image2 == NULL){
+                        $image_attachment = $image_attachment."  -- Image 1";
+                        $missing_image_number++;
+                    }
+                    
+                    if($image3 == NULL){
+                        $image_attachment = $image_attachment."  --Image 2";
+                        $missing_image_number++;
+                    }
+                    
+                    if($missing_image_number != 0){
+                    $image_statement = $image_statement."\\n".$display_table." // ".$name." // ".$image_attachment;
+                    }
+               
+               }
+               $iteration_2++;}
+               
+              
+               
+               
+               
+               
+               
+                break;
+               
+                // </editor-fold>
+            
+            default:
+                //do this
+                break;
+        }
+        
+        
+        
+    
+        
+        
+        
+        
+        $iteration++;}
+        
+        debug_to_console("$image_statement \\n");
     
 }
 

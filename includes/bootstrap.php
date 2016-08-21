@@ -26,7 +26,8 @@
   global $planet_limit;
   global $moon_limit;
   
-//  rewrite_data();
+  
+  
   
   $item_number = mt_rand(1,7);
   $item_array = random_discovery($item_number);
@@ -112,6 +113,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="icon" type="image/x-icon" href="images/icon6.png">
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         
@@ -336,6 +338,10 @@
 </script>";
           }
           
+          if($link_id == 11){
+              image_check();
+          }
+          
           
 // <editor-fold defaultstate="collapsed" desc="Nav Bar">?>
         
@@ -357,9 +363,12 @@
                             <li><a href="table.php?table_type=creatures&column=name&order=ASC">Creatures</a></li>
                             <li><a href="table.php?table_type=flora&column=name&order=ASC">Flora</a></li>
                             <li><a href="table.php?table_type=ships&column=name&order=ASC">Ships</a></li>
+                            <li><a href="index.php?id=11">Image Check</a></li>
+                            
                         </ul>
                     </li>
                     <li><a id="nav_links" href="item.php?database_type=<?= $item_array[0]; ?>&item_id=<?= $item_array[1]; ?>">?</a></li>
+                    
                     
                     
 
@@ -1762,7 +1771,7 @@
                                 <br>
                                 
                                 <h4> Select extra image to upload: </h4>
-                                <input class="btn btn-primary form-control" type="file" name="planet_extra_image" id="fileToUpload">
+                                <input class="btn btn-primary form-control" type="file"  name="planet_extra_image"  id="fileToUpload">
                                 <br>
                                 
                                 <h4> Select extra image to upload: </h4>
