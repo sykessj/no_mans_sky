@@ -560,7 +560,7 @@
       $sql->execute();
 
 
-
+      rmdir("images/planets/$name");
 
       //Refresh to the index page
       echo "<meta http-equiv='refresh' content='0; index.php'>";

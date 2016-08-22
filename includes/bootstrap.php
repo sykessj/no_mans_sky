@@ -40,6 +40,7 @@
   $edit_name = "none";
   $edit_type = "none";
   $edit_image = "none";
+  $message_text = NULL;
   
   
   
@@ -84,6 +85,9 @@
   
   if (isset($_GET['edit_var11'])) {
   $edit_var11 = $_GET['edit_var11'];}
+  
+  if (isset($_GET['message_text'])) {
+  $message_text = $_GET['message_text'];}
   
   
   
@@ -341,6 +345,20 @@
           if($link_id == 11){
               image_check();
           }
+          
+          if($link_id == 12){
+              if($message_text != NULL){
+              
+              echo "
+                  <script type='text/javascript'>
+    $(window).load(function()
+{
+    $('#notification_modal').modal('show');
+});
+</script>";
+          }
+          }
+
           
           
 // <editor-fold defaultstate="collapsed" desc="Nav Bar">?>
@@ -3074,6 +3092,35 @@ $('#moon_modal').modal('show');
                                  
                                  <?php
                     // </editor-fold>
+                                   
+                                   //Notification Modal
+                                   
+      ?>                             
+       <div class="modal fade" style="margin-top:200px;" id="notification_modal" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel5" aria-hidden="true">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                   
+                     
+                         <div class="modal-content">
+<!--        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <p1>Delete?</p1>
+        </div>-->
+        <div class="modal-body" style="text-align: center; padding-bottom: 20px; padding-top: 20px;">
+            <h2 style="font-family: noMansFont; font-size: 20pt;"><?= $message_text; ?></h2>
+        </div>
+        <div class="modal-footer" style="text-align: center;">
+            
+            <button type="button" class="btn btn-success form-control" data-dismiss="modal">OK</button>
+          
+          
+        </div>
+      </div>
+                    
+                    </div>
+                </div>
+            </div>
                     ?>
                                  
                     </body>
