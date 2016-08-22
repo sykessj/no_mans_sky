@@ -1353,7 +1353,7 @@
                       $name = "";
 
 
-                      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                      if (isset($_POST['add_galaxy'])) {
                           if (empty($_POST["galaxy_name"])) {
                               
                               
@@ -1369,14 +1369,14 @@
                       }
                     ?>
                     <div id="formDiv">     
-                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">  
+                        <form method="post" action="index.php?id=12&message_text=Galaxy Added">  
                             <input id="galaxy_input" class="form-control" type="text" name="galaxy_name" value="" placeholder="name">
                         
                             <br><br>
                        
                             </div>
 
-                            <input href="index.php?id=1" class="btn btn-success" id="submit_button" type="submit" name="submit" value="Submit" >  
+                            <input href="index.php?id=1" class="btn btn-success" id="submit_button" type="submit" name="add_galaxy" value="Submit" >  
                         </form>
 
 
@@ -1564,7 +1564,7 @@
                                   $planet_image[2] = "";
                                   
                                   
-                                  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                  if (isset($_POST['submit_planet'])) {
                                       
                                       ////// GET NAME OF PLANET  ///////
                                       if (empty($_POST["planet_name"])) {
@@ -1661,7 +1661,7 @@
 
 
                                 <!-- ///////////////// HTML CODE FOR DISPLAYING THE MODAL --> 
-                                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                                <form method="post" action="index.php?id=12&message_text=Planet Added">
                                     <!-- NAME FIELD-->
                                     <input class="form-control" type="text" name="planet_name" value="" placeholder="name">
                                     <br>
@@ -1805,7 +1805,7 @@
 
 
                                     </div>
-                                    <input  class="btn btn-lg btn-success" id="submit_button1" type="submit" name="submit" value="Submit">  
+                                    <input  class="btn btn-lg btn-success" id="submit_button1" type="submit" name="submit_planet" value="Submit">  
                                 </form>
                             </div>
                         </div>
@@ -1849,7 +1849,7 @@
                   $result = $sql->fetchObject();
                   $moon_star = $result->name;
 
-                  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                  if (isset($_POST['submit_moon'])) {
                         
                         
                           if (empty($_POST["moon_name"])) {
@@ -1911,7 +1911,7 @@
                     
                     
                         
-                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">  
+                        <form method="post" action="index.php?id=12&message_text=Moon Added">  
                             <input class="form-control" type="text" name="moon_name" value="" placeholder="name">
                             
                             
@@ -2051,7 +2051,7 @@
                                 <input class="btn btn-primary form-control" type="file" name="moon_extra_image1" id="fileToUpload">
                                 <br><br>
                                 </div>
-                                <input class="btn btn-lg btn-success" id="submit_button1" type="submit" name="submit" value="Submit">
+                                <input class="btn btn-lg btn-success" id="submit_button1" type="submit" name="submit_moon" value="Submit">
                             
                             
                         </form>
@@ -2097,7 +2097,7 @@
                       
 
 
-                      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                      if (isset($_POST['add_creature'])) {
                           if (empty($_POST["creature_name"])) {
                               $creature_name = "";
                           } else {$creature_name = test_input($_POST["creature_name"]);}
@@ -2135,7 +2135,7 @@
                       
                     ?>
                     <div id="formDiv">     
-                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">  
+                        <form method="post" action="index.php?id=12&message_text=Creature Added">  
                             
                             <!--//// NAME -->
                             <input class="form-control" type="text" name="creature_name" value="" placeholder="name">
@@ -2260,7 +2260,7 @@
                             <br><br>
                             </div>
 
-                            <input class="btn btn-success" id="submit_button" type="submit" name="submit2" value="Submit" >  
+                            <input class="btn btn-success" id="submit_button" type="submit" name="add_creature" value="Submit" >  
                         </form>
 
 
@@ -2306,7 +2306,7 @@
                       
 
 
-                      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                      if (isset($_POST['add_flora'])) {
                           if (empty($_POST["flora_name"])) {
                               $flora_name = "";
                           } else {$flora_name = test_input($_POST["flora_name"]);}
@@ -2340,7 +2340,7 @@
                       
                     ?>
                     <div id="formDiv">     
-                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">  
+                        <form method="post" action="index.php?id=12&message_text=Flora Added">  
                             
                             <!--//// NAME -->
                             <input class="form-control" type="text" name="flora_name" value="" placeholder="name">
@@ -2455,7 +2455,7 @@
                             <br><br>
                             </div>
 
-                            <input class="btn btn-success" id="submit_button" type="submit" name="submit_flora2" value="Submit" >  
+                            <input class="btn btn-success" id="submit_button" type="submit" name="add_flora" value="Submit" >  
                         </form>
 
 
@@ -2487,7 +2487,7 @@
                       $ship_main_image = "";
 
 
-                      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                      if (isset($_POST['add_ship'])) {
                          if (empty($_POST["ship_name"])) {
                               $ship_name = "";
                           } else {$ship_name = test_input($_POST["ship_name"]);}
@@ -2505,7 +2505,7 @@
                       }
                     ?>
                     <div id="formDiv">     
-                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">  
+                        <form method="post" action="index.php?id=12&message_text=Ship Added">  
                             <input id="ship_input" class="form-control" type="text" name="ship_name" value="" placeholder="name">
                             <br><br>
                             <h4> Ship Type: </h4>
@@ -2527,7 +2527,7 @@
                                     
                             </div>
 
-                            <input class="btn btn-success" id="submit_button1" type="submit" name="submit3" value="Submit" >  
+                            <input class="btn btn-success" id="submit_button1" type="submit" name="add_ship" value="Submit" >  
                         </form>
 
 
@@ -2559,7 +2559,7 @@
                       $media_file = "";
 
 
-                      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                      if (isset($_POST['add_media'])) {
                           
                          if (empty($_POST["media_name"])) {
                               $media_name = "";
@@ -2575,13 +2575,15 @@
                           
                           
                           add_media($media_name , $media_type , $media_file);
+                          
+                          
                       }
                     ?>
                     <div id="formDiv">     
-                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">  
+                        <form method="post" action="index.php?id=12&message_text=<?= $media_type; ?> Added">  
                             <input id="ship_input" class="form-control" type="text" name="media_name" value="" placeholder="name">
                             <br><br>
-                            <h4> Ship Type: </h4>
+                            <h4> Media Type: </h4>
                                     <!-- ENTER SHIP INFORMATION -->
                                         <select name="media_type" class="form-control" id="dropdownMenu1">
                                         <option value="image">Image</option>
@@ -2599,7 +2601,7 @@
                                     
                             </div>
 
-                            <input class="btn btn-success" id="submit_button1" type="submit" name="submit5" value="Submit" >  
+                            <input class="btn btn-success" id="submit_button1" type="submit" name="add_media" value="Submit" >  
                         </form>
 
 
@@ -3121,7 +3123,7 @@ $('#moon_modal').modal('show');
                     </div>
                 </div>
             </div>
-                    ?>
+                    
                                  
                     </body>
 

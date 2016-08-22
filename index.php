@@ -308,12 +308,6 @@
 </style>
 
 <body>
-   
-   <?php
-     
-     //Also have a save to database button
-     //Random Fact
-     ?>
     
     <div class="container-fluid">
         

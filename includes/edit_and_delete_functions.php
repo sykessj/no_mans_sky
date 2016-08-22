@@ -102,7 +102,7 @@
 
 
       //Refresh to the index page
-      echo "<meta http-equiv='refresh' content='0; index.php'>";
+      echo "<meta http-equiv='refresh' content='0; index.php?id=12&message_text=Galaxy Deleted'>";
   }
 
   // </editor-fold>
@@ -294,7 +294,7 @@
 
 
       //Refresh to the index page
-      echo "<meta http-equiv='refresh' content='0; index.php'>";
+      echo "<meta http-equiv='refresh' content='0; index.php?id=12&message_text=Star System Deleted'>";
   }
 
   // </editor-fold>
@@ -563,7 +563,7 @@
       rmdir("images/planets/$name");
 
       //Refresh to the index page
-      echo "<meta http-equiv='refresh' content='0; index.php'>";
+      echo "<meta http-equiv='refresh' content='0; index.php?id=12&message_text=Planet Deleted'>";
   }
 
   // </editor-fold>
@@ -943,7 +943,7 @@
 
 
       //Refresh to the index page
-      echo "<meta http-equiv='refresh' content='0; index.php'>";
+      echo "<meta http-equiv='refresh' content='0; index.php?id=12&message_text=Moon Deleted'>";
   }
 
   // </editor-fold>
@@ -1115,7 +1115,7 @@
 
 
       //Refresh to the index page
-      echo "<meta http-equiv='refresh' content='0; index.php'>";
+      echo "<meta http-equiv='refresh' content='0; index.php?id=12&message_text=Creature Deleted'>";
   }
 
   // </editor-fold>
@@ -1288,6 +1288,8 @@
       //Update the limit 
       $sql = $conn->prepare("UPDATE `limits` SET `$database` = '$new_limit' WHERE `id` = '1'");
       $sql->execute();
+      
+      echo "<meta http-equiv='refresh' content='0; index.php?id=12&message_text=Creature Deleted'>";
   }
 
   // </editor-fold>
@@ -1370,7 +1372,7 @@
 
 
               //Refresh to the index page
-              echo "<meta http-equiv='refresh' content='0; index.php'>";
+              echo "<meta http-equiv='refresh' content='0; index.php?id=12&message_text=Ship Deleted'>";
               break;
 
           default:

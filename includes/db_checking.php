@@ -215,7 +215,7 @@ function add_planet($planet_name , $planet_star , $planet_enviroment , $planet_c
       mkdir("images/planets/$planet_name");
   }
   
-  debug_to_console("Planet Added Successfully!");
+  
               
               
               
@@ -267,7 +267,7 @@ function add_planet($planet_name , $planet_star , $planet_enviroment , $planet_c
   else{
       mkdir("images/planets/$planet_name");
   }
-  debug_to_console("Planet Added Successfully!");
+  
              
                   
               } 
@@ -348,7 +348,7 @@ function add_moon($moon_name , $moon_star, $moon_parent , $moon_enviroment , $mo
       mkdir("images/moons/$moon_name");
   }
               
-              echo "<meta http-equiv='refresh' content='0'>";
+              
               
               }
               else{ //Dont add to database)
@@ -408,9 +408,9 @@ function add_moon($moon_name , $moon_star, $moon_parent , $moon_enviroment , $mo
   }
               
               
-              echo "<meta http-equiv='refresh' content='0'>";
+             
                   
-              } echo "<meta http-equiv='refresh' content='0; index.php'>"; 
+              } 
     }
     
     
@@ -506,7 +506,7 @@ function add_creature($creature_name , $creature_planet , $creature_life_type , 
              
               
               
-              echo "<meta http-equiv='refresh' content='0'>";
+              
               
               }
               else{ //Dont add to database)
@@ -560,9 +560,9 @@ function add_creature($creature_name , $creature_planet , $creature_life_type , 
               $sql->execute();
               
               
-              echo "<meta http-equiv='refresh' content='0'>";
+              
                   
-    } echo "<meta http-equiv='refresh' content='0; index.php'>"; 
+    }
         }}
         // </editor-fold>
 
@@ -647,7 +647,7 @@ function add_flora($flora_name , $flora_planet , $flora_size , $flora_diet
               $sql->execute();
               
               
-              echo "<meta http-equiv='refresh' content='0'>";
+              
               
               }
               else{ //Dont add to database)
@@ -703,7 +703,7 @@ function add_flora($flora_name , $flora_planet , $flora_size , $flora_diet
               
               
                   
-    } echo "<meta http-equiv='refresh' content='0; index.php'>"; 
+    }
         }}
         // </editor-fold>
            
@@ -744,7 +744,7 @@ function add_ship($ship_name, $ship_type, $ship_main_image){
                 $sql = $conn->prepare("UPDATE `limits` SET `ships` = '$new_limit' WHERE `id` = '1'");
               $sql->execute();
 
-              echo "<meta http-equiv='refresh' content='0'>";
+              
               
               }
               else{ //Dont add to database)
@@ -769,7 +769,7 @@ function add_ship($ship_name, $ship_type, $ship_main_image){
               
               
                   
-              } echo "<meta http-equiv='refresh' content='0; index.php'>"; 
+              } 
 }}
 
 // </editor-fold>
@@ -843,8 +843,8 @@ function add_media($media_name, $media_type, $media_file){
               
                   
               }
-
-           echo "<meta http-equiv='refresh' content='0; index.php'>";   
+              $media_type = ucwords($media_type);
+           echo "<meta http-equiv='refresh' content='0; index.php?id=12&message_text=$media_type Added'>";   
               }
               
               }
@@ -1270,7 +1270,7 @@ function image_check(){
     global $creature_limit;
     global $flora_limit;
     global $ship_limit;
-    $image_statement = "Objects With Missing Images: \\n";
+    $image_statement = "Objects With Missing Images: <br>";
     
     
     $iteration = 1;
@@ -1407,7 +1407,7 @@ function image_check(){
                     }
                     
                     if($missing_image_number != 0){
-                    $image_statement = $image_statement."\\n".$display_table." // ".$name." // ".$image_attachment;
+                    $image_statement = $image_statement."<br>".$display_table." // ".$name." // ".$image_attachment;
                     }
                
                }
@@ -1423,7 +1423,9 @@ function image_check(){
     $iteration++;}
     
         
-        debug_to_console("$image_statement \\n");
+//        debug_to_console("$image_statement \\n");
+        echo "<meta http-equiv='refresh' content='0; index.php?id=12&message_text=$image_statement'>"; 
+        
     
 }
 
