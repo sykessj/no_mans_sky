@@ -1424,7 +1424,8 @@ function image_check(){
     
         
 //        debug_to_console("$image_statement \\n");
-        echo "<meta http-equiv='refresh' content='0; index.php?id=12&message_text=$image_statement'>"; 
+//        echo "<meta http-equiv='refresh' content='0; index.php?id=12&message_text=$image_statement'>"; 
+    return $image_statement;
         
     
 }

@@ -41,6 +41,7 @@
   $edit_type = "none";
   $edit_image = "none";
   $message_text = NULL;
+  $image_check = image_check();
   
   
   
@@ -88,6 +89,8 @@
   
   if (isset($_GET['message_text'])) {
   $message_text = $_GET['message_text'];}
+  
+ 
   
   
   
@@ -346,8 +349,11 @@
               image_check();
           }
           
+          
           if($link_id == 12){
               if($message_text != NULL){
+                  
+                  
               
               echo "
                   <script type='text/javascript'>
@@ -356,6 +362,8 @@
     $('#notification_modal').modal('show');
 });
 </script>";
+              
+              
           }
           }
 
@@ -381,7 +389,7 @@
                             <li><a href="table.php?table_type=creatures&column=name&order=ASC">Creatures</a></li>
                             <li><a href="table.php?table_type=flora&column=name&order=ASC">Flora</a></li>
                             <li><a href="table.php?table_type=ships&column=name&order=ASC">Ships</a></li>
-                            <li><a href="index.php?id=11">Image Check</a></li>
+                            <li><a href="" data-toggle="modal" data-target="#image_check_modal">Image Check</a></li>
                             
                         </ul>
                     </li>
@@ -3123,8 +3131,36 @@ $('#moon_modal').modal('show');
                     </div>
                 </div>
             </div>
+                
+                
+                <div class="modal fade" style="margin-top:200px;" id="image_check_modal" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel5" aria-hidden="true">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                   
+                     
+                         <div class="modal-content">
+<!--        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <p1>Delete?</p1>
+        </div>-->
+        <div class="modal-body" style="text-align: center; padding-bottom: 20px; padding-top: 20px;">
+            <h2 style="font-family: noMansFont; font-size: 20pt;"><?= $image_check; ?></h2>
+        </div>
+        <div class="modal-footer" style="text-align: center;">
+            
+            <button type="button" class="btn btn-success form-control" data-dismiss="modal">OK</button>
+          
+          
+        </div>
+      </div>
+                    
+                    </div>
+                </div>
+            </div>
                     
                                  
                     </body>
 
                     </html>
+                    
