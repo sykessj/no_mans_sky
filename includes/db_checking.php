@@ -4,7 +4,23 @@ global $conn;
 global $galaxy_limit;
 global $star_system_limit;
 
+// <editor-fold defaultstate="collapsed" desc="Db_connection">
 
+function db_select($table, $column, $value){
+    global $conn;
+    
+          $sql = $conn->prepare("SELECT * FROM `$table` WHERE `$column` = :id");
+          $sql->bindParam('id', $value, PDO::PARAM_INT);
+          $sql->execute();
+
+          $result = $sql->fetchObject();
+      
+
+      return $result;
+              
+}
+
+// </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="Add Galaxy">
 //////////////////////  ADDING A GALAXY  ///////////////////////////
@@ -16,11 +32,7 @@ function add_galaxy($name){
     //Get the last record
     global $galaxy_limit;
     //get last record of galaxy db
-    $sql = $conn->prepare("SELECT * FROM `galaxy` WHERE `Id` = :id");
-              $sql->bindParam('id', $galaxy_limit, PDO::PARAM_INT);
-              $sql->execute();
-
-              $result = $sql->fetchObject();
+    $result = db_select("galaxy", "Id", "$galaxy_limit");
               //check the result is real
               if($result != false){
               
@@ -40,7 +52,7 @@ VALUES ('$new_limit', '$name')";
               ////update limit for the new galaxy limit
               $sql = $conn->prepare("UPDATE `limits` SET `galaxy` = '$new_limit' WHERE `id` = '1'");
               $sql->execute();
-              echo "<meta http-equiv='refresh' content='0'>";
+              
               }
               else {
                   
@@ -58,7 +70,7 @@ VALUES ('$new_limit', '$name')";
 
           $sql = $conn->prepare("UPDATE `limits` SET `galaxy` = '$new_limit' WHERE `id` = '1'");
           $sql->execute();
-          echo "<meta http-equiv='refresh' content='0; index.php'>";
+          
       }   
       
 }

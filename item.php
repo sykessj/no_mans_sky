@@ -95,6 +95,7 @@
   global $moon_limit;
   global $creature_limit;
   $test_var = "No Change";
+  date_default_timezone_set("Europe/London");
   
   $table = "none";
   $id = 0;
@@ -175,13 +176,30 @@
                   $timestamp = strtotime($date_logged);
                         $date_logged = date("H:ia  d/M/Y", $timestamp);
                         
+                        $next_id = $object_id + 1;
+                        $result = db_select("galaxy", "Id", $next_id);
+                        if($result != false){
+                            $second_date = $result->date_logged;
+//                            debug_to_console("Next Date: $second_date");
+                            $second_timestamp = strtotime($second_date);
+//                            debug_to_console("Next Timestamp: $second_timestamp");
+                            $second_time = time() - $second_timestamp;
+//                            debug_to_console("End Time: $second_time");
+                            $time = time() - $second_time;
+                            $time = $time - $timestamp;
+//                            debug_to_console("Total Time: $time");
+                        }else{
+                        
                         $time = time() - $timestamp;
+                        
+                        }
                         
                      // <editor-fold defaultstate="collapsed" desc="Time in Galaxy method">  
                         $time_array = array();
                         //Starts with the time in seconds
 //                        $time = 147896348;
                         $seconds = $time;
+                        
                         
                         //Work the way down
                         //First get the years

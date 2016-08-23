@@ -29,6 +29,10 @@
   
   
   
+  
+  
+  
+  
   $item_number = mt_rand(1,7);
   $item_array = random_discovery($item_number);
   
@@ -1367,7 +1371,7 @@
                               
                           } else {
                               $galaxy_name = test_input($_POST["galaxy_name"]);
-                              echo $galaxy_name;
+                              
 
 
                               // check if name only contains letters and whitespace
